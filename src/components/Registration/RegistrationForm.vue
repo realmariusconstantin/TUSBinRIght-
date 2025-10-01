@@ -10,7 +10,7 @@
     <input type="email" id="email" v-model="form.email" required />
   </div>
   <div>
-    <label for="password">Password:</label>
+    <label for="password">ALohga:</label>
     <input type="password" id="password" v-model="form.password" required />
   </div>
   <button type="submit">Register</button>
