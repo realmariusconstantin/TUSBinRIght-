@@ -1,0 +1,108 @@
+CRITICAL - 2025-09-29 13:25:05 --> TypeError: str_contains(): Argument #1 ($haystack) must be of type string, array given
+[Method: GET, Route: Enter]
+in SYSTEMPATH\Common.php on line 587.
+ 1 SYSTEMPATH\Common.php(587): str_contains([...], '_helper')
+ 2 APPPATH\Controllers\Login.php(8): helper([...])
+ 3 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Login->__construct()
+ 4 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-09-29 13:25:32 --> TypeError: str_contains(): Argument #1 ($haystack) must be of type string, array given
+[Method: GET, Route: Enter]
+in SYSTEMPATH\Common.php on line 587.
+ 1 SYSTEMPATH\Common.php(587): str_contains([...], '_helper')
+ 2 APPPATH\Controllers\Login.php(8): helper([...])
+ 3 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Login->__construct()
+ 4 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-09-29 13:26:10 --> TypeError: str_contains(): Argument #1 ($haystack) must be of type string, array given
+[Method: GET, Route: Enter]
+in SYSTEMPATH\Common.php on line 587.
+ 1 SYSTEMPATH\Common.php(587): str_contains([...], '_helper')
+ 2 APPPATH\Controllers\Login.php(8): helper([...])
+ 3 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Login->__construct()
+ 4 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-09-29 13:26:36 --> TypeError: str_contains(): Argument #1 ($haystack) must be of type string, array given
+[Method: GET, Route: Enter]
+in SYSTEMPATH\Common.php on line 587.
+ 1 SYSTEMPATH\Common.php(587): str_contains([...], '_helper')
+ 2 APPPATH\Controllers\Login.php(8): helper([...])
+ 3 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Login->__construct()
+ 4 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-09-29 13:27:03 --> TypeError: str_contains(): Argument #1 ($haystack) must be of type string, array given
+[Method: GET, Route: Enter]
+in SYSTEMPATH\Common.php on line 587.
+ 1 SYSTEMPATH\Common.php(587): str_contains([...], '_helper')
+ 2 APPPATH\Controllers\Login.php(8): helper([...])
+ 3 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Login->__construct()
+ 4 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-09-29 13:27:55 --> TypeError: str_contains(): Argument #1 ($haystack) must be of type string, array given
+[Method: GET, Route: Enter]
+in SYSTEMPATH\Common.php on line 587.
+ 1 SYSTEMPATH\Common.php(587): str_contains([...], '_helper')
+ 2 APPPATH\Controllers\Login.php(8): helper([...])
+ 3 SYSTEMPATH\CodeIgniter.php(903): App\Controllers\Login->__construct()
+ 4 SYSTEMPATH\CodeIgniter.php(498): CodeIgniter\CodeIgniter->createController()
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-09-29 14:06:24 --> ErrorException: Undefined variable $validation
+[Method: GET, Route: Enter2]
+in APPPATH\Views\UserLogin.php on line 9.
+ 1 APPPATH\Views\UserLogin.php(9): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $validation', 'C:\\xampp\\htdocs\\CI4-FV1\\app\\Views\\UserLogin.php', 9)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\xampp\\htdocs\\CI4-FV1\\app\\Views\\UserLogin.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('UserLogin', [], true)
+ 5 APPPATH\Controllers\Login2.php(31): view('UserLogin')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Login2->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login2))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-09-29 14:07:01 --> ErrorException: Undefined variable $validation
+[Method: GET, Route: Enter2]
+in APPPATH\Views\UserLogin.php on line 9.
+ 1 APPPATH\Views\UserLogin.php(9): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $validation', 'C:\\xampp\\htdocs\\CI4-FV1\\app\\Views\\UserLogin.php', 9)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\xampp\\htdocs\\CI4-FV1\\app\\Views\\UserLogin.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('UserLogin', [], true)
+ 5 APPPATH\Controllers\Login2.php(31): view('UserLogin')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Login2->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login2))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-09-29 14:15:42 --> ErrorException: Undefined variable $validation
+[Method: GET, Route: Enter2]
+in APPPATH\Views\UserLogin2.php on line 14.
+ 1 APPPATH\Views\UserLogin2.php(14): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $validation', 'C:\\xampp\\htdocs\\CI4-FV1\\app\\Views\\UserLogin2.php', 14)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\xampp\\htdocs\\CI4-FV1\\app\\Views\\UserLogin2.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('UserLogin2', [], true)
+ 5 APPPATH\Controllers\Login2.php(31): view('UserLogin2')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Login2->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Login2))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

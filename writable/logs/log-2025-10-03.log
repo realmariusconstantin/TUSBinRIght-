@@ -1,0 +1,16 @@
+CRITICAL - 2025-10-03 09:38:33 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "Success
+                .php"
+[Method: POST, Route: login]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('Success
+                .php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('Success
+                ', [], true)
+ 3 APPPATH\Controllers\LabController.php(25): view('Success
+                ')
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\LabController->User()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LabController))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
