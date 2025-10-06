@@ -1,8 +1,9 @@
 <template>
   <section class="registration-page">
-    <h1>Registration</h1>
 
     <form class="reg-form" @submit.prevent="handleSubmit">
+          <h1>Registration</h1>
+
       <div class="field">
         <label for="username">Name</label>
         <input type="text" id="username" v-model="form.username" placeholder="Enter your full name" required />

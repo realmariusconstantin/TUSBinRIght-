@@ -2,7 +2,10 @@
     <nav>
         <div>
             <h1 class="logo">
-                <img :src="logo" alt="" aria-hidden="true">
+                <a href="/home">
+                    <img :src="logo" alt="" aria-hidden="true">
+                </a>
+
             </h1>
         </div>
 
