@@ -1,8 +1,9 @@
 <template>
     <section class="registration-page signup-page">
-        <h1>Log in</h1>
+      
 
         <form class="reg-form" @submit.prevent="handleSubmit">
+            <h1>Log in</h1>
             <div class="field">
                 <label for="email">Email</label>
                 <input
