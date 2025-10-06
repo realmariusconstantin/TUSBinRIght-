@@ -1,5 +1,7 @@
 <template>
-  <div class="reg-wrapper">
+  <section class="registration-page">
+    <h1>Registration</h1>
+
     <form class="reg-form" @submit.prevent="handleSubmit">
       <div class="field">
         <label for="username">Name</label>
@@ -22,11 +24,11 @@
       </div>
 
       <div class="buttons">
-        <button type="button" class="btn btn-secondary">Back</button>
+        <button type="button" class="btn btn-secondary" @click="goBack">Back</button>
         <button type="submit" class="btn btn-primary">Register</button>
       </div>
     </form>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -45,6 +47,11 @@ export default {
   methods: {
     handleSubmit() {
       console.log('Form submitted:', this.form);
+    },
+    goBack() {
+      if (this.$router) {
+        this.$router.back();
+      }
     }
   }
 };
