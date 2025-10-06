@@ -1,13 +1,28 @@
 <template>
     <nav>
         <div>
-            <h1 class="logo">TusBinRight</h1>
+            <h1 class="logo">
+                <img :src="logo" alt="" aria-hidden="true">
+            </h1>
         </div>
 
 
         <div class="nav-links">
             <router-link to="/register">Register</router-link>
-            <router-link to="/signup">Sign up</router-link>
+            <router-link to="/Login">Log in</router-link>
         </div>
     </nav>
 </template>
+<script>
+import logo from '@/images/Logo.png';
+
+export default {
+    name: 'navbar',
+    data() {
+        return {
+            logo
+        };
+    }
+};
+</script>
+<style src="./nav.css" scoped></style>
