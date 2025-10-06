@@ -1,14 +1,16 @@
 <template>
   <div id="app">
-    <RegistrationForm />
+    <navbar />
+    <router-view />
   </div>
 </template>
 
 <script>
-import RegistrationForm from './components/Registration/RegistrationForm.vue';
+import { RouterView } from 'vue-router';
+import navbar from './components/navbar/nav.vue';
 
 export default {
   name: 'App',
-  components: { RegistrationForm }
+  components: { RouterView, navbar }
 };
 </script>
