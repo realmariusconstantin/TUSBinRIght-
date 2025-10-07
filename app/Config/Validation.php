@@ -41,99 +41,66 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
     // Rules
     // --------------------------------------------------------------------
-    // public $userLogin = [
-    //     'username' => 'required',
-    //     'password' => 'required',
-    //     'pass_confirm' => 'required|matches[password]',
-    //     'email' => 'required|valid_email'
-    // ];
-    public $userLogin = [
-        'username' => [
-            'rules' => 'required',
-            'errors' => [
-                'required' => 'You must chose a Username'
-            ]
-            ],
+
+    public $login = [
         'email' => [
+            'label' => 'Email',
             'rules' => 'required|valid_email',
             'errors' => [
-                'valid_email' => 'You must check Email field. It does not appear to be valid.'
+                'required' => '{field} is required',
+                'valid_email' => '{field} must be a valid email address'
             ]
         ],
+        'password' => [
+            'label' => 'Password',
+            'rules' => 'required',
+            'errors' => [
+                'required' => '{field} is required'
+            ]
+        ]
     ];
 
-    public $labValidation = [
-        "username" => [
-            "label" => "Username",
-            "rules" => "required",
-            "errors" => [
-                "required" => "{field} is a mandatory field"
+    public $register = [
+        'forename' => [
+            'label' => 'Forename',
+            'rules' => 'required|min_length[2]|max_length[50]',
+            'errors' => [
+                'required' => '{field} is required',
+                'min_length' => '{field} must be at least 2 characters',
+                'max_length' => '{field} must not exceed 50 characters'
             ]
-            ],
-        "fname" => [
-            "label" => "First name",
-            "rules" => "required|min_length[2]|max_length[15]",
-            "errors" => [
-                "required" => "{field} is a mandatory",
-                "min_length" => "{field} must be more than 1 character in length",
-                "max_length" => "{field} must be no more than 15 characters in length"
+        ],
+        'surname' => [
+            'label' => 'Surname',
+            'rules' => 'required|min_length[2]|max_length[50]',
+            'errors' => [
+                'required' => '{field} is required',
+                'min_length' => '{field} must be at least 2 characters',
+                'max_length' => '{field} must not exceed 50 characters'
             ]
-            ],
-        "lname" => [
-            "label" => "Last name",
-            "rules" => "required|min_length[3]|max_length[20]",
-            "errors" => [
-                "required" => "{field} is a mandatory",
-                "min_length" => "{field} must be more than 2 character in length",
-                "max_length" => "{field} must be no more than 20 characters in length"
+        ],
+        'email' => [
+            'label' => 'Email',
+            'rules' => 'required|valid_email',
+            'errors' => [
+                'required' => '{field} is required',
+                'valid_email' => '{field} must be a valid email'
             ]
-            ],
-        "addressline1" => [
-            "label" => "Address line 1",
-            "rules" => "required",
-            "errors" => [
-                "required" => "{field} is a mandatory field"
+        ],
+        'password' => [
+            'label' => 'Password',
+            'rules' => 'required|min_length[6]',
+            'errors' => [
+                'required' => '{field} is required',
+                'min_length' => '{field} must be at least 6 characters'
             ]
-            ],
-        "city" => [
-            "label" => "City",
-            "rules" => "required|in_list[Cork,Limerick,Galway]",
-            "errors" => [
-                "required" => "{field} is a mandatory field",
-                "in_list" => "{field} must be either Cork, Limerick or Galway"
+        ],
+        'pass_confirm' => [
+            'label' => 'Confirm Password',
+            'rules' => 'required',
+            'errors' => [
+                'required' => '{field} is required',
             ]
-            ],
-        "email" => [
-            "label" => "Email",
-            "rules" => "required|regex_match[/^[^@]+@[^@]+\.[^@]+$/]",
-            "errors" => [
-                "required" => "{field} is a mandatory field",
-                "regex_match" => "This is not a valid {field} address"
-            ]
-            ],
-        "type" => [
-            "label" => "Type",
-            "rules" => "required|in_list[Customer]",
-            "errors" => [
-                "required" => "{field} is a mandatory field",
-                "in_list" => "{field} must be the word Customer"
-            ]
-            ],
-        "password" => [
-            "label" => "Password",
-            "rules" => "required|alpha_numeric",
-            "errors" => [
-                "required" => "{field} is a mandatory field",
-                "alpha_numeric" => "{field} must be alpha numeric"
-            ]
-            ],
-        "age" => [
-            "label" => "Age",
-            "rules" => "required|is_natural_no_zero",
-            "errors" => [
-                "required" => "{field} is a mandatory field",
-                "is_natural_no_zero" => "{field} must be an integer excluding 0"
-            ]
-            ]
+        ]
     ];
 }
