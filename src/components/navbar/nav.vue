@@ -11,8 +11,9 @@
 
 
         <div class="nav-links">
+            <router-link to="/home">Home</router-link>
             <router-link to="/register">Register</router-link>
-            <router-link to="/Login">Log in</router-link>
+            <router-link to="/login">Log in</router-link>
         </div>
     </nav>
 </template>
