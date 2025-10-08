@@ -35,20 +35,31 @@
 </template>
 
 <script>
+import api from '@/lib/api';
+
 export default {
     name: 'LoginForm',
     data() {
         return {
             form: {
                 email: '',
-                password: '',
-                confirmPassword: ''
+                password: ''
             }
         };
     },
     methods: {
-        handleSubmit() {
-            console.log('Form submitted:', this.form);
+        async handleSubmit() {
+            try {
+                const { data } = await api.post('/login', {
+                    email: this.form.email,
+                    password: this.form.password
+                });
+                localStorage.setItem('token', data.token);
+                this.$router.push('/home');
+            } catch (e) {
+                console.error('Login error:', e);
+                alert('Invalid email or password');
+            }
         },
         goBack() {
             if (this.$router) {

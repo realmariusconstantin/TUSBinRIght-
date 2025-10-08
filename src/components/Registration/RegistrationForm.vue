@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import api from '@/lib/api';
+
 export default {
   name: 'RegistrationForm',
   data() {
@@ -45,9 +47,23 @@ export default {
       }
     };
   },
+
   methods: {
-    handleSubmit() {
-      console.log('Form submitted:', this.form);
+    async handleSubmit() {
+      try {
+        const payload = {
+          username: this.form.username,
+          email: this.form.email,
+          password: this.form.password,
+          confirmPassword: this.form.confirmPasswordS
+        };
+        const { data } = await api.post('/register', payload);
+        alert(data.message || 'Registered!');
+        this.$router.push('/login');
+      } catch (e) {
+        const msgs = e?.response?.data?.messages || e?.response?.data || 'Registration failed';
+        alert(typeof msgs === 'string' ? msgs : JSON.stringify(msgs));
+      }
     },
     goBack() {
       if (this.$router) {
