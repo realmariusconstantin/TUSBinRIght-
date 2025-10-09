@@ -1,32 +1,53 @@
 <template>
   <section class="registration-page">
-
     <form class="reg-form" @submit.prevent="handleSubmit">
-          <h1>Registration</h1>
+      <h1>Registration</h1>
 
       <div class="field">
-        <label for="username">Name</label>
+        <label for="name">Name</label>
         <input type="text" id="username" v-model="form.name" placeholder="Enter your full name" required />
       </div>
 
       <div class="field">
         <label for="email">Email</label>
-        <input type="email" id="email" v-model="form.email" placeholder="Enter your email address" required />
+        <input
+          type="email"
+          id="email"
+          v-model="form.email"
+          placeholder="Enter your email address"
+          required
+        />
       </div>
 
       <div class="field">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="form.password" placeholder="Create a password" required />
+        <input
+          type="password"
+          id="password"
+          v-model="form.password"
+          placeholder="Create a password"
+          required
+        />
       </div>
 
       <div class="field">
         <label for="confirm">Confirm Password</label>
-        <input type="password" id="confirm" v-model="form.confirmPassword" placeholder="Re-enter your password" required />
+        <input
+          type="password"
+          id="confirm"
+          v-model="form.confirmPassword"
+          placeholder="Re-enter your password"
+          required
+        />
       </div>
 
       <div class="buttons">
-        <button type="button" class="btn btn-secondary" @click="goBack">Back</button>
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="button" class="btn btn-secondary" @click="goBack">
+          Back
+        </button>
+        <button type="submit" class="btn btn-primary">
+          Register
+        </button>
       </div>
     </form>
   </section>
@@ -47,7 +68,6 @@ export default {
       }
     };
   },
-
   methods: {
     async handleSubmit() {
       try {
@@ -57,18 +77,19 @@ export default {
           password: this.form.password,
           confirmPassword: this.form.confirmPassword
         };
+
         const { data } = await api.post('/register', payload);
-        alert(data.message || 'Registered!');
-        this.$router.push('/login');
+  alert(data.message || 'Registered successfully!');
+  // After successful registration, send user to public home page
+  this.$router.push('/');
       } catch (e) {
-        const msgs = e?.response?.data?.messages || e?.response?.data || 'Registration failed';
+        const msgs =
+          e?.response?.data?.messages || e?.response?.data || 'Registration failed';
         alert(typeof msgs === 'string' ? msgs : JSON.stringify(msgs));
       }
     },
     goBack() {
-      if (this.$router) {
-        this.$router.back();
-      }
+      if (this.$router) this.$router.back();
     }
   }
 };
