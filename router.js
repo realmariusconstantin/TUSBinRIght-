@@ -12,13 +12,13 @@ import PaperPage from '@/view/Materials/Paper.vue';
 const routes = [
     { 
         path: '/', 
-        component: Home,
-        meta: { requiresAuth: true } // This route requires authentication
+        component: Home
+        // No authentication required - accessible to everyone
     },
     { 
         path: '/home', 
-        component: Home,
-        meta: { requiresAuth: true }
+        component: Home
+        // No authentication required - accessible to everyone
     },
     { 
         path: '/register', 
@@ -32,23 +32,23 @@ const routes = [
     },
     { 
         path: '/material/plastic', 
-        component: PlasticPage,
-        meta: { requiresAuth: true }
+        component: PlasticPage
+        // No authentication required - accessible to everyone
     },
     { 
         path: '/material/can', 
-        component: CanPage,
-        meta: { requiresAuth: true }
+        component: CanPage
+        // No authentication required - accessible to everyone
     },
     { 
         path: '/material/glass', 
-        component: GlassPage,
-        meta: { requiresAuth: true }
+        component: GlassPage
+        // No authentication required - accessible to everyone
     },
     { 
         path: '/material/paper', 
-        component: PaperPage,
-        meta: { requiresAuth: true }
+        component: PaperPage
+        // No authentication required - accessible to everyone
     },
     { path: '/:pathMatch(.*)*', redirect: '/' }
 ];

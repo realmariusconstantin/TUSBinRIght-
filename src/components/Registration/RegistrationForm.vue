@@ -6,7 +6,7 @@
 
       <div class="field">
         <label for="username">Name</label>
-        <input type="text" id="username" v-model="form.username" placeholder="Enter your full name" required />
+        <input type="text" id="username" v-model="form.name" placeholder="Enter your full name" required />
       </div>
 
       <div class="field">
@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       form: {
-        username: '',
+        name: '',
         email: '',
         password: '',
         confirmPassword: ''
@@ -52,10 +52,10 @@ export default {
     async handleSubmit() {
       try {
         const payload = {
-          username: this.form.username,
+          name: this.form.name,
           email: this.form.email,
           password: this.form.password,
-          confirmPassword: this.form.confirmPasswordS
+          confirmPassword: this.form.confirmPassword
         };
         const { data } = await api.post('/register', payload);
         alert(data.message || 'Registered!');
