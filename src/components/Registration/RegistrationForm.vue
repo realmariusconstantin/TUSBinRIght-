@@ -4,14 +4,8 @@
       <h1>Registration</h1>
 
       <div class="field">
-        <label for="name">Full Name</label>
-        <input
-          type="text"
-          id="name"
-          v-model="form.name"
-          placeholder="Enter your full name"
-          required
-        />
+        <label for="name">Name</label>
+        <input type="text" id="username" v-model="form.name" placeholder="Enter your full name" required />
       </div>
 
       <div class="field">

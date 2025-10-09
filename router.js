@@ -10,14 +10,46 @@ import GlassPage from '@/view/Materials/Glass.vue';
 import PaperPage from '@/view/Materials/Paper.vue';
 
 const routes = [
-    { path: '/', component: Home },
-    { path: '/home', component: Home },
-    { path: '/register', component: RegistrationForm },
-    { path: '/login', component: LoginForm },
-    { path: '/material/plastic', component: PlasticPage },
-    { path: '/material/can', component: CanPage },
-    { path: '/material/glass', component: GlassPage },
-    { path: '/material/paper', component: PaperPage },
+    { 
+        path: '/', 
+        component: Home
+        // No authentication required - accessible to everyone
+    },
+    { 
+        path: '/home', 
+        component: Home
+        // No authentication required - accessible to everyone
+    },
+    { 
+        path: '/register', 
+        component: RegistrationForm,
+        meta: { guestOnly: true } // Redirect to home if already logged in
+    },
+    { 
+        path: '/login', 
+        component: LoginForm,
+        meta: { guestOnly: true }
+    },
+    { 
+        path: '/material/plastic', 
+        component: PlasticPage
+        // No authentication required - accessible to everyone
+    },
+    { 
+        path: '/material/can', 
+        component: CanPage
+        // No authentication required - accessible to everyone
+    },
+    { 
+        path: '/material/glass', 
+        component: GlassPage
+        // No authentication required - accessible to everyone
+    },
+    { 
+        path: '/material/paper', 
+        component: PaperPage
+        // No authentication required - accessible to everyone
+    },
     { path: '/:pathMatch(.*)*', redirect: '/' }
 ];
 
