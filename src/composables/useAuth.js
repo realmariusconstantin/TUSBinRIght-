@@ -167,8 +167,8 @@ export function useAuth() {
       user.value = null;
       isAuthenticated.value = false;
       
-      // Redirect to login page
-      router.push('/login');
+  // Redirect to public home page
+  router.push('/');
     }
   };
 

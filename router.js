@@ -10,46 +10,14 @@ import GlassPage from '@/view/Materials/Glass.vue';
 import PaperPage from '@/view/Materials/Paper.vue';
 
 const routes = [
-    { 
-        path: '/', 
-        component: Home,
-        meta: { requiresAuth: true } // This route requires authentication
-    },
-    { 
-        path: '/home', 
-        component: Home,
-        meta: { requiresAuth: true }
-    },
-    { 
-        path: '/register', 
-        component: RegistrationForm,
-        meta: { guestOnly: true } // Redirect to home if already logged in
-    },
-    { 
-        path: '/login', 
-        component: LoginForm,
-        meta: { guestOnly: true }
-    },
-    { 
-        path: '/material/plastic', 
-        component: PlasticPage,
-        meta: { requiresAuth: true }
-    },
-    { 
-        path: '/material/can', 
-        component: CanPage,
-        meta: { requiresAuth: true }
-    },
-    { 
-        path: '/material/glass', 
-        component: GlassPage,
-        meta: { requiresAuth: true }
-    },
-    { 
-        path: '/material/paper', 
-        component: PaperPage,
-        meta: { requiresAuth: true }
-    },
+    { path: '/', component: Home },
+    { path: '/home', component: Home },
+    { path: '/register', component: RegistrationForm },
+    { path: '/login', component: LoginForm },
+    { path: '/material/plastic', component: PlasticPage },
+    { path: '/material/can', component: CanPage },
+    { path: '/material/glass', component: GlassPage },
+    { path: '/material/paper', component: PaperPage },
     { path: '/:pathMatch(.*)*', redirect: '/' }
 ];
 
@@ -66,40 +34,6 @@ const router = createRouter({
  * 2. Redirects unauthenticated users to /login
  * 3. Redirects authenticated users away from login/register
  */
-router.beforeEach((to, from, next) => {
-    // Check if user has authentication token
-    const token = localStorage.getItem('auth_token');
-    const isAuthenticated = !!token;
-    
-    // Check if route requires authentication
-    const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-    
-    // Check if route is for guests only (login/register)
-    const guestOnly = to.matched.some(record => record.meta.guestOnly);
-    
-    console.log('Navigation Guard:', {
-        to: to.path,
-        requiresAuth,
-        guestOnly,
-        isAuthenticated
-    });
-    
-    // If route requires auth and user is not authenticated
-    if (requiresAuth && !isAuthenticated) {
-        console.log('Redirecting to login - authentication required');
-        next('/login');
-        return;
-    }
-    
-    // If route is guest-only and user is authenticated
-    if (guestOnly && isAuthenticated) {
-        console.log('Redirecting to home - already authenticated');
-        next('/');
-        return;
-    }
-    
-    // Allow navigation
-    next();
-});
+// No global navigation guard — routes are public by design.
 
 export default router;
