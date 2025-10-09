@@ -10,14 +10,13 @@ class Cors implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        header('Access-Control-Allow-Origin: http://localhost:5173');
-        header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
-        header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization');
-        header('Access-Control-Allow-Credentials: true');
+        $response = service('response');
+        $response->setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+        $response->setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        $response->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-        // Handle preflight (OPTIONS) requests immediately
-        if ($request->getMethod(true) === 'OPTIONS') {
-            exit(0);
+        if ($request->getMethod() === 'options') {
+            return $response->setStatusCode(200);
         }
     }
 
