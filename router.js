@@ -66,40 +66,6 @@ const router = createRouter({
  * 2. Redirects unauthenticated users to /login
  * 3. Redirects authenticated users away from login/register
  */
-router.beforeEach((to, from, next) => {
-    // Check if user has authentication token
-    const token = localStorage.getItem('auth_token');
-    const isAuthenticated = !!token;
-    
-    // Check if route requires authentication
-    const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-    
-    // Check if route is for guests only (login/register)
-    const guestOnly = to.matched.some(record => record.meta.guestOnly);
-    
-    console.log('Navigation Guard:', {
-        to: to.path,
-        requiresAuth,
-        guestOnly,
-        isAuthenticated
-    });
-    
-    // If route requires auth and user is not authenticated
-    if (requiresAuth && !isAuthenticated) {
-        console.log('Redirecting to login - authentication required');
-        next('/login');
-        return;
-    }
-    
-    // If route is guest-only and user is authenticated
-    if (guestOnly && isAuthenticated) {
-        console.log('Redirecting to home - already authenticated');
-        next('/');
-        return;
-    }
-    
-    // Allow navigation
-    next();
-});
+// No global navigation guard — routes are public by design.
 
 export default router;
