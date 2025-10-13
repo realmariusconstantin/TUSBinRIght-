@@ -58,8 +58,12 @@ export default {
           confirmPassword: this.form.confirmPassword
         };
         const { data } = await api.post('/register', payload);
+        // Store the token if returned during registration
+        if (data.token) {
+          localStorage.setItem('auth_token', data.token);
+        }
         alert(data.message || 'Registered!');
-        this.$router.push('/login');
+        this.$router.push('/home');
       } catch (e) {
         const msgs = e?.response?.data?.messages || e?.response?.data || 'Registration failed';
         alert(typeof msgs === 'string' ? msgs : JSON.stringify(msgs));
