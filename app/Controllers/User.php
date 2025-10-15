@@ -18,68 +18,69 @@ class User extends ResourceController
     {
         $data = $this->request->getJSON(true);
 
-        if (!isset($data['name'], $data['email'], $data['password'], $data['confirmPassword'])) {
-            return $this->fail(['message' => 'All fields are required'], 400);
+        // Validate input using the "register" rule group from Validation.php
+        if (!$this->validate('register')) {
+            // Return backend validation errors in JSON
+            return $this->response->setJSON([
+                'status' => 'error',
+                'errors' => $this->validator->getErrors()
+            ])->setStatusCode(400);
         }
 
-        if ($data['password'] !== $data['confirmPassword']) {
-            return $this->fail(['message' => 'Passwords do not match'], 400);
-        }
-
+        // Check if email already exists
         $exists = $this->db->table('users')->where('email', $data['email'])->get()->getRow();
         if ($exists) {
-            return $this->fail(['message' => 'Email already registered'], 400);
+            return $this->response->setJSON([
+                'status' => 'error',
+                'errors' => ['email' => 'Email already registered']
+            ])->setStatusCode(400);
         }
 
+        // Insert new user
         $this->db->table('users')->insert([
             'name' => $data['name'],
             'email' => $data['email'],
             'password_hash' => password_hash($data['password'], PASSWORD_DEFAULT),
         ]);
 
-        return $this->respondCreated(['message' => 'User registered successfully']);
+        return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'User registered successfully'
+        ])->setStatusCode(201);
     }
+
 
     public function login()
     {
         $data = $this->request->getJSON(true);
 
-        if (!isset($data['email'], $data['password'])) {
-            return $this->fail(['message' => 'Email and password are required'], 400);
+        if (!$this->validate('login')) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'errors' => $this->validator->getErrors()
+            ])->setStatusCode(400);
         }
 
         $user = $this->db->table('users')->where('email', $data['email'])->get()->getRow();
 
         if (!$user || !password_verify($data['password'], $user->password_hash)) {
-            return $this->fail(['message' => 'Invalid email or password'], 401);
+            return $this->response->setJSON([
+                'status' => 'error',
+                'errors' => ['email' => 'Invalid email or password']
+            ])->setStatusCode(401);
         }
 
-        return $this->respond([
+        return $this->response->setJSON([
+            'status' => 'success',
             'message' => 'Login successful',
             'user' => [
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
-            ],
+            ]
         ]);
     }
-
-    public function testDB()
-    {
-        try {
-            echo '<pre>';
-            print_r(\Config\Database::connect());
-            die();
-
-            $db = \Config\Database::connect();
-            if ($db->connID) {
-                return $this->respond(['success' => true, 'message' => 'CodeIgniter DB connected successfully!']);
-            } else {
-                return $this->fail(['success' => false, 'message' => 'Connection failed!']);
-            }
-        } catch (\Throwable $e) {
-            return $this->fail(['error' => $e->getMessage()]);
-        }
-    }
-
 }
+
+
+
