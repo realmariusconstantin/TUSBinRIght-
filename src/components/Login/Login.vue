@@ -6,13 +6,20 @@
             <div class="field">
                 <label for="email">Email</label>
                 <input type="email" id="email" v-model="form.email" placeholder="Enter your email address" required />
+                <!-- Display backend validation error for email field -->
+                <p v-if="errors.email" class="error">{{ errors.email }}</p>
             </div>
 
             <div class="field">
                 <label for="password">Password</label>
                 <input type="password" id="password" v-model="form.password" placeholder="Enter your password"
                     required />
+                <!-- Display backend validation error for password field -->
+                <p v-if="errors.password" class="error">{{ errors.password }}</p>
             </div>
+
+            <!-- Display success message from backend -->
+            <p v-if="successMessage" class="success">{{ successMessage }}</p>
 
             <div class="buttons">
                 <button type="button" class="btn btn-secondary" @click="goBack">Back</button>
@@ -32,11 +39,19 @@ export default {
             form: {
                 email: '',
                 password: ''
-            }
+            },
+            // Store validation errors from CodeIgniter backend
+            errors: {},
+            // Store success message from backend
+            successMessage: ''
         };
     },
     methods: {
         async handleSubmit() {
+            // Clear previous errors and messages before submitting
+            this.errors = {};
+            this.successMessage = '';
+
             try {
                 const { data } = await api.post('/login', {
                     email: this.form.email,
@@ -45,19 +60,31 @@ export default {
 
                 // Backend doesn't return a JWT/token yet — it returns user info
                 if (data.status === 'success') {
+                    this.successMessage = data.message || 'Login successful!';
                     // Optionally store user details locally
                     localStorage.setItem('user', JSON.stringify(data.user));
-                    alert('Login successful!');
-                    this.$router.push('/home');
+                    
+                    // Redirect after a short delay so user sees success message
+                    setTimeout(() => {
+                        this.$router.push('/home');
+                    }, 1000);
                 } else {
                     alert(data.message || 'Invalid credentials');
                 }
             } catch (e) {
-                const msg =
-                    e?.response?.data?.message ||
-                    e?.response?.data ||
-                    'Invalid email or password';
-                alert(typeof msg === 'string' ? msg : JSON.stringify(msg));
+                // 🎯 Catch backend validation errors from CodeIgniter
+                // CodeIgniter returns: { status: "error", errors: { email: "...", password: "..." } }
+                if (e.response && e.response.data && e.response.data.errors) {
+                    // Store the errors object to display under each input field
+                    this.errors = e.response.data.errors;
+                } else {
+                    // Handle other types of errors (network, server errors, etc.)
+                    const msg =
+                        e?.response?.data?.message ||
+                        e?.response?.data ||
+                        'Invalid email or password';
+                    alert(typeof msg === 'string' ? msg : JSON.stringify(msg));
+                }
             }
         },
         goBack() {
