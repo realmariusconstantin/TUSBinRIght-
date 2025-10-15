@@ -9,6 +9,12 @@ import CanPage from '@/view/Materials/Can.vue';
 import GlassPage from '@/view/Materials/Glass.vue';
 import PaperPage from '@/view/Materials/Paper.vue';
 
+// Admin pages
+import AdminLayout from '@/components/Panel/AdminLayout.vue'
+import Users from '@/components/Panel/Users.vue'
+import BinSteps from '@/components/Panel/BinSteps.vue'
+import Items from '@/components/Panel/Items.vue'
+
 const routes = [
     { 
         path: '/', 
@@ -49,6 +55,17 @@ const routes = [
         path: '/material/paper', 
         component: PaperPage
         // No authentication required - accessible to everyone
+    },
+    {
+    path: '/admin',
+    component: AdminLayout,
+    meta: { requiresAuth: true, adminOnly: true },
+    children: [
+        { path: '', redirect: '/admin/users' },
+        { path: 'users', component: Users },
+        { path: 'bin-steps', component: BinSteps },
+        { path: 'items', component: Items }
+    ]
     },
     { path: '/:pathMatch(.*)*', redirect: '/' }
 ];
