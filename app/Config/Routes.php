@@ -6,16 +6,19 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
+// Handle OPTIONS preflight requests for all routes
+$routes->options('(:any)', static function () {});
+
 $routes->get('/', fn() => 'Backend is running!');
 
-// Handle CORS preflight
-$routes->options('(:any)', function() {
-    header('Access-Control-Allow-Origin: *');
-    header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
-    header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
-    exit;
-});
+// PUBLIC ROUTES (No JWT required)
+$routes->post('register', 'AuthController::register');
+$routes->post('login', 'AuthController::login');
+$routes->post('logout', 'AuthController::logout');
 
-// Actual endpoints
-$routes->post('register', 'User::register');
-$routes->post('login', 'User::login');
+// PROTECTED ROUTES (JWT required)
+$routes->group('', ['filter' => 'jwtauth'], function($routes) {
+    $routes->get('profile', 'AuthController::profile');
+    $routes->post('refresh', 'AuthController::refresh');
+    $routes->post('promote/(:num)', 'AuthController::promote/$1');
+});

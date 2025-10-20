@@ -10,18 +10,31 @@ class Cors implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        $response = service('response');
-        $response->setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-        $response->setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-        $response->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-        if ($request->getMethod() === 'options') {
-            return $response->setStatusCode(200);
+        // Handle preflight OPTIONS requests
+        if (strtoupper($request->getMethod()) === 'OPTIONS') {
+            $response = service('response');
+            $response->setStatusCode(200);
+            $response->setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+            $response->setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+            $response->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
+            $response->setHeader('Access-Control-Allow-Credentials', 'true');
+            $response->setHeader('Access-Control-Max-Age', '7200');
+            $response->send();
+            exit(0);
         }
+        
+        return $request;
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
+        // Add CORS headers to the response
+        $response->setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+        $response->setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+        $response->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
+        $response->setHeader('Access-Control-Allow-Credentials', 'true');
+        $response->setHeader('Access-Control-Max-Age', '7200');
+        
         return $response;
     }
 }

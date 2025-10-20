@@ -26,10 +26,11 @@ class Cors extends BaseConfig
      */
     public array $default = [
         'allowedOrigins' => ['http://localhost:5173'],
-        'allowedHeaders' => ['Content-Type', 'Authorization'],
+        'allowedOriginsPatterns' => [],
+        'allowedHeaders' => ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
         'allowedMethods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-        'supportsCredentials' => false,
         'exposedHeaders' => [],
         'maxAge' => 7200,
+        'supportsCredentials' => true,
     ];
 }
