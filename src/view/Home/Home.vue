@@ -510,3 +510,4 @@ export default {
 </script>
 
 <style src="./Home.css" scoped></style>
+
