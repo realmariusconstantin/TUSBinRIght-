@@ -140,12 +140,21 @@
 
 <script>
 import { BrowserMultiFormatReader } from '@zxing/browser';
+import { useAuth } from '@/composables/useAuth';
+import { computed } from 'vue';
 
 export default {
   name: 'Home',
+  setup() {
+    const { user } = useAuth();
+    const username = computed(() => user.value?.name || 'Guest');
+    
+    return {
+      username
+    };
+  },
   data() {
     return {
-      username: 'Guest', // Replace with actual user data from authentication
       searchQuery: '',
       isScannerActive: false,
       scanResult: '',

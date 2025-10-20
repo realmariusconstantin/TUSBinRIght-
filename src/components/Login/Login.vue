@@ -42,28 +42,6 @@ import { ref } from 'vue';
 import { useAuth } from '@/composables/useAuth';
 import { useRouter } from 'vue-router';
 
-export default {
-    name: 'LoginForm',
-    data() {
-        return {
-            form: {
-                email: '',
-                password: ''
-            },
-            errors: {},
-            successMessage: '',
-            showPassword: false
-        };
-    },
-    methods: {
-        togglePassword() {
-            this.showPassword = !this.showPassword;
-        },
-        async handleSubmit() {
-            this.errors = {};
-            this.successMessage = '';
-        }
-      
 // Use auth composable
 const { login, errors, successMessage, isLoading } = useAuth();
 const router = useRouter();
@@ -73,6 +51,14 @@ const form = ref({
     email: '',
     password: ''
 });
+
+// Password visibility toggle
+const showPassword = ref(false);
+
+// Toggle password visibility
+const togglePassword = () => {
+    showPassword.value = !showPassword.value;
+};
 
 // Handle form submission
 const handleSubmit = async () => {

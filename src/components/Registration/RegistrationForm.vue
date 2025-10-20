@@ -102,32 +102,6 @@ import { ref } from 'vue';
 import { useAuth } from '@/composables/useAuth';
 import { useRouter } from 'vue-router';
 
-export default {
-  name: 'RegistrationForm',
-  data() {
-    return {
-      form: {
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-      },
-      errors: {},
-      successMessage: '',
-      showPassword: false,
-      showConfirmPassword: false
-    };
-  },
-  methods: {
-    togglePassword() {
-      this.showPassword = !this.showPassword;
-    },
-    toggleConfirmPassword() {
-      this.showConfirmPassword = !this.showConfirmPassword;
-    },
-    async handleSubmit() {
-      this.errors = {};
-      this.successMessage = '';
 // Use auth composable
 const { register, errors, successMessage, isLoading } = useAuth();
 const router = useRouter();
@@ -140,7 +114,19 @@ const form = ref({
     confirmPassword: ''
 });
 
+// Password visibility toggles
+const showPassword = ref(false);
+const showConfirmPassword = ref(false);
 
+// Toggle password visibility
+const togglePassword = () => {
+    showPassword.value = !showPassword.value;
+};
+
+// Toggle confirm password visibility
+const toggleConfirmPassword = () => {
+    showConfirmPassword.value = !showConfirmPassword.value;
+};
 
 // Handle form submission
 const handleSubmit = async () => {

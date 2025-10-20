@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vue/compiler-sfc": "^3.5.22",
     "@zxing/browser": "^0.1.5",
     "@zxing/library": "^0.21.3",
     "axios": "^1.12.2",
@@ -21,7 +22,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
-    "vite": "^7.1.10",
+    "vite": "^7.1.11",
     "vite-plugin-vue-devtools": "^8.0.2"
   }
 }

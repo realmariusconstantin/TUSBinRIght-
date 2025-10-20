@@ -9,6 +9,7 @@ import CanPage from '@/view/Materials/Can.vue';
 import GlassPage from '@/view/Materials/Glass.vue';
 import PaperPage from '@/view/Materials/Paper.vue';
 import ProtectedPage from '@/view/ProtectedPage.vue';
+import RecyclingInfo from '@/view/RecyclingInfo/RecyclingInfo.vue';
 
 const routes = [
     { 
@@ -52,9 +53,21 @@ const routes = [
         // No authentication required - accessible to everyone
     },
     { 
+        path: '/recycling-info', 
+        component: RecyclingInfo
+        // No authentication required - accessible to everyone
+    },
+    { 
         path: '/profile', 
-        component: ProtectedPage
-        // Example protected route - checks JWT cookie on mount
+        component: ProtectedPage,
+        meta: { requiresAuth: true }
+        // Protected route - placeholder for user profile (to be implemented by colleagues)
+    },
+    { 
+        path: '/admin', 
+        component: ProtectedPage,
+        meta: { requiresAuth: true, requiresAdmin: true }
+        // Protected route - placeholder for admin page (to be implemented by colleagues)
     },
     { path: '/:pathMatch(.*)*', redirect: '/' }
 ];
