@@ -37,8 +37,10 @@
     </section>
 </template>
 
-<script>
-import api from '@/lib/api';
+<script setup>
+import { ref } from 'vue';
+import { useAuth } from '@/composables/useAuth';
+import { useRouter } from 'vue-router';
 
 export default {
     name: 'LoginForm',
@@ -60,39 +62,35 @@ export default {
         async handleSubmit() {
             this.errors = {};
             this.successMessage = '';
-
-            try {
-                const { data } = await api.post('/login', {
-                    email: this.form.email,
-                    password: this.form.password
-                });
-
-                if (data.status === 'success') {
-                    this.successMessage = data.message || 'Login successful!';
-                    localStorage.setItem('user', JSON.stringify(data.user));
-                    
-                    setTimeout(() => {
-                        this.$router.push('/home');
-                    }, 1000);
-                } else {
-                    alert(data.message || 'Invalid credentials');
-                }
-            } catch (e) {
-                if (e.response && e.response.data && e.response.data.errors) {
-                    this.errors = e.response.data.errors;
-                } else {
-                    const msg =
-                        e?.response?.data?.message ||
-                        e?.response?.data ||
-                        'Invalid email or password';
-                    alert(typeof msg === 'string' ? msg : JSON.stringify(msg));
-                }
-            }
-        },
-        goBack() {
-            if (this.$router) this.$router.back();
         }
+      
+// Use auth composable
+const { login, errors, successMessage, isLoading } = useAuth();
+const router = useRouter();
+
+// Form data
+const form = ref({
+    email: '',
+    password: ''
+});
+
+// Handle form submission
+const handleSubmit = async () => {
+    // Send credentials to backend (JWT stored in HttpOnly cookie)
+    const result = await login(form.value.email, form.value.password);
+    
+    if (result.success) {
+        // Redirect to home after successful login
+        setTimeout(() => {
+            router.push('/home');
+        }, 1000);
     }
+    // Errors are automatically handled by useAuth composable
+};
+
+// Go back navigation
+const goBack = () => {
+    router.back();
 };
 </script>
 

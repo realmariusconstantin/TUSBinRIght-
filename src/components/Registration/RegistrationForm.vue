@@ -97,8 +97,10 @@
   </section>
 </template>
 
-<script>
-import api from '@/lib/api';
+<script setup>
+import { ref } from 'vue';
+import { useAuth } from '@/composables/useAuth';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'RegistrationForm',
@@ -126,44 +128,42 @@ export default {
     async handleSubmit() {
       this.errors = {};
       this.successMessage = '';
+// Use auth composable
+const { register, errors, successMessage, isLoading } = useAuth();
+const router = useRouter();
 
-      try {
-        const payload = {
-          name: this.form.name,
-          email: this.form.email,
-          password: this.form.password,
-          confirmPassword: this.form.confirmPassword
-        };
+// Form data
+const form = ref({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+});
 
-        const { data } = await api.post('/register', payload);
-        
-        if (data.status === 'success') {
-          this.successMessage = data.message || 'User registered successfully!';
-          
-          if (data.token) {
-            localStorage.setItem('auth_token', data.token);
-          }
-          
-          setTimeout(() => {
-            this.$router.push('/home');
-          }, 1500);
-        } else if (data.errors) {
-          this.errors = data.errors;
-        }
-      } catch (e) {
-        if (e.response && e.response.data && e.response.data.errors) {
-          this.errors = e.response.data.errors;
-        } else {
-          const msgs =
-            e?.response?.data?.message || e?.response?.data || 'Registration failed';
-          alert(typeof msgs === 'string' ? msgs : JSON.stringify(msgs));
-        }
-      }
-    },
-    goBack() {
-      if (this.$router) this.$router.back();
+
+
+// Handle form submission
+const handleSubmit = async () => {
+    // Send registration data to backend
+    const result = await register(
+        form.value.name,
+        form.value.email,
+        form.value.password,
+        form.value.confirmPassword
+    );
+    
+    if (result.success) {
+        // Registration now auto-logs in, redirect to home
+        setTimeout(() => {
+            router.push('/home');
+        }, 1500);
     }
-  }
+    // Errors are automatically handled by useAuth composable
+};
+
+// Go back navigation
+const goBack = () => {
+    router.back();
 };
 </script>
 
