@@ -28,4 +28,12 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], static functio
     $routes->get('users', 'Users::getUsers');
     $routes->post('users/update', 'Users::updateUser');
     $routes->post('users/delete', 'Users::deleteUser');
+
+    $routes->get('bin-steps', 'BinSteps::getSteps');
+    $routes->post('bin-steps/create', 'BinSteps::createStep');
+    $routes->post('bin-steps/update', 'BinSteps::updateStep');
+    $routes->post('bin-steps/delete', 'BinSteps::deleteStep');
+
+    $routes->get('bin-types', 'BinTypes::getTypes');
 });
+
