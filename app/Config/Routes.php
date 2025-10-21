@@ -22,3 +22,10 @@ $routes->group('', ['filter' => 'jwtauth'], function($routes) {
     $routes->post('refresh', 'AuthController::refresh');
     $routes->post('promote/(:num)', 'AuthController::promote/$1');
 });
+
+// ADMIN ROUTES
+$routes->group('admin', ['namespace' => 'App\Controllers\Admin'], static function($routes) {
+    $routes->get('users', 'Users::getUsers');
+    $routes->post('users/update', 'Users::updateUser');
+    $routes->post('users/delete', 'Users::deleteUser');
+});

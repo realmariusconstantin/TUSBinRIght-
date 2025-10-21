@@ -3,15 +3,16 @@
 namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
+use App\Models\UserModel;
 
 class User extends ResourceController
 {
-    protected $db;
+    protected $model;
     protected $format = 'json';
 
     public function __construct()
     {
-        $this->db = \Config\Database::connect();
+        $this->model = new UserModel();
     }
 
     public function register()
@@ -28,8 +29,8 @@ class User extends ResourceController
         }
 
         // Check if email already exists
-        $exists = $this->db->table('users')->where('email', $data['email'])->get()->getRow();
-        if ($exists) {
+        $exists = $this->model->checkEmailExists($data['email']);
+        if ($exists && $exists['status'] == 1) {
             return $this->response->setJSON([
                 'status' => 'error',
                 'errors' => ['email' => 'Email already registered']
@@ -37,11 +38,21 @@ class User extends ResourceController
         }
 
         // Insert new user
-        $this->db->table('users')->insert([
+        $newUser = [
             'name' => $data['name'],
             'email' => $data['email'],
             'password_hash' => password_hash($data['password'], PASSWORD_DEFAULT),
-        ]);
+            'user_type_id' => $data['user_type_id'] ?? 1
+        ];
+
+        $result = $this->model->createUser($newUser);
+
+        if (!$result || $result['status'] == 0) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => $result['message'] ?? 'Error creating user'
+            ])->setStatusCode(500);
+        }
 
         return $this->response->setJSON([
             'status' => 'success',
@@ -61,9 +72,9 @@ class User extends ResourceController
             ])->setStatusCode(400);
         }
 
-        $user = $this->db->table('users')->where('email', $data['email'])->get()->getRow();
+        $user = $this->model->loginUser($data['email'], $data['password']);
 
-        if (!$user || !password_verify($data['password'], $user->password_hash)) {
+        if (!$user) {
             return $this->response->setJSON([
                 'status' => 'error',
                 'errors' => ['email' => 'Invalid email or password']
@@ -74,13 +85,11 @@ class User extends ResourceController
             'status' => 'success',
             'message' => 'Login successful',
             'user' => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
+                'id' => $user['id'],
+                'name' => $user['name'],
+                'email' => $user['email'],
+                'user_type' => $user['user_type']
             ]
         ]);
     }
 }
-
-
-
