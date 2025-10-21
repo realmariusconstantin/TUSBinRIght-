@@ -11,6 +11,12 @@ import PaperPage from '@/view/Materials/Paper.vue';
 import ProtectedPage from '@/view/ProtectedPage.vue';
 import RecyclingInfo from '@/view/RecyclingInfo/RecyclingInfo.vue';
 
+// Admin pages
+import AdminLayout from '@/components/Panel/AdminLayout.vue'
+import Users from '@/components/Panel/Users.vue'
+import BinSteps from '@/components/Panel/BinSteps.vue'
+import Items from '@/components/Panel/Items.vue'
+
 const routes = [
     { 
         path: '/', 
@@ -63,11 +69,16 @@ const routes = [
         meta: { requiresAuth: true }
         // Protected route - placeholder for user profile (to be implemented by colleagues)
     },
-    { 
-        path: '/admin', 
-        component: ProtectedPage,
-        meta: { requiresAuth: true, requiresAdmin: true }
-        // Protected route - placeholder for admin page (to be implemented by colleagues)
+    {
+        path: '/admin',
+        component: AdminLayout,
+        meta: { requiresAuth: true, adminOnly: true },
+        children: [
+            { path: '', redirect: '/admin/users' },
+            { path: 'users', component: Users },
+            { path: 'bin-steps', component: BinSteps },
+            { path: 'items', component: Items }
+        ]
     },
     { path: '/:pathMatch(.*)*', redirect: '/' }
 ];
