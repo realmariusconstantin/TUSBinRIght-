@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2025 at 12:57 PM
+-- Generation Time: Oct 21, 2025 at 01:22 PM
 -- Server version: 8.0.42
 -- PHP Version: 8.2.12
 
@@ -473,6 +473,13 @@ CREATE TABLE `binstep` (
   `bin_type_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `binstep`
+--
+
+INSERT INTO `binstep` (`id`, `description`, `bin_type_id`) VALUES
+(4, 'Cut boxes', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -484,6 +491,16 @@ CREATE TABLE `bintype` (
   `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bintype`
+--
+
+INSERT INTO `bintype` (`id`, `name`, `description`) VALUES
+(1, 'Blue Bin', 'Paper & cardboard'),
+(2, 'Yellow Bin', 'Plastic bottles, tubs, trays'),
+(3, 'Black Bin', 'General Waste'),
+(4, 'Brown Bin', 'Organic Waste');
 
 -- --------------------------------------------------------
 
@@ -637,13 +654,13 @@ ALTER TABLE `usertype`
 -- AUTO_INCREMENT for table `binstep`
 --
 ALTER TABLE `binstep`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `bintype`
 --
 ALTER TABLE `bintype`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `disposalrule`
