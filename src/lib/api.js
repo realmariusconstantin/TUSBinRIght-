@@ -1,25 +1,22 @@
+// src/lib/api.js
 import axios from 'axios';
 
 // Create Axios instance configured for HttpOnly cookie authentication
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost/tusbinright/public', 
+    // ✅ Add "/api" to the backend base URL
+    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost/tusbinright/public/api',
     headers: {
         'Content-Type': 'application/json'
     },
-
-    // This ensures the JWT stored in HttpOnly cookie is automatically sent to backend
-    withCredentials: true
+    withCredentials: true // ensures cookies/JWTs are sent automatically
 });
 
-// Optional: Add response interceptor to handle 401 Unauthorized globally
+// Optional: Handle expired tokens globally
 api.interceptors.response.use(
     response => response,
     error => {
-        // If backend returns 401, JWT is invalid/expired
         if (error.response && error.response.status === 401) {
-            // Clear any user data but DON'T force redirect
-            // Let the component handle the redirect logic
-            localStorage.removeItem('user');
+            localStorage.removeItem('user'); // Clear any cached session
         }
         return Promise.reject(error);
     }
