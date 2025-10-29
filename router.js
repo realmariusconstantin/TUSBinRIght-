@@ -15,7 +15,7 @@ import RecyclingInfo from '@/view/RecyclingInfo/RecyclingInfo.vue';
 import AdminLayout from '@/components/Panel/AdminLayout.vue'
 import Users from '@/components/Panel/Users.vue'
 import DisposalRules from '@/components/Panel/DisposalRules.vue'
-import Items from '@/components/Panel/Items.vue'
+import UserScans from '@/components/Panel/UserScans.vue'
 
 const routes = [
     { 
@@ -77,7 +77,7 @@ const routes = [
             { path: '', redirect: '/admin/users' },
             { path: 'users', component: Users },
             { path: 'disposal-rules', component: DisposalRules },
-            { path: 'items', component: Items }
+            { path: 'user-scans', component: UserScans }
         ]
     },
     { path: '/:pathMatch(.*)*', redirect: '/' }
