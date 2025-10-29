@@ -4,7 +4,7 @@
       <h2>♻️ Recycle Admin</h2>
       <nav>
         <router-link to="/admin/users" class="link" active-class="active">Users</router-link>
-        <router-link to="/admin/bin-steps" class="link" active-class="active">Bin Steps</router-link>
+        <router-link to="/admin/disposal-rules" class="link" active-class="active">Disposal Rules</router-link>
         <router-link to="/admin/items" class="link" active-class="active">Items</router-link>
       </nav>
     </aside>

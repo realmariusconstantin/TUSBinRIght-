@@ -14,7 +14,7 @@ import RecyclingInfo from '@/view/RecyclingInfo/RecyclingInfo.vue';
 // Admin pages
 import AdminLayout from '@/components/Panel/AdminLayout.vue'
 import Users from '@/components/Panel/Users.vue'
-import BinSteps from '@/components/Panel/BinSteps.vue'
+import DisposalRules from '@/components/Panel/DisposalRules.vue'
 import Items from '@/components/Panel/Items.vue'
 
 const routes = [
@@ -76,7 +76,7 @@ const routes = [
         children: [
             { path: '', redirect: '/admin/users' },
             { path: 'users', component: Users },
-            { path: 'bin-steps', component: BinSteps },
+            { path: 'disposal-rules', component: DisposalRules },
             { path: 'items', component: Items }
         ]
     },
