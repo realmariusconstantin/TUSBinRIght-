@@ -29,11 +29,16 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], static functio
     $routes->post('users/update', 'Users::updateUser');
     $routes->post('users/delete', 'Users::deleteUser');
 
-    $routes->get('bin-steps', 'BinSteps::getSteps');
-    $routes->post('bin-steps/create', 'BinSteps::createStep');
-    $routes->post('bin-steps/update', 'BinSteps::updateStep');
-    $routes->post('bin-steps/delete', 'BinSteps::deleteStep');
+    $routes->get('disposal-rules', 'DisposalRules::getDisposalRules');
+    $routes->post('disposal-rules/create', 'DisposalRules::createDisposalRule');
+    $routes->post('disposal-rules/update', 'DisposalRules::updateDisposalRule');
+    $routes->post('disposal-rules/delete', 'DisposalRules::deleteDisposalRule');
 
+    $routes->get('locations', 'Locations::getLocations');
     $routes->get('bin-types', 'BinTypes::getTypes');
+    $routes->get('item-types', 'ItemTypes::getTypes');
+
+    $routes->get('user-scans', 'UserScans::getScans');
+    $routes->delete('user-scans', 'UserScans::deleteScans');
 });
 

@@ -18,9 +18,7 @@ class Users extends ResourceController
     // GET /admin/users
     public function getUsers()
     {
-        $db = \Config\Database::connect();
-        $query = $db->query('CALL GetAllUsers()');
-        $users = $query->getResultArray();
+        $users = $this->model->getAllUsers();
 
         return $this->response->setJSON([
             'status' => 'success',
@@ -32,49 +30,33 @@ class Users extends ResourceController
     public function updateUser()
     {
         $data = $this->request->getJSON(true);
-        $db = \Config\Database::connect();
 
         if (empty($data['id'])) {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Missing user ID'
-            ])->setStatusCode(400);
+            return $this->fail('Missing user ID', 400);
         }
 
-        $user = $db->table('users')->where('id', $data['id'])->get()->getRowArray();
+        // Fetch current user
+        $user = $this->model->getUserById($data['id']);
         if (!$user) {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'User not found'
-            ])->setStatusCode(404);
+            return $this->fail('User not found', 404);
         }
 
-        $res = $db->query('CALL UpdateUser(?, ?, ?, ?, ?)', [
-            $data['id'],
-            $data['user'] ?? $user['name'],
-            $data['email'] ?? $user['email'],
-            $user['password_hash'],
-            $data['user_type_id'] ?? $user['user_type_id']
-        ])->getRowArray();
+        $res = $this->model->updateUser($user['id'], $data['user'], $data['email'], $user['password_hash'], $data['user_type_id']);
 
-        return $this->response->setJSON($res);
+        return $this->respond($res);
     }
 
     // POST /admin/users/delete
     public function deleteUser()
     {
         $data = $this->request->getJSON(true);
-        $db = \Config\Database::connect();
 
         if (empty($data['id'])) {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Missing user ID'
-            ])->setStatusCode(400);
+            return $this->fail('Missing user ID', 400);
         }
 
-        $res = $db->query('CALL DeleteUser(?)', [$data['id']])->getRowArray();
+        $res = $this->model->deleteUser($data['id']);
 
-        return $this->response->setJSON($res);
+        return $this->respond($res);
     }
 }
