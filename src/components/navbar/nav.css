@@ -31,7 +31,7 @@ nav .nav-links {
     align-items: center;
 }
 
-nav .nav-links a {
+nav .nav-links > a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -46,8 +46,8 @@ nav .nav-links a {
     transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
-nav .nav-links a:hover,
-nav .nav-links a.router-link-active {
+nav .nav-links > a:hover,
+nav .nav-links > a.router-link-active {
     background: #000;
     color: #fff;
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
@@ -80,22 +80,53 @@ nav .nav-links a.router-link-active {
 }
 
 .profile-btn {
-    background: none;
-    border: none;
+    background: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 999px;
     cursor: pointer;
-    padding: 0;
+    padding: 6px 16px 6px 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s ease;
+    gap: 12px;
+    transition: all 0.2s ease;
 }
 
 .profile-btn:hover {
-    transform: scale(1.05);
+    background: #000000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.profile-btn:hover .username-display {
+    color: #ffffff;
+}
+
+.profile-btn:hover .dropdown-arrow {
+    stroke: #ffffff;
 }
 
 .profile-btn:active {
     transform: scale(0.98);
+}
+
+.username-display {
+    color: #000000;
+    font-weight: 600;
+    font-size: 18px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.dropdown-arrow {
+    transition: all 0.3s ease;
+    stroke: #000000;
+}
+
+.dropdown-arrow.arrow-open {
+    transform: rotate(180deg);
 }
 
 .profile-avatar {
@@ -103,16 +134,16 @@ nav .nav-links a.router-link-active {
     height: 48px;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid #000;
+    border: 2px solid #000000;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    transition: box-shadow 0.2s ease;
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    transition: all 0.2s ease;
 }
 
 .profile-btn:hover .profile-avatar {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .profile-avatar img {
@@ -131,58 +162,70 @@ nav .nav-links a.router-link-active {
 
 .dropdown-menu {
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 12px);
     right: 0;
-    background: #fff;
-    border: 2px solid #000;
-    border-radius: 12px;
-    min-width: 240px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    background: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 16px;
+    min-width: 260px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     overflow: hidden;
     z-index: 1000;
-    animation: dropdownSlide 0.2s ease;
+    animation: dropdownSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 12px 0;
 }
 
 @keyframes dropdownSlide {
     from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(-15px) scale(0.95);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
 .dropdown-item {
-    display: flex;
+    display: flex !important;
     align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
+    gap: 14px;
+    padding: 14px 24px !important;
     text-decoration: none;
-    color: #000;
+    color: #000000;
     font-weight: 600;
-    font-size: 16px;
-    background: #fff;
-    border: none;
+    font-size: 17px;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
     width: 100%;
     text-align: left;
     cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease;
+    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: none !important;
+    outline: none !important;
 }
 
 .dropdown-item:hover {
-    background: #f5f5f5;
+    background: #f8f9fa !important;
+    color: #000000;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .dropdown-item svg {
     flex-shrink: 0;
+    transition: all 0.2s ease;
+    stroke: currentColor;
+    width: 22px;
+    height: 22px;
 }
 
 .dropdown-divider {
     height: 1px;
-    background: #e0e0e0;
-    margin: 4px 0;
+    background: #dee2e6;
+    margin: 8px 0;
 }
 
 .logout-item {
@@ -191,5 +234,5 @@ nav .nav-links a.router-link-active {
 
 .logout-item:hover {
     background: #fff5f5;
-    color: #c82333;
+    color: #dc3545;
 }

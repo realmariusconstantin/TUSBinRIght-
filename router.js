@@ -8,7 +8,7 @@ import PlasticPage from '@/view/Materials/Plastic.vue';
 import CanPage from '@/view/Materials/Can.vue';
 import GlassPage from '@/view/Materials/Glass.vue';
 import PaperPage from '@/view/Materials/Paper.vue';
-import ProtectedPage from '@/view/ProtectedPage.vue';
+
 import RecyclingInfo from '@/view/RecyclingInfo/RecyclingInfo.vue';
 
 // Admin pages
@@ -64,12 +64,6 @@ const routes = [
         // No authentication required - accessible to everyone
     },
     { 
-        path: '/profile', 
-        component: ProtectedPage,
-        meta: { requiresAuth: true }
-        // Protected route - placeholder for user profile (to be implemented by colleagues)
-    },
-    {
         path: '/admin',
         component: AdminLayout,
         meta: { requiresAuth: true, adminOnly: true },
