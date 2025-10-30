@@ -1,9 +1,22 @@
 <template>
   <div class="admin-layout">
     <aside class="sidebar">
-      <h2>♻️ Recycle Admin</h2>
+      <h2>♻️ Admin Panel</h2>
       <nav>
-        <router-link to="/admin/users" class="link" active-class="active">Users</router-link>
+        <router-link to="/admin/users" class="link" active-class="active">
+          <i class="fa-solid fa-user icon"></i>
+          Users
+        </router-link>
+
+        <router-link to="/admin/disposal-rules" class="link" active-class="active">
+          <i class="fa-solid fa-trash icon"></i>
+          Disposal Rules
+        </router-link>
+
+        <router-link to="/admin/user-scans" class="link" active-class="active">
+          <i class="fa-solid fa-qrcode icon"></i>
+          User Scans
+        </router-link>
       </nav>
     </aside>
 
@@ -50,7 +63,9 @@ export default {
   padding: 0.6rem 1rem;
   border-radius: 8px;
   transition: background 0.2s;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   width: 100%;
 }
 
@@ -64,6 +79,10 @@ export default {
   color: white;
 }
 
+.icon {
+  width: 18px;
+  text-align: center;
+}
 .content {
   flex: 1;
   padding: 2rem;
