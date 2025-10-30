@@ -121,11 +121,11 @@
         </p>
         <div class="stats">
           <div class="stat-item">
-            <h3>{{ totalScans.toLocaleString() }}</h3>
+            <h3>{{ totalScans }}</h3>
             <p>Items Scanned</p>
           </div>
           <div class="stat-item">
-            <h3>{{ totalUsers.toLocaleString() }}</h3>
+            <h3>{{ totalUsers }}</h3>
             <p>Active Users</p>
           </div>
           <div class="stat-item">
