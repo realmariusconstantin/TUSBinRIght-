@@ -43,6 +43,15 @@ class DisposalRuleModel extends Model
         return $query->getRowArray();
     }
 
+    // Get all disposal rules by item_type and location
+    public function getDisposalRulesByItemAndLocationId($itemTypeId, $locationId)
+    {
+        $query = $this->db->query('CALL GetDisposalRulesByItemAndLocationId(?, ?)', [$itemTypeId, $locationId]);
+        $result = $query->getResultArray();
+        $query->freeResult();
+        return $result;
+    }
+
     // Update a disposal rule using stored procedure
     public function updateDisposalRule($data)
     {

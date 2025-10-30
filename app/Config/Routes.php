@@ -17,6 +17,7 @@ $routes->post('login', 'AuthController::login');
 $routes->post('logout', 'AuthController::logout');
 $routes->get('total-scans', 'StatsController::totalScans');
 $routes->get('total-users', 'StatsController::totalUsers');
+$routes->get('disposal-rules-location', '\App\Controllers\Admin\DisposalRules::getDisposalRulesByItemAndLocationId');
 
 // PROTECTED ROUTES (JWT required)
 $routes->group('', ['filter' => 'jwtauth'], function($routes) {

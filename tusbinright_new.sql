@@ -357,6 +357,27 @@ BEGIN
 END$$
 
 
+CREATE PROCEDURE GetDisposalRulesByItemAndLocationId(
+    IN p_item_type_id INT,
+    IN p_location_id INT
+)
+BEGIN
+    SELECT 
+        dr.id,
+        it.name AS item_type,
+        l.name AS location,
+        bt.name AS bin_type,
+        dr.description
+    FROM disposalrule dr
+    INNER JOIN itemtype it ON dr.item_type_id = it.id
+    INNER JOIN location l ON dr.location_id = l.id
+    INNER JOIN bintype bt ON dr.bin_type_id = bt.id
+    WHERE dr.item_type_id = p_item_type_id
+      AND dr.location_id = p_location_id
+    ORDER BY dr.id;
+END$$
+
+
 CREATE PROCEDURE UpdateDisposalRule (
     IN p_disposal_rule_id INT,
     IN p_item_type_id INT,

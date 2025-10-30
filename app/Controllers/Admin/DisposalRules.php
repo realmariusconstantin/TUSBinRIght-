@@ -64,4 +64,22 @@ class DisposalRules extends ResourceController
         $res = $this->model->deleteDisposalRule($data['id']);
         return $this->respond($res);
     }
+
+    // GET /disposal-rules/filter?id_item_type=1&id_location=2
+    public function getDisposalRulesByItemAndLocationId()
+    {
+        $itemTypeId = $this->request->getGet('item_type_id');
+        $locationId = $this->request->getGet('location_id');
+
+        if (empty($itemTypeId) || empty($locationId)) {
+            return $this->fail('Missing required parameters: item_type_id and location_id', 400);
+        }
+
+        $rules = $this->model->getDisposalRulesByItemAndLocationId($itemTypeId, $locationId);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'rules' => $rules
+        ]);
+    }
 }
