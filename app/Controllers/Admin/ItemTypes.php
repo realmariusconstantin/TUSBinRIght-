@@ -2,27 +2,27 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\BinTypeModel;
+use App\Models\ItemTypeModel;
 use CodeIgniter\RESTful\ResourceController;
 
-class BinTypes extends ResourceController
+class ItemTypes extends ResourceController
 {
     protected $model;
     protected $format = 'json';
 
     public function __construct()
     {
-        $this->model = new BinTypeModel();
+        $this->model = new ItemTypeModel();
     }
 
-    // GET /admin/bin-types
+    // GET /admin/item-types
     public function getTypes()
     {
-        $types = $this->model->getBinTypes();
+        $types = $this->model->getItemTypes();
 
         return $this->response->setJSON([
             'status' => 'success',
-            'bin_types' => $types
+            'item_types' => $types
         ]);
     }
 }

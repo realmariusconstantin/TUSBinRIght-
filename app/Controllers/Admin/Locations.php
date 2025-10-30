@@ -2,27 +2,27 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\BinTypeModel;
+use App\Models\LocationModel;
 use CodeIgniter\RESTful\ResourceController;
 
-class BinTypes extends ResourceController
+class Locations extends ResourceController
 {
     protected $model;
     protected $format = 'json';
 
     public function __construct()
     {
-        $this->model = new BinTypeModel();
+        $this->model = new LocationModel();
     }
 
-    // GET /admin/bin-types
-    public function getTypes()
+    // GET /admin/locations
+    public function getLocations()
     {
-        $types = $this->model->getBinTypes();
+        $locations = $this->model->getLocations();
 
         return $this->response->setJSON([
             'status' => 'success',
-            'bin_types' => $types
+            'locations' => $locations
         ]);
     }
 }
