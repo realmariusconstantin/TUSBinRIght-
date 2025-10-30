@@ -1,5 +1,9 @@
 <template>
-  <button :class="`btn ${type}`" @click="$emit('click')">
+  <button
+    :class="['btn', type, { disabled }]"
+    :disabled="disabled"
+    @click.stop="$emit('action')"
+  >
     <slot />
   </button>
 </template>
@@ -8,7 +12,8 @@
 export default {
   name: 'ActionButton',
   props: {
-    type: { type: String, default: 'default' }
+    type: { type: String, default: 'default' },
+    disabled: { type: Boolean, default: false }
   }
 }
 </script>
@@ -21,8 +26,9 @@ export default {
   color: white;
   cursor: pointer;
   margin-right: 0.4rem;
-  transition: background 0.2s;
+  transition: background 0.2s, opacity 0.2s;
 }
+
 .edit {
   background: #3A506B;
 }
@@ -32,7 +38,13 @@ export default {
 .delete {
   background: #F05454;
 }
-.btn:hover {
+
+.btn:hover:not(.disabled) {
   opacity: 0.9;
+}
+
+.btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 </style>

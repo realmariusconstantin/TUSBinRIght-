@@ -121,11 +121,11 @@
         </p>
         <div class="stats">
           <div class="stat-item">
-            <h3>10K+</h3>
+            <h3>{{ totalScans }}</h3>
             <p>Items Scanned</p>
           </div>
           <div class="stat-item">
-            <h3>5K+</h3>
+            <h3>{{ totalUsers }}</h3>
             <p>Active Users</p>
           </div>
           <div class="stat-item">
@@ -142,15 +142,18 @@
 import { BrowserMultiFormatReader } from '@zxing/browser';
 import { useAuth } from '@/composables/useAuth';
 import { computed } from 'vue';
+import api from '@/lib/api';
 
 export default {
   name: 'Home',
   setup() {
     const { user } = useAuth();
     const username = computed(() => user.value?.name || 'Guest');
+    const userId = computed(() => user.value?.id);
     
     return {
-      username
+      username,
+      userId
     };
   },
   data() {
@@ -161,15 +164,35 @@ export default {
       detectedMaterial: '',
       codeReader: null,
       videoStream: null,
-      isProcessing: false
+      isProcessing: false,
+      totalScans: 0,
+      totalUsers: 0,
     };
   },
   methods: {
+    
     handleSearch() {
       if (this.searchQuery.trim()) {
         console.log('Searching for:', this.searchQuery);
         // Add your search logic here (API call, routing, etc.)
         alert(`Searching for: ${this.searchQuery}`);
+      }
+    },
+
+    async fetchStats() {
+      try {
+        const [scansRes, usersRes] = await Promise.all([
+          api.get('/total-scans'),
+          api.get('/total-users')
+        ]);
+
+        this.totalScans = scansRes.data.total_scans || 0;
+        this.totalUsers = usersRes.data.total_users || 0;
+
+      } catch (error) {
+        console.error('Error fetching stats:', error);
+        this.totalScans = 0;
+        this.totalUsers = 0;
       }
     },
 
@@ -243,7 +266,18 @@ export default {
       this.isScannerActive = false;
     },
 
-    onScanSuccess(decodedText) {
+    getItemTypeId(materialType) {
+      if (!materialType) return null;
+      const mapping = {
+        plastic: 1,
+        can: 2,
+        glass: 3,
+        paper: 4,
+      };
+      return mapping[materialType.toLowerCase()] || null;
+    },
+
+    async onScanSuccess(decodedText) {
       // Prevent duplicate scans - ignore if already processing
       if (this.isProcessing || this.scanResult) {
         console.log('Already processing a scan, ignoring duplicate');
@@ -254,6 +288,29 @@ export default {
       this.isProcessing = true;
       this.scanResult = decodedText;
       this.stopScanner();
+
+      try {
+        if (this.username !== 'Guest') {
+          const materialType = await this.identifyMaterial(decodedText);
+          let itemTypeId = this.getItemTypeId(materialType);
+
+          if (!itemTypeId) { // Marius will have to help me out with this, as scanner doesn't always detect
+            console.warn('⚠️ Could not detect item type, automatically defaulting to plastic');
+            itemTypeId = 1;
+          }
+
+          const response = await api.post('/create-scan', {
+            user_id: this.userId,
+            item_type_id: itemTypeId,
+          });
+          console.log('Scan successfully recorded in backend', response.data);
+        } else {
+          console.log('User not logged in, skipping scan save.');
+        }
+      } catch (error) {
+        console.error('Error saving scan:', error);
+      }
+
       this.routeToMaterial(decodedText);
     },
 
@@ -503,6 +560,8 @@ export default {
   },
 
   mounted() {
+    // I get the statistics for the home page
+    this.fetchStats();
     // Clear any previous scan results when component mounts
     this.scanResult = '';
     this.detectedMaterial = '';
