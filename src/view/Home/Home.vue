@@ -142,15 +142,18 @@
 import { BrowserMultiFormatReader } from '@zxing/browser';
 import { useAuth } from '@/composables/useAuth';
 import { computed } from 'vue';
+import api from '@/lib/api';
 
 export default {
   name: 'Home',
   setup() {
     const { user } = useAuth();
     const username = computed(() => user.value?.name || 'Guest');
+    const userId = computed(() => user.value?.id);
     
     return {
-      username
+      username,
+      userId
     };
   },
   data() {
@@ -243,7 +246,18 @@ export default {
       this.isScannerActive = false;
     },
 
-    onScanSuccess(decodedText) {
+    getItemTypeId(materialType) {
+      if (!materialType) return null;
+      const mapping = {
+        plastic: 1,
+        can: 2,
+        glass: 3,
+        paper: 4,
+      };
+      return mapping[materialType.toLowerCase()] || null;
+    },
+
+    async onScanSuccess(decodedText) {
       // Prevent duplicate scans - ignore if already processing
       if (this.isProcessing || this.scanResult) {
         console.log('Already processing a scan, ignoring duplicate');
@@ -254,6 +268,29 @@ export default {
       this.isProcessing = true;
       this.scanResult = decodedText;
       this.stopScanner();
+
+      try {
+        if (this.username !== 'Guest') {
+          const materialType = await this.identifyMaterial(decodedText);
+          let itemTypeId = this.getItemTypeId(materialType);
+
+          if (!itemTypeId) { // Marius will have to help me out with this, as scanner doesn't always detect
+            console.warn('⚠️ Could not detect item type, automatically defaulting to plastic');
+            itemTypeId = 1;
+          }
+
+          const response = await api.post('/create-scan', {
+            user_id: this.userId,
+            item_type_id: itemTypeId,
+          });
+          console.log('Scan successfully recorded in backend', response.data);
+        } else {
+          console.log('User not logged in, skipping scan save.');
+        }
+      } catch (error) {
+        console.error('Error saving scan:', error);
+      }
+
       this.routeToMaterial(decodedText);
     },
 
