@@ -121,11 +121,11 @@
         </p>
         <div class="stats">
           <div class="stat-item">
-            <h3>10K+</h3>
+            <h3>{{ totalScans.toLocaleString() }}</h3>
             <p>Items Scanned</p>
           </div>
           <div class="stat-item">
-            <h3>5K+</h3>
+            <h3>{{ totalUsers.toLocaleString() }}</h3>
             <p>Active Users</p>
           </div>
           <div class="stat-item">
@@ -164,15 +164,35 @@ export default {
       detectedMaterial: '',
       codeReader: null,
       videoStream: null,
-      isProcessing: false
+      isProcessing: false,
+      totalScans: 0,
+      totalUsers: 0,
     };
   },
   methods: {
+    
     handleSearch() {
       if (this.searchQuery.trim()) {
         console.log('Searching for:', this.searchQuery);
         // Add your search logic here (API call, routing, etc.)
         alert(`Searching for: ${this.searchQuery}`);
+      }
+    },
+
+    async fetchStats() {
+      try {
+        const [scansRes, usersRes] = await Promise.all([
+          api.get('/total-scans'),
+          api.get('/total-users')
+        ]);
+
+        this.totalScans = scansRes.data.total_scans || 0;
+        this.totalUsers = usersRes.data.total_users || 0;
+
+      } catch (error) {
+        console.error('Error fetching stats:', error);
+        this.totalScans = 0;
+        this.totalUsers = 0;
       }
     },
 
@@ -540,6 +560,8 @@ export default {
   },
 
   mounted() {
+    // I get the statistics for the home page
+    this.fetchStats();
     // Clear any previous scan results when component mounts
     this.scanResult = '';
     this.detectedMaterial = '';
