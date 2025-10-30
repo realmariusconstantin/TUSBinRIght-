@@ -253,6 +253,14 @@ BEGIN
 END$$
 
 
+CREATE PROCEDURE GetTotalUsers()
+BEGIN
+    SELECT 
+        COUNT(*) AS total_users
+    FROM users;
+END$$
+
+
 CREATE PROCEDURE GetBinTypeById (IN p_bin_type_id INT)
 BEGIN
     SELECT 
@@ -472,6 +480,14 @@ BEGIN
     COMMIT;
 
     SELECT 1 AS status, 'User scans deleted successfully' AS message;
+END$$
+
+
+CREATE PROCEDURE GetTotalScans()
+BEGIN
+    SELECT 
+        COUNT(*) AS total_scans
+    FROM userscan;
 END$$
 
 

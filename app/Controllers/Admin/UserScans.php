@@ -52,4 +52,35 @@ class UserScans extends ResourceController
             'message' => $result[0]['message']
         ]);
     }
+
+    // POST /create-scan
+    public function createScan()
+    {
+        $input = $this->request->getJSON(true);
+
+        $user_id = $input['user_id'] ?? null;
+        $item_type_id = $input['item_type_id'] ?? null;
+
+        if (!$user_id || !$item_type_id) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Missing required fields: user_id and item_type_id'
+            ]);
+        }
+
+        $result = $this->model->createUserScan($user_id, $item_type_id);
+
+        if (!empty($result) && isset($result[0]['status']) && $result[0]['status']) {
+            return $this->response->setJSON([
+                'status' => 'success',
+                'message' => $result[0]['message'] ?? 'Scan created successfully',
+                'data' => $result[0]
+            ]);
+        }
+
+        return $this->response->setJSON([
+            'status' => 'error',
+            'message' => $result[0]['message'] ?? 'Failed to create scan'
+        ]);
+    }
 }

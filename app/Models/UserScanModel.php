@@ -51,4 +51,13 @@ class UserScanModel extends Model
         $query->freeResult();
         return $result;
     }
+
+    // Get a count of the amount of scans using stored procedure
+    public function getTotalScans()
+    {
+        $query = $this->db->query('CALL GetTotalScans()');
+        $result = $query->getRowArray();
+        $query->freeResult();
+        return $result['total_scans'] ?? 0;
+    }
 }

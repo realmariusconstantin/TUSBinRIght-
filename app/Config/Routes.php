@@ -15,12 +15,15 @@ $routes->get('/', fn() => 'Backend is running!');
 $routes->post('register', 'AuthController::register');
 $routes->post('login', 'AuthController::login');
 $routes->post('logout', 'AuthController::logout');
+$routes->get('total-scans', 'StatsController::totalScans');
+$routes->get('total-users', 'StatsController::totalUsers');
 
 // PROTECTED ROUTES (JWT required)
 $routes->group('', ['filter' => 'jwtauth'], function($routes) {
     $routes->get('profile', 'AuthController::profile');
     $routes->post('refresh', 'AuthController::refresh');
     $routes->post('promote/(:num)', 'AuthController::promote/$1');
+    $routes->post('create-scan', '\App\Controllers\Admin\UserScans::createScan');
 });
 
 // ADMIN ROUTES

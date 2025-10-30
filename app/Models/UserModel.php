@@ -92,4 +92,13 @@ class UserModel extends Model
         $query->freeResult();
         return $result;
     }
+
+    // Get a count of the amount of users using stored procedure
+    public function getTotalUsers()
+    {
+        $query = $this->db->query('CALL GetTotalUsers()');
+        $result = $query->getRowArray();
+        $query->freeResult();
+        return $result['total_users'] ?? 0;
+    }
 }
