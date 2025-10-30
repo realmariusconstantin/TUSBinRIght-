@@ -35,9 +35,5 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], static functio
     $routes->post('bin-steps/delete', 'BinSteps::deleteStep');
 
     $routes->get('bin-types', 'BinTypes::getTypes');
-
-    $routes->get('admin/dashboard/stats', 'Admin\DashboardStats::getStats');
-
-
 });
 
