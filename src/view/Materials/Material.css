@@ -220,6 +220,37 @@
   color: #000;
 }
 
+.buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+  justify-content: center;
+}
+
+.rules-section,
+.no-rules-section {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.rules-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.rules-list li {
+  margin: 0.5rem 0;
+}
+
+.no-rules-section p {
+  color: #555;
+  margin-top: 0.5rem;
+}
+
 /* Material-specific theming */
 .plastic-page .material-icon {
   filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.3));

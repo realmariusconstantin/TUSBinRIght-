@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.1.0",
     "@vue/compiler-sfc": "^3.5.22",
     "@zxing/browser": "^0.1.5",
     "@zxing/library": "^0.21.3",
