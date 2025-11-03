@@ -22,6 +22,8 @@ $routes->get('disposal-rules-location', '\App\Controllers\Admin\DisposalRules::g
 // PROTECTED ROUTES (JWT required)
 $routes->group('', ['filter' => 'jwtauth'], function($routes) {
     $routes->get('profile', 'AuthController::profile');
+    $routes->put('profile/email', 'AuthController::updateEmail');
+    $routes->put('profile/password', 'AuthController::updatePassword');
     $routes->post('refresh', 'AuthController::refresh');
     $routes->post('promote/(:num)', 'AuthController::promote/$1');
     $routes->post('create-scan', '\App\Controllers\Admin\UserScans::createScan');

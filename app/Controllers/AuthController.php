@@ -40,7 +40,7 @@ class AuthController extends ResourceController
 
         // Create user with stored procedure (defaults to user_type_id = 1 = student)
         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
-        
+
         try {
             // Insert user directly instead of using stored procedure
             $this->db->table('users')->insert([
@@ -66,12 +66,12 @@ class AuthController extends ResourceController
 
             // Create HttpOnly cookie
             $cookie = [
-                'name'     => 'jwt_token',
-                'value'    => $token,
-                'expire'   => 3600,
-                'path'     => '/',
-                'domain'   => '',
-                'secure'   => false,
+                'name' => 'jwt_token',
+                'value' => $token,
+                'expire' => 3600,
+                'path' => '/',
+                'domain' => '',
+                'secure' => false,
                 'httponly' => true,
                 'samesite' => 'Lax'
             ];
@@ -132,12 +132,12 @@ class AuthController extends ResourceController
 
             // Create HttpOnly cookie
             $cookie = [
-                'name'     => 'jwt_token',
-                'value'    => $token,
-                'expire'   => 3600,
-                'path'     => '/',
-                'domain'   => '',
-                'secure'   => false,
+                'name' => 'jwt_token',
+                'value' => $token,
+                'expire' => 3600,
+                'path' => '/',
+                'domain' => '',
+                'secure' => false,
                 'httponly' => true,
                 'samesite' => 'Lax'
             ];
@@ -167,12 +167,12 @@ class AuthController extends ResourceController
     public function logout()
     {
         $cookie = [
-            'name'     => 'jwt_token',
-            'value'    => '',
-            'expire'   => 0,
-            'path'     => '/',
-            'domain'   => '',
-            'secure'   => false,
+            'name' => 'jwt_token',
+            'value' => '',
+            'expire' => 0,
+            'path' => '/',
+            'domain' => '',
+            'secure' => false,
             'httponly' => true,
             'samesite' => 'Lax'
         ];
@@ -279,12 +279,12 @@ class AuthController extends ResourceController
             $token = generateJWT($user->id, $user->email, $user->name, $user->role);
 
             $cookie = [
-                'name'     => 'jwt_token',
-                'value'    => $token,
-                'expire'   => 3600,
-                'path'     => '/',
-                'domain'   => '',
-                'secure'   => false,
+                'name' => 'jwt_token',
+                'value' => $token,
+                'expire' => 3600,
+                'path' => '/',
+                'domain' => '',
+                'secure' => false,
                 'httponly' => true,
                 'samesite' => 'Lax'
             ];
@@ -301,6 +301,146 @@ class AuthController extends ResourceController
             return $this->response->setJSON([
                 'status' => 'error',
                 'message' => 'Failed to refresh token'
+            ])->setStatusCode(500);
+        }
+    }
+
+    /**
+     * Update user email
+     * PUT /profile/email
+     */
+    public function updateEmail()
+    {
+        $user = getAuthenticatedUser();
+
+        if (!$user) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Not authenticated'
+            ])->setStatusCode(401);
+        }
+
+        $data = $this->request->getJSON(true);
+
+        if (empty($data['email'])) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Email is required'
+            ])->setStatusCode(400);
+        }
+
+        // Validate email format
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Invalid email format'
+            ])->setStatusCode(400);
+        }
+
+        // Check if email already exists (excluding current user)
+        $existingEmail = $this->db->table('users')
+            ->where('email', $data['email'])
+            ->where('id !=', $user->id)
+            ->countAllResults();
+
+        if ($existingEmail > 0) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Email already in use'
+            ])->setStatusCode(400);
+        }
+
+        try {
+            $this->db->table('users')
+                ->where('id', $user->id)
+                ->update(['email' => $data['email']]);
+
+            return $this->response->setJSON([
+                'status' => 'success',
+                'message' => 'Email updated successfully'
+            ])->setStatusCode(200);
+
+        } catch (\Exception $e) {
+            log_message('error', 'Email update failed: ' . $e->getMessage());
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Failed to update email'
+            ])->setStatusCode(500);
+        }
+    }
+
+    /**
+     * Update user password
+     * PUT /profile/password
+     */
+    public function updatePassword()
+    {
+        $user = getAuthenticatedUser();
+
+        if (!$user) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Not authenticated'
+            ])->setStatusCode(401);
+        }
+
+        $data = $this->request->getJSON(true);
+
+        if (empty($data['currentPassword']) || empty($data['newPassword'])) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Current password and new password are required'
+            ])->setStatusCode(400);
+        }
+
+        try {
+            // Get current user password hash from database
+            $currentUser = $this->db->table('users')
+                ->where('id', $user->id)
+                ->get()
+                ->getRow();
+
+            if (!$currentUser) {
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => 'User not found'
+                ])->setStatusCode(404);
+            }
+
+            // Verify current password
+            if (!password_verify($data['currentPassword'], $currentUser->password_hash)) {
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => 'Current password is incorrect'
+                ])->setStatusCode(401);
+            }
+
+            // Validate new password (at least 6 characters)
+            if (strlen($data['newPassword']) < 6) {
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => 'New password must be at least 6 characters long'
+                ])->setStatusCode(400);
+            }
+
+            // Hash new password
+            $hashedPassword = password_hash($data['newPassword'], PASSWORD_DEFAULT);
+
+            // Update password
+            $this->db->table('users')
+                ->where('id', $user->id)
+                ->update(['password_hash' => $hashedPassword]);
+
+            return $this->response->setJSON([
+                'status' => 'success',
+                'message' => 'Password updated successfully'
+            ])->setStatusCode(200);
+
+        } catch (\Exception $e) {
+            log_message('error', 'Password update failed: ' . $e->getMessage());
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Failed to update password'
             ])->setStatusCode(500);
         }
     }
