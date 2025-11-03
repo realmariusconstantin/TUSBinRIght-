@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useAuth } from '@/composables/useAuth';
 
 // Correct file locations
 import Home from '@/view/Home/Home.vue';
@@ -10,6 +11,7 @@ import GlassPage from '@/view/Materials/Glass.vue';
 import PaperPage from '@/view/Materials/Paper.vue';
 
 import RecyclingInfo from '@/view/RecyclingInfo/RecyclingInfo.vue';
+import ProfilePage from '@/view/ProfilePage.vue';
 
 // Admin pages
 import AdminLayout from '@/components/Panel/AdminLayout.vue'
@@ -64,6 +66,11 @@ const routes = [
         // No authentication required - accessible to everyone
     },
     { 
+        path: '/profile', 
+        component: ProfilePage,
+        meta: { requiresAuth: true }
+    },
+    { 
         path: '/admin',
         component: AdminLayout,
         meta: { requiresAuth: true, adminOnly: true },
@@ -88,8 +95,49 @@ const router = createRouter({
  * This guard runs before every route change and:
  * 1. Checks if route requires authentication
  * 2. Redirects unauthenticated users to /login
- * 3. Redirects authenticated users away from login/register
+ * 3. Checks if route requires admin role
+ * 4. Redirects non-admin users to home
+ * 5. Redirects authenticated users away from login/register
  */
-// No global navigation guard — routes are public by design.
+router.beforeEach((to, from, next) => {
+    const { user } = useAuth();
+
+    // Check if route requires authentication
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!user.value) {
+            // User not logged in - redirect to login
+            next('/login');
+            return;
+        }
+    }
+
+    // Check if route requires admin role
+    if (to.matched.some(record => record.meta.adminOnly)) {
+        if (!user.value) {
+            // User not logged in - redirect to login
+            next('/login');
+            return;
+        }
+
+        const userRole = user.value.role?.toLowerCase() || '';
+        if (userRole !== 'admin') {
+            // User is not admin - redirect to home
+            console.warn('Access denied: User is not an admin');
+            next('/');
+            return;
+        }
+    }
+
+    // Check if route is guest-only (like login/register)
+    if (to.matched.some(record => record.meta.guestOnly)) {
+        if (user.value) {
+            // User already logged in - redirect to home
+            next('/home');
+            return;
+        }
+    }
+
+    next();
+});
 
 export default router;

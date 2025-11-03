@@ -4,7 +4,7 @@ import axios from 'axios';
 // Create Axios instance configured for HttpOnly cookie authentication
 const api = axios.create({
     // ✅ Add "/api" to the backend base URL
-    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost/tusbinright/public/api',
+    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost/tusbinright/public',
     headers: {
         'Content-Type': 'application/json'
     },
