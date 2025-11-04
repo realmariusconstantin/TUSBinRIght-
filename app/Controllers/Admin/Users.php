@@ -29,34 +29,69 @@ class Users extends ResourceController
     // POST /admin/users/update
     public function updateUser()
     {
-        $data = $this->request->getJSON(true);
+        $data = json_decode($this->request->getBody(), true);
 
         if (empty($data['id'])) {
             return $this->fail('Missing user ID', 400);
         }
 
-        // Fetch current user
-        $user = $this->model->getUserById($data['id']);
-        if (!$user) {
-            return $this->fail('User not found', 404);
+        if (empty($data['user']) || empty($data['email']) || empty($data['user_type_id'])) {
+            return $this->fail('Missing required fields', 400);
         }
 
-        $res = $this->model->updateUser($user['id'], $data['user'], $data['email'], $user['password_hash'], $data['user_type_id']);
+        try {
+            // Fetch current user
+            $user = $this->model->getUserById($data['id']);
+            if (!$user) {
+                return $this->fail('User not found', 404);
+            }
 
-        return $this->respond($res);
+            // Update user directly
+            $db = \Config\Database::connect();
+            $result = $db->table('users')->where('id', $data['id'])->update([
+                'name' => $data['user'],
+                'email' => $data['email'],
+                'user_type_id' => $data['user_type_id']
+            ]);
+
+            if ($result) {
+                return $this->respond([
+                    'status' => 'success',
+                    'message' => 'User updated successfully'
+                ]);
+            } else {
+                return $this->fail('Failed to update user', 500);
+            }
+        } catch (\Exception $e) {
+            log_message('error', 'User update failed: ' . $e->getMessage());
+            return $this->fail('Error updating user: ' . $e->getMessage(), 500);
+        }
     }
 
     // POST /admin/users/delete
     public function deleteUser()
     {
-        $data = $this->request->getJSON(true);
+        $data = json_decode($this->request->getBody(), true);
 
         if (empty($data['id'])) {
             return $this->fail('Missing user ID', 400);
         }
 
-        $res = $this->model->deleteUser($data['id']);
+        try {
+            $db = \Config\Database::connect();
+            $result = $db->table('users')->where('id', $data['id'])->delete();
 
-        return $this->respond($res);
+            if ($result) {
+                return $this->respond([
+                    'status' => 'success',
+                    'message' => 'User deleted successfully'
+                ]);
+            } else {
+                return $this->fail('Failed to delete user', 500);
+            }
+        } catch (\Exception $e) {
+            log_message('error', 'User delete failed: ' . $e->getMessage());
+            return $this->fail('Error deleting user: ' . $e->getMessage(), 500);
+        }
     }
 }

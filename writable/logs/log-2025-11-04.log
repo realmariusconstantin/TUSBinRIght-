@@ -1,0 +1,356 @@
+ERROR - 2025-11-04 13:09:28 --> Login failed: file_get_contents(C:\xampp\htdocs\tusbinright\app\): Failed to open stream: No such file or directory
+CRITICAL - 2025-11-04 13:38:18 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:19 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:19 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:19 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:20 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:20 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:20 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:21 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:24 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:25 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:25 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:26 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:26 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:26 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:26 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:26 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:26 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:28 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:28 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:28 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:28 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:29 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:29 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:29 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:33 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:34 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:38:43 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-04 13:39:03 --> ErrorException: Undefined array key "password_hash"
+[Method: POST, Route: admin/users/update]
+in APPPATH\Controllers\Admin\Users.php on line 44.
+ 1 APPPATH\Controllers\Admin\Users.php(44): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "password_hash"', 'C:\\xampp\\htdocs\\tusbinright\\app\\Controllers\\Admin\\Users.php', 44)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-04 13:40:33 --> mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`tusbinright`.`userscan`, CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)) in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('DELETE FROM `us...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('DELETE FROM `us...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('DELETE FROM `us...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2848): CodeIgniter\Database\BaseConnection->query('DELETE FROM `us...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(82): CodeIgniter\Database\BaseBuilder->delete()
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->deleteUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-04 13:40:33 --> User delete failed: Cannot delete or update a parent row: a foreign key constraint fails (`tusbinright`.`userscan`, CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`))
+ERROR - 2025-11-04 13:40:51 --> mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`tusbinright`.`userscan`, CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)) in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('DELETE FROM `us...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('DELETE FROM `us...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('DELETE FROM `us...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2848): CodeIgniter\Database\BaseConnection->query('DELETE FROM `us...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(82): CodeIgniter\Database\BaseBuilder->delete()
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->deleteUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-04 13:40:51 --> User delete failed: Cannot delete or update a parent row: a foreign key constraint fails (`tusbinright`.`userscan`, CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`))
+ERROR - 2025-11-04 13:40:58 --> mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`tusbinright`.`userscan`, CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)) in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('DELETE FROM `us...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('DELETE FROM `us...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('DELETE FROM `us...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2848): CodeIgniter\Database\BaseConnection->query('DELETE FROM `us...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(82): CodeIgniter\Database\BaseBuilder->delete()
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->deleteUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-04 13:40:58 --> User delete failed: Cannot delete or update a parent row: a foreign key constraint fails (`tusbinright`.`userscan`, CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`))
+ERROR - 2025-11-04 13:41:06 --> mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`tusbinright`.`userscan`, CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)) in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('DELETE FROM `us...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('DELETE FROM `us...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('DELETE FROM `us...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2848): CodeIgniter\Database\BaseConnection->query('DELETE FROM `us...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(82): CodeIgniter\Database\BaseBuilder->delete()
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->deleteUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-04 13:41:06 --> User delete failed: Cannot delete or update a parent row: a foreign key constraint fails (`tusbinright`.`userscan`, CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`))
+ERROR - 2025-11-04 13:41:09 --> mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`tusbinright`.`userscan`, CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)) in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('DELETE FROM `us...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('DELETE FROM `us...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('DELETE FROM `us...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2848): CodeIgniter\Database\BaseConnection->query('DELETE FROM `us...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(82): CodeIgniter\Database\BaseBuilder->delete()
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->deleteUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-04 13:41:09 --> User delete failed: Cannot delete or update a parent row: a foreign key constraint fails (`tusbinright`.`userscan`, CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`))
