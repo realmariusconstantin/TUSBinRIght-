@@ -101,7 +101,7 @@ onMounted(loadMe)
     <div class="profile-wrapper">
       <!-- Email Section -->
       <div class="section">
-        <h3>📧 Change Email</h3>
+        <h3>Change Email</h3>
         <div class="field-group">
           <label>Current Email</label>
           <div class="current-value">{{ me.email }}</div>
@@ -125,7 +125,7 @@ onMounted(loadMe)
 
       <!-- Password Section -->
       <div class="section">
-        <h3>🔐 Change Password</h3>
+        <h3>Change Password</h3>
         <div class="field-group">
           <label for="current-pwd">Current Password</label>
           <input 

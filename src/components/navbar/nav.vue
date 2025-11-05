@@ -64,7 +64,7 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
-import logo from '@/images/Logo.png';
+import logo from '@/images/RenovaLogo.png';
 
 const router = useRouter();
 const { user, logout, fetchUser, initUser } = useAuth();
