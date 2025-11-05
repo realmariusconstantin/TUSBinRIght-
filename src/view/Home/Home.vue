@@ -180,7 +180,7 @@ export default {
     },
 
     async fetchStats() {
-      // I try to fetch user scans and total users from CI4 backend
+      // I try to fetch user scans and total users from CI4 backend for FrontEnd
       try {
         const [scansRes, usersRes] = await Promise.all([
           // Request to json endpoints: http://localhost/tusbinright/public/total-users & http://localhost/tusbinright/public/total-scans
