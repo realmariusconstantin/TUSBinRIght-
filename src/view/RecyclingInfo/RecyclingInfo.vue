@@ -15,166 +15,55 @@
       <div class="stats-container">
         <h2 class="section-title">Recycling Impact</h2>
         <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon">♻️</div>
-            <h3 class="stat-number">75%</h3>
-            <p class="stat-label">Waste Can Be Recycled</p>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">🌍</div>
-            <h3 class="stat-number">95%</h3>
-            <p class="stat-label">Energy Saved (Aluminum)</p>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">🌳</div>
-            <h3 class="stat-number">17</h3>
-            <p class="stat-label">Trees Saved Per Ton</p>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">💧</div>
-            <h3 class="stat-number">70%</h3>
-            <p class="stat-label">Water Saved (Paper)</p>
+          <div class="stat-card" v-for="(stat, i) in stats" :key="i">
+            <div class="stat-icon">{{ stat.icon }}</div>
+            <h3 class="stat-number">{{ stat.number }}</h3>
+            <p class="stat-label">{{ stat.label }}</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Water Bottles Section -->
-    <section class="item-section water-section">
-      <div class="item-container">
+    <!-- Item Sections -->
+    <section
+      v-for="(item, i) in items"
+      :key="i"
+      :class="['item-section', { reverse: i % 2 === 1 }]"
+    >
+      <div class="item-container" :class="{ reverse: i % 2 === 1 }">
         <div class="item-image-wrapper">
-          <img src="../../images/waterBottle.png" alt="Water Bottle" class="item-image" />
+          <img :src="item.image" :alt="item.title" class="item-image" />
         </div>
         <div class="item-content">
           <h2 class="item-title">
-            <span class="title-number">1.</span>
-            Plastic Water Bottles
+            <span class="title-number">{{ i + 1 }}.</span>
+            {{ item.title }}
           </h2>
           <div class="recycle-badge">RECYCLE</div>
           <ul class="item-steps">
-            <li>Empty out all liquid</li>
-            <li>Remove labels if possible (not required)</li>
-            <li>Rinse the bottle with water</li>
-            <li>Place in recycling bin with cap on</li>
+            <li v-for="(step, j) in item.steps" :key="j">{{ step }}</li>
           </ul>
           <div class="item-facts">
-            <p><strong>Material:</strong> PET/PETE (Plastic #1)</p>
-            <p><strong>Recycling Rate:</strong> ~29% in the US</p>
-            <p><strong>Fact:</strong> One recycled bottle saves enough energy to power a laptop for 3 hours!</p>
+            <p><strong>Material:</strong> {{ item.material }}</p>
+            <p><strong>Recycling Rate:</strong> {{ item.rate }}</p>
+            <p><strong>Fact:</strong> {{ item.fact }}</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Milk Cartons Section -->
-    <section class="item-section milk-section">
-      <div class="item-container reverse">
-        <div class="item-content">
-          <h2 class="item-title">
-            <span class="title-number">2.</span>
-            Milk Cartons
-          </h2>
-          <div class="recycle-badge">RECYCLE</div>
-          <ul class="item-steps">
-            <li>Empty out remaining milk</li>
-            <li>Rinse thoroughly with water</li>
-            <li>Flatten the carton to save space</li>
-            <li>Place in recycling bin (caps can stay on)</li>
-          </ul>
-          <div class="item-facts">
-            <p><strong>Material:</strong> Paperboard with plastic/foil lining</p>
-            <p><strong>Recycling Rate:</strong> ~62% globally</p>
-            <p><strong>Fact:</strong> Cartons are 70% paper from responsibly managed forests!</p>
-          </div>
-        </div>
-        <div class="item-image-wrapper">
-          <img src="../../images/milkCarton.png" alt="Milk Carton" class="item-image" />
-        </div>
-      </div>
-      <img src="../../images/beerBottle.png" alt="Beer Bottle" class="floating-image bottle-2" />
-    </section>
-
-    <!-- Aluminum Cans Section -->
-    <section class="item-section can-section">
-      <div class="item-container">
-        <div class="item-image-wrapper">
-          <img src="../../images/can.png" alt="Aluminum Can" class="item-image" />
-        </div>
-        <div class="item-content">
-          <h2 class="item-title">
-            <span class="title-number">3.</span>
-            Aluminum Cans
-          </h2>
-          <div class="recycle-badge">RECYCLE</div>
-          <ul class="item-steps">
-            <li>Empty the can completely</li>
-            <li>Quick rinse to remove residue</li>
-            <li>No need to remove tabs</li>
-            <li>Place in recycling bin</li>
-          </ul>
-          <div class="item-facts">
-            <p><strong>Material:</strong> 100% Aluminum</p>
-            <p><strong>Recycling Rate:</strong> ~50% in the US, 75% in Europe</p>
-            <p><strong>Fact:</strong> Aluminum can be recycled infinitely without losing quality!</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Glass Bottles Section -->
-    <section class="item-section glass-section">
-      <div class="item-container reverse">
-        <div class="item-content">
-          <h2 class="item-title">
-            <span class="title-number">4.</span>
-            Glass Bottles
-          </h2>
-          <div class="recycle-badge">RECYCLE</div>
-          <ul class="item-steps">
-            <li>Empty all contents</li>
-            <li>Rinse out any residue</li>
-            <li>Remove caps and corks</li>
-            <li>Place in glass recycling bin</li>
-          </ul>
-          <div class="item-facts">
-            <p><strong>Material:</strong> Soda-lime glass</p>
-            <p><strong>Recycling Rate:</strong> ~33% in the US</p>
-            <p><strong>Fact:</strong> Glass can be recycled endlessly and takes 1 million years to decompose!</p>
-          </div>
-        </div>
-        <div class="item-image-wrapper">
-          <img src="../../images/beerBottle.png" alt="Beer Bottle" class="item-image" />
-        </div>
-      </div>
-    </section>
-
-    <!-- Decycle Section -->
+    <!-- Non-Recyclables Section -->
     <section class="decycle-section">
       <div class="decycle-container">
-        <img src="../../images/milkCarton.png" alt="Milk Carton" class="floating-image milk-float" />
         <h2 class="section-title">Not Everything is Recyclable</h2>
         <p class="section-subtitle">Some items need special handling</p>
-        
         <div class="decycle-grid">
-          <div class="decycle-card">
-            <h3>❌ Pizza Boxes</h3>
-            <p>Grease contamination makes them non-recyclable</p>
-          </div>
-          <div class="decycle-card">
-            <h3>❌ Plastic Bags</h3>
-            <p>Take to store drop-off locations instead</p>
-          </div>
-          <div class="decycle-card">
-            <h3>❌ Styrofoam</h3>
-            <p>Check for special recycling programs in your area</p>
-          </div>
-          <div class="decycle-card">
-            <h3>❌ Broken Glass</h3>
-            <p>Wrap safely and dispose in trash</p>
+          <div class="decycle-card" v-for="(item, i) in nonRecyclables" :key="i">
+            <h3>{{ item.icon }} {{ item.title }}</h3>
+            <p>{{ item.desc }}</p>
           </div>
         </div>
       </div>
-      <img src="../../images/waterBottle.png" alt="Water Bottle" class="floating-image bottle-3" />
     </section>
 
     <!-- Call to Action -->
@@ -190,12 +79,82 @@
 
 <script>
 export default {
-  name: 'RecyclingInfo',
+  name: "RecyclingInfo",
+  data() {
+    return {
+      stats: [
+        { icon: "♻️", number: "75%", label: "Waste Can Be Recycled" },
+        { icon: "🌍", number: "95%", label: "Energy Saved (Aluminum)" },
+        { icon: "🌳", number: "17", label: "Trees Saved Per Ton" },
+        { icon: "💧", number: "70%", label: "Water Saved (Paper)" },
+      ],
+      items: [
+        {
+          title: "Plastic Water Bottles",
+          image: "../../images/waterBottle.png",
+          steps: [
+            "Empty out all liquid",
+            "Rinse the bottle",
+            "Remove label (optional)",
+            "Recycle with cap on",
+          ],
+          material: "PET/PETE (Plastic #1)",
+          rate: "~29% in the US",
+          fact: "One recycled bottle powers a laptop for 3 hours!",
+        },
+        {
+          title: "Milk Cartons",
+          image: "../../images/milkCarton.png",
+          steps: [
+            "Empty remaining milk",
+            "Rinse thoroughly",
+            "Flatten to save space",
+            "Recycle (caps can stay)",
+          ],
+          material: "Paperboard with plastic/foil lining",
+          rate: "~62% globally",
+          fact: "Cartons are 70% paper from responsibly managed forests!",
+        },
+        {
+          title: "Aluminum Cans",
+          image: "../../images/can.png",
+          steps: [
+            "Empty completely",
+            "Quick rinse",
+            "No need to remove tabs",
+            "Recycle directly",
+          ],
+          material: "100% Aluminum",
+          rate: "~50% US / 75% Europe",
+          fact: "Aluminum can be recycled infinitely without quality loss!",
+        },
+        {
+          title: "Glass Bottles",
+          image: "../../images/beerBottle.png",
+          steps: [
+            "Empty contents",
+            "Rinse residue",
+            "Remove caps/corks",
+            "Recycle in glass bin",
+          ],
+          material: "Soda-lime glass",
+          rate: "~33% in the US",
+          fact: "Glass can be recycled endlessly and takes 1M years to decompose!",
+        },
+      ],
+      nonRecyclables: [
+        { icon: "❌", title: "Pizza Boxes", desc: "Grease makes them non-recyclable" },
+        { icon: "❌", title: "Plastic Bags", desc: "Take to store drop-off locations" },
+        { icon: "❌", title: "Styrofoam", desc: "Needs special recycling programs" },
+        { icon: "❌", title: "Broken Glass", desc: "Wrap safely and dispose in trash" },
+      ],
+    };
+  },
   methods: {
     goToHome() {
-      this.$router.push('/');
-    }
-  }
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 
