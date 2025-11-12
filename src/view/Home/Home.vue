@@ -180,17 +180,21 @@ export default {
     },
 
     async fetchStats() {
+      // I try to fetch user scans and total users from CI4 backend for FrontEnd
       try {
         const [scansRes, usersRes] = await Promise.all([
+          // Request to json endpoints: http://localhost/tusbinright/public/total-users & http://localhost/tusbinright/public/total-scans
           api.get('/total-scans'),
           api.get('/total-users')
         ]);
 
+        // If there is no data, default to 0
         this.totalScans = scansRes.data.total_scans || 0;
         this.totalUsers = usersRes.data.total_users || 0;
 
       } catch (error) {
         console.error('Error fetching stats:', error);
+        // If there is and exception, default to 0
         this.totalScans = 0;
         this.totalUsers = 0;
       }
