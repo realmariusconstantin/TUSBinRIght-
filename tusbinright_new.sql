@@ -12,6 +12,19 @@ SET time_zone = "+00:00";
 -- Tables
 -- --------------------------------------------------------
 
+-- LoginAttempts (for rate limiting)
+CREATE TABLE login_attempts (
+  id INT NOT NULL AUTO_INCREMENT,
+  email VARCHAR(255) NOT NULL,
+  ip_address VARCHAR(45) NOT NULL,
+  attempts INT NOT NULL DEFAULT 1,
+  last_attempt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  locked_until DATETIME DEFAULT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY email_ip (email, ip_address),
+  KEY locked_until (locked_until)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- UserType
 CREATE TABLE usertype (
   id INT NOT NULL AUTO_INCREMENT,

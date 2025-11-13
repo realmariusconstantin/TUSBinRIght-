@@ -18,10 +18,12 @@ $routes->post('logout', 'AuthController::logout');
 $routes->get('total-scans', 'StatsController::totalScans');
 $routes->get('total-users', 'StatsController::totalUsers');
 $routes->get('disposal-rules-location', '\App\Controllers\Admin\DisposalRules::getDisposalRulesByItemAndLocationId');
+$routes->get('api/password-strength', '\App\Controllers\Api\PasswordValidator::strength');
 
 // PROTECTED ROUTES (JWT required)
 $routes->group('', ['filter' => 'jwtauth'], function($routes) {
     $routes->get('profile', 'AuthController::profile');
+    $routes->get('profile/recycling-summary', 'AuthController::recyclingSummary');
     $routes->put('profile/email', 'AuthController::updateEmail');
     $routes->put('profile/password', 'AuthController::updatePassword');
     $routes->post('refresh', 'AuthController::refresh');

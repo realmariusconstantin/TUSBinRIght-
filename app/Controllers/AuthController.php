@@ -19,22 +19,73 @@ class AuthController extends ResourceController
     {
         $data = $this->request->getJSON(true);
 
-        if (!$this->validate('register')) {
+        // Initialize validation and security services
+        $validationService = new \App\Services\ValidationService();
+        $passwordStrengthService = new \App\Services\PasswordStrengthService();
+        $rateLimitService = new \App\Services\RateLimitService();
+
+        // Get client IP for rate limiting registrations
+        $ipAddress = $this->request->getIPAddress();
+        
+        $errors = [];
+
+        // Validate name
+        $nameValidation = $validationService->validateName($data['name'] ?? '');
+        if (!$nameValidation['valid']) {
+            $errors['name'] = $nameValidation['errors'][0];
+        }
+
+        // Validate email format
+        $emailValidation = $validationService->validateEmail($data['email'] ?? '');
+        if (!$emailValidation['valid']) {
+            $errors['email'] = $emailValidation['errors'][0];
+        }
+
+        // Check if email already registered (only if email is valid)
+        if (empty($errors['email']) && $validationService->isEmailRegistered($data['email'])) {
+            $errors['email'] = 'Email is already registered. Please use a different email or log in.';
+        }
+
+        // Validate password format
+        $passwordFormatValidation = $validationService->validatePasswordFormat($data['password'] ?? '');
+        if (!$passwordFormatValidation['valid']) {
+            $errors['password'] = $passwordFormatValidation['errors'][0];
+        }
+
+        // Validate passwords match
+        if (!empty($data['password']) && !empty($data['confirmPassword'])) {
+            $passwordMatchValidation = $validationService->validatePasswordsMatch(
+                $data['password'],
+                $data['confirmPassword']
+            );
+            if (!$passwordMatchValidation['valid']) {
+                $errors['confirmPassword'] = $passwordMatchValidation['error'];
+            }
+        } elseif (empty($data['confirmPassword'])) {
+            $errors['confirmPassword'] = 'Confirm password is required';
+        }
+
+        // Return early if basic validation fails
+        if (!empty($errors)) {
             return $this->response->setJSON([
                 'status' => 'error',
-                'errors' => $this->validator->getErrors()
+                'errors' => $errors
             ])->setStatusCode(400);
         }
 
-        // Check if email exists - use direct query instead of stored procedure
-        $checkQuery = $this->db->table('users')
-            ->where('email', $data['email'])
-            ->countAllResults();
+        // Validate password strength
+        $passwordValidation = $passwordStrengthService->validatePassword($data['password']);
 
-        if ($checkQuery > 0) {
+        if (!$passwordValidation['valid']) {
             return $this->response->setJSON([
                 'status' => 'error',
-                'errors' => ['email' => 'Email already registered']
+                'message' => 'Password does not meet security requirements',
+                'password' => [
+                    'score' => $passwordValidation['score'],
+                    'strength' => $passwordValidation['strength'],
+                    'requirements' => $passwordValidation['requirements'],
+                    'needed' => $passwordStrengthService->getRequirements()
+                ]
             ])->setStatusCode(400);
         }
 
@@ -101,11 +152,34 @@ class AuthController extends ResourceController
     {
         $data = $this->request->getJSON(true);
 
-        if (!$this->validate('login')) {
+        // Initialize validation and security services
+        $validationService = new \App\Services\ValidationService();
+        $rateLimitService = new \App\Services\RateLimitService();
+
+        // Get client IP address
+        $ipAddress = $this->request->getIPAddress();
+        $email = $data['email'] ?? '';
+        $password = $data['password'] ?? '';
+
+        // Validate login input
+        $loginValidation = $validationService->validateLoginInput($email, $password);
+        if (!$loginValidation['valid']) {
             return $this->response->setJSON([
                 'status' => 'error',
-                'errors' => $this->validator->getErrors()
+                'errors' => $loginValidation['errors']
             ])->setStatusCode(400);
+        }
+
+        // Check rate limiting BEFORE attempting authentication
+        $rateLimitStatus = $rateLimitService->isRateLimited($email, $ipAddress);
+
+        if ($rateLimitStatus['limited']) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => $rateLimitStatus['message'],
+                'rateLimited' => true,
+                'remaining_time' => $rateLimitStatus['remainingTime']
+            ])->setStatusCode(429); // Too Many Requests
         }
 
         // Get user directly from database with role from usertype table
@@ -113,16 +187,29 @@ class AuthController extends ResourceController
             $user = $this->db->table('users')
                 ->select('users.*, usertype.description as role')
                 ->join('usertype', 'users.user_type_id = usertype.id')
-                ->where('users.email', $data['email'])
+                ->where('users.email', $email)
                 ->get()
                 ->getRow();
 
             if (!$user || !password_verify($data['password'], $user->password_hash)) {
+                // Record failed attempt
+                $failureResult = $rateLimitService->recordFailedAttempt($email, $ipAddress);
+                
+                $remaining = $failureResult['remaining'];
+                $message = $failureResult['locked'] 
+                    ? "Account locked after 5 failed attempts. Try again in 15 minutes."
+                    : "Invalid email or password. Attempts remaining: {$remaining}";
+
                 return $this->response->setJSON([
                     'status' => 'error',
-                    'message' => 'Invalid email or password'
+                    'message' => $message,
+                    'attemptsRemaining' => $remaining,
+                    'accountLocked' => $failureResult['locked']
                 ])->setStatusCode(401);
             }
+
+            // Successful login - clear rate limit
+            $rateLimitService->clearAttempts($email, $ipAddress);
 
             // Role is already fetched from usertype table
             $role = $user->role;
@@ -230,6 +317,59 @@ class AuthController extends ResourceController
             return $this->response->setJSON([
                 'status' => 'error',
                 'message' => 'Failed to fetch profile'
+            ])->setStatusCode(500);
+        }
+    }
+
+    public function recyclingSummary()
+    {
+        $user = getAuthenticatedUser();
+
+        if (!$user) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Not authenticated'
+            ])->setStatusCode(401);
+        }
+
+        try {
+            // Get recycling stats grouped by item type
+            $stats = $this->db->table('userscan')
+                ->select('itemtype.id, itemtype.description, COUNT(userscan.id) as count')
+                ->join('itemtype', 'userscan.item_type_id = itemtype.id')
+                ->where('userscan.user_id', $user->id)
+                ->groupBy('itemtype.id, itemtype.description')
+                ->get()
+                ->getResultArray();
+
+            // Initialize counters
+            $summary = [
+                'can' => 0,
+                'plastic' => 0,
+                'paper' => 0,
+                'glass' => 0,
+                'total' => 0
+            ];
+
+            // Map results to summary
+            foreach ($stats as $stat) {
+                $type = strtolower($stat['description']);
+                if (isset($summary[$type])) {
+                    $summary[$type] = (int)$stat['count'];
+                }
+                $summary['total'] += (int)$stat['count'];
+            }
+
+            return $this->response->setJSON([
+                'status' => 'success',
+                'summary' => $summary
+            ])->setStatusCode(200);
+
+        } catch (\Exception $e) {
+            log_message('error', 'Recycling summary fetch failed: ' . $e->getMessage());
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Failed to fetch recycling summary'
             ])->setStatusCode(500);
         }
     }
