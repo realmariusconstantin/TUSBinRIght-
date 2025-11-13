@@ -9,6 +9,8 @@
         </div>
 
         <div class="nav-links">
+            <router-link to="/recycling-info">Recycling Info</router-link>
+            
             <template v-if="!user">
                 <router-link to="/register">Register</router-link>
                 <router-link to="/login">Log in</router-link>
@@ -45,6 +47,14 @@
                         
                         <div class="dropdown-divider"></div>
                         
+                        <button @click="toggleDarkModeAndClose" class="dropdown-item dark-mode-item">
+                            <i v-if="isDarkMode" class="fas fa-sun"></i>
+                            <i v-else class="fas fa-moon"></i>
+                            {{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}
+                        </button>
+                        
+                        <div class="dropdown-divider"></div>
+                        
                         <button @click="handleLogout" class="dropdown-item logout-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
@@ -64,10 +74,12 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
+import { useDarkMode } from '@/composables/useDarkMode';
 import logo from '@/images/RenovaLogo.png';
 
 const router = useRouter();
 const { user, logout, fetchUser, initUser } = useAuth();
+const { isDarkMode, toggleDarkMode } = useDarkMode();
 
 const isDropdownOpen = ref(false);
 const dropdownRef = ref(null);
@@ -145,6 +157,11 @@ const handleLogout = async () => {
     if (result.success) {
         router.push('/login');
     }
+};
+
+const toggleDarkModeAndClose = () => {
+    toggleDarkMode();
+    closeDropdown();
 };
 </script>
 

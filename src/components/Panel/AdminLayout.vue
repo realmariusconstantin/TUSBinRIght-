@@ -62,6 +62,8 @@ const isUserAdmin = computed(() => {
   display: flex;
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
+  background: var(--bg-primary);
+  transition: background-color 0.3s ease;
 }
 
 /* Error Container */
@@ -71,19 +73,19 @@ const isUserAdmin = computed(() => {
   justify-content: center;
   width: 100%;
   min-height: 100vh;
-  background: radial-gradient(160% 120% at 50% 0%, rgba(15, 23, 42, 0.05) 0%, rgba(15, 23, 42, 0) 60%);
+  background: var(--bg-primary);
+  transition: background-color 0.3s ease;
 }
 
 .error-box {
   text-align: center;
   padding: 60px 40px;
-  background: linear-gradient(145deg, #ffffff 0%, #f7f9fc 100%);
+  background: var(--bg-secondary);
   border-radius: 22px;
-  border: 1.5px solid rgba(15, 23, 42, 0.18);
-  box-shadow:
-    0 20px 48px rgba(15, 23, 42, 0.14),
-    0 3px 12px rgba(15, 23, 42, 0.1);
+  border: 1.5px solid var(--border-color);
+  box-shadow: 0 20px 48px var(--shadow);
   max-width: 500px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .error-box i {
@@ -96,13 +98,13 @@ const isUserAdmin = computed(() => {
 .error-box h2 {
   font-size: 32px;
   font-weight: 700;
-  color: #222;
+  color: var(--text-primary);
   margin: 0 0 12px 0;
 }
 
 .error-box p {
   font-size: 16px;
-  color: #555;
+  color: var(--text-secondary);
   margin: 0 0 30px 0;
 }
 
@@ -127,26 +129,29 @@ const isUserAdmin = computed(() => {
 /* Sidebar */
 .sidebar {
   width: 230px;
-  background: linear-gradient(180deg, #30475E, #222831);
-  color: white;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  border-right: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 .sidebar h2 {
   font-weight: 600;
   margin-bottom: 1.5rem;
+  color: var(--text-primary);
 }
 
 .link {
-  color: #ddd;
+  color: var(--text-secondary);
   text-decoration: none;
   margin: 0.5rem 0;
   padding: 0.6rem 1rem;
   border-radius: 8px;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -154,12 +159,12 @@ const isUserAdmin = computed(() => {
 }
 
 .link:hover {
-  background: #3A506B;
+  background: var(--accent-green);
   color: white;
 }
 
 .active {
-  background: #00ADB5;
+  background: var(--accent-green);
   color: white;
 }
 
@@ -171,6 +176,7 @@ const isUserAdmin = computed(() => {
 .content {
   flex: 1;
   padding: 2rem;
-  background: #f8f9fa;
+  background: var(--bg-primary);
+  transition: background-color 0.3s ease;
 }
 </style>

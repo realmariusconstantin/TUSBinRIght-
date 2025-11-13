@@ -1,16 +1,31 @@
-/* 🌿 Modernized Page Background */
+﻿/* Main Page Container */
 .recycling-info-page {
   min-height: 100vh;
-  background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 50%, #66bb6a 100%);
-  font-family: "Inter", sans-serif;
+  background: linear-gradient(180deg, #f5f5f5 0%, #ffffff 50%, #f9f9f9 100%);
+  font-family: Inter, sans-serif;
   overflow-x: hidden;
+  transition: background 0.3s ease;
 }
 
-/* HERO SECTION */
+.recycling-info-page.dark-mode {
+  background: linear-gradient(180deg, #0d2818 0%, #1b4d2b 50%, #2d5a3d 100%);
+}
+
+/* Hero Section */
 .hero {
   padding: 100px 24px 80px;
   text-align: center;
   position: relative;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+}
+
+.recycling-info-page.dark-mode .hero {
+  background: linear-gradient(135deg, #0d2818 0%, #1b4d2b 100%);
 }
 
 .page-title {
@@ -18,34 +33,35 @@
   font-weight: 900;
   color: white;
   text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.35);
-  letter-spacing: 1px;
+  margin: 0;
 }
 
 .page-subtitle {
   font-size: 22px;
   color: rgba(255, 255, 255, 0.9);
   margin-top: 12px;
-  font-weight: 400;
 }
 
-/* Floating animations */
 .floating-image {
   position: absolute;
   opacity: 0.25;
   animation: float 8s ease-in-out infinite;
   pointer-events: none;
+  display: none;
 }
 
 .bottle-1 {
   width: 80px;
   top: 10%;
   right: 10%;
+  display: none;
 }
 
 .can-1 {
   width: 60px;
   top: 25%;
   left: 8%;
+  display: none;
 }
 
 @keyframes float {
@@ -57,34 +73,51 @@
   }
 }
 
-/* STATISTICS SECTION */
+/* Stats Section */
 .stats-section {
   padding: 80px 24px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.95);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
+}
+
+.recycling-info-page.dark-mode .stats-section {
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .section-title {
   font-size: 42px;
-  color: white;
+  color: #1b5e20;
   text-align: center;
   font-weight: 800;
-  margin-bottom: 48px;
+  margin: 0 0 48px 0;
+}
+
+.recycling-info-page.dark-mode .section-title {
+  color: white;
 }
 
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .stat-card {
   background: white;
   border-radius: 20px;
-  text-align: center;
   padding: 40px 24px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   transition: all 0.35s ease;
+  text-align: center;
+}
+
+.recycling-info-page.dark-mode .stat-card {
+  background: #2a2a2a;
+  color: #e0e0e0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .stat-card:hover {
@@ -101,17 +134,34 @@
   font-size: 48px;
   font-weight: 900;
   color: #2e7d32;
+  margin: 8px 0;
+}
+
+.recycling-info-page.dark-mode .stat-number {
+  color: #4caf50;
 }
 
 .stat-label {
   font-size: 16px;
   color: #555;
   font-weight: 600;
+  margin: 0;
 }
 
-/* ITEM SECTIONS */
+.recycling-info-page.dark-mode .stat-label {
+  color: #b0b0b0;
+}
+
+/* Item Sections */
 .item-section {
   padding: 100px 24px;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.1);
+  background: linear-gradient(to bottom, #ffffff, #f5f5f5);
+}
+
+.recycling-info-page.dark-mode .item-section {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(to bottom, rgba(13, 40, 24, 0.5), rgba(27, 77, 43, 0.3));
 }
 
 .item-container {
@@ -120,7 +170,13 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
-  align-items: center;
+  align-items: flex-start;
+}
+
+.item-image-chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 .item-container.reverse {
@@ -131,11 +187,21 @@
   direction: ltr;
 }
 
+.item-image-chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
 .item-image-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   animation: bobble 3s ease-in-out infinite;
+}
+
+.chart-inline {
+  width: 100%;
 }
 
 @keyframes bobble {
@@ -163,11 +229,20 @@
   padding: 48px;
   border-radius: 24px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.recycling-info-page.dark-mode .item-content {
+  background: #2a2a2a;
+  color: #e0e0e0;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  border-color: #4caf50;
 }
 
 .item-content:hover {
   transform: translateY(-4px);
+  box-shadow: 0 16px 50px rgba(76, 175, 80, 0.3);
 }
 
 .item-title {
@@ -177,10 +252,15 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  margin: 0 0 12px 0;
+}
+
+.recycling-info-page.dark-mode .item-title {
+  color: #81c784;
 }
 
 .title-number {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 50px;
@@ -191,6 +271,10 @@
   font-size: 28px;
   font-weight: 900;
   flex-shrink: 0;
+}
+
+.recycling-info-page.dark-mode .title-number {
+  background: #66bb6a;
 }
 
 .recycle-badge {
@@ -209,7 +293,7 @@
 .item-steps {
   list-style: none;
   padding: 0;
-  margin-bottom: 28px;
+  margin: 0 0 28px 0;
 }
 
 .item-steps li {
@@ -218,10 +302,15 @@
   font-size: 16px;
   color: #333;
   line-height: 1.6;
+  margin: 0;
+}
+
+.recycling-info-page.dark-mode .item-steps li {
+  color: #d0d0d0;
 }
 
 .item-steps li:before {
-  content: "✓";
+  content: "";
   position: absolute;
   left: 0;
   top: 12px;
@@ -242,12 +331,28 @@
   padding: 20px;
   border-radius: 12px;
   border-left: 4px solid #4caf50;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
-/* DECYCLE SECTION */
+.recycling-info-page.dark-mode .item-facts {
+  background: #1a3a1a;
+  border-left-color: #66bb6a;
+  color: #d0d0d0;
+}
+
+.item-facts p {
+  margin: 8px 0;
+}
+
+/* Decycle Section */
 .decycle-section {
   padding: 100px 24px;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(245, 245, 245, 0.9);
+}
+
+.recycling-info-page.dark-mode .decycle-section {
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .decycle-container {
@@ -258,9 +363,13 @@
 
 .section-subtitle {
   font-size: 20px;
-  color: rgba(255, 255, 255, 0.9);
+  color: #666;
   font-weight: 300;
-  margin-bottom: 48px;
+  margin: 0 0 48px 0;
+}
+
+.recycling-info-page.dark-mode .section-subtitle {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .decycle-grid {
@@ -274,42 +383,63 @@
   padding: 32px 24px;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.recycling-info-page.dark-mode .decycle-card {
+  background: #2a2a2a;
+  color: #e0e0e0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .decycle-card:hover {
   transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 }
 
 .decycle-card h3 {
   font-size: 24px;
   color: #d32f2f;
-  margin-bottom: 12px;
+  margin: 0 0 12px 0;
 }
 
 .decycle-card p {
   font-size: 15px;
   color: #666;
+  margin: 0;
 }
 
-/* CTA SECTION */
+.recycling-info-page.dark-mode .decycle-card p {
+  color: #b0b0b0;
+}
+
+/* CTA Section */
 .cta-section {
   background: linear-gradient(135deg, #2e7d32, #43a047);
   padding: 100px 24px;
   text-align: center;
 }
 
+.recycling-info-page.dark-mode .cta-section {
+  background: linear-gradient(135deg, #1a4d2b, #2d6a3d);
+}
+
+.cta-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .cta-container h2 {
   font-size: 48px;
   color: white;
-  margin-bottom: 16px;
+  margin: 0 0 16px 0;
   font-weight: 800;
 }
 
 .cta-container p {
   font-size: 22px;
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 32px;
+  margin: 0 0 32px 0;
 }
 
 .cta-button {
@@ -329,24 +459,28 @@
   box-shadow: 0 10px 25px rgba(76, 175, 80, 0.5);
 }
 
-/* RESPONSIVE DESIGN */
+.recycling-info-page.dark-mode .cta-button {
+  background: linear-gradient(90deg, #66bb6a, #4caf50);
+}
+
 @media (max-width: 968px) {
   .item-container {
     grid-template-columns: 1fr;
+    gap: 40px;
   }
-
+  .item-image-chart-wrapper {
+    flex-direction: column;
+    gap: 30px;
+  }
   .page-title {
     font-size: 42px;
   }
-
   .section-title {
     font-size: 32px;
   }
-
   .item-title {
     font-size: 28px;
   }
-
   .item-content {
     padding: 36px 28px;
   }
@@ -356,12 +490,28 @@
   .page-title {
     font-size: 36px;
   }
-
+  .page-subtitle {
+    font-size: 18px;
+  }
   .cta-container h2 {
     font-size: 32px;
   }
-
   .cta-container p {
     font-size: 18px;
+  }
+  .item-image {
+    max-width: 200px;
+  }
+  .item-section {
+    padding: 60px 24px;
+  }
+  .stats-section {
+    padding: 60px 24px;
+  }
+  .decycle-section {
+    padding: 60px 24px;
+  }
+  .cta-section {
+    padding: 60px 24px;
   }
 }

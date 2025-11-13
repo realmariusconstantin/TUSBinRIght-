@@ -166,6 +166,12 @@ export default {
 .page {
   font-family: 'Inter', sans-serif;
   padding: 1rem;
+  color: var(--text-primary);
+}
+
+.page h1 {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 table {
@@ -174,16 +180,33 @@ table {
   table-layout: fixed;
 }
 
+tbody tr {
+  background: var(--bg-primary);
+  transition: background-color 0.3s ease;
+}
+
+tbody tr:hover {
+  background: var(--bg-secondary);
+}
+
 td,
 th {
   padding: 0.6rem 1rem;
   text-align: left;
   vertical-align: middle;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--border-color);
   height: 48px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: border-color 0.3s ease;
+  color: var(--text-primary);
+}
+
+th {
+  background: #00ADB5;
+  color: white;
+  font-weight: 600;
 }
 
 td:first-child {
@@ -192,13 +215,22 @@ td:first-child {
 
 .input,
 select {
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 6px;
-  background-color: #fff;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
   height: 34px;
   font-size: 0.95rem;
   padding: 0 0.6rem;
   box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent-green);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
 }
 
 td:last-child {
@@ -214,8 +246,17 @@ button {
   align-items: center;
   justify-content: center;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
   cursor: pointer;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--accent-green);
+  color: white;
+  border-color: var(--accent-green);
 }
 
 .form {
@@ -223,6 +264,11 @@ button {
   gap: 0.5rem;
   margin-bottom: 1.5rem;
   align-items: center;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
 }
 
 /* Pagination Styles */
@@ -233,10 +279,11 @@ button {
   gap: 12px;
   margin-top: 30px;
   padding: 20px;
-  background: linear-gradient(145deg, #ffffff 0%, #f7f9fc 100%);
+  background: var(--bg-secondary);
   border-radius: 12px;
-  border: 1px solid rgba(15, 23, 42, 0.1);
+  border: 1px solid var(--border-color);
   flex-wrap: wrap;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .pagination-btn {
@@ -272,20 +319,18 @@ button {
   width: 36px;
   height: 36px;
   padding: 0;
-  border: 1px solid #ccc;
-  background: white;
-  color: #333;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.2s ease;
-  min-width: 0;
-  height: 36px;
 }
 
 .page-number:hover {
-  border-color: #4CAF50;
-  color: #4CAF50;
+  border-color: var(--accent-green);
+  color: var(--accent-green);
 }
 
 .page-number.active {
@@ -296,7 +341,7 @@ button {
 
 .pagination-info {
   font-size: 14px;
-  color: #666;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 

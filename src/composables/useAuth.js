@@ -29,12 +29,37 @@ export function useAuth() {
         return { success: false };
       }
     } catch (e) {
-      if (e.response?.data?.errors) {
-        errors.value = e.response.data.errors;
-      } else {
-        errors.value = { general: e?.response?.data?.message || 'Login failed.' };
+      const errorData = e.response?.data || {};
+      
+      // Handle rate limiting (429 status)
+      if (e.response?.status === 429) {
+        errors.value = { general: errorData.message || 'Too many login attempts' };
+        return { 
+          success: false, 
+          data: {
+            rateLimited: true,
+            message: errorData.message,
+            remainingTime: errorData.remaining_time,
+            attemptsRemaining: errorData.attempts_remaining
+          }
+        };
       }
-      return { success: false };
+      
+      // Handle general errors
+      if (errorData.errors) {
+        errors.value = errorData.errors;
+      } else {
+        errors.value = { general: errorData.message || 'Login failed.' };
+      }
+      
+      // Return attempts remaining if available
+      return { 
+        success: false, 
+        data: {
+          rateLimited: false,
+          attemptsRemaining: errorData.attempts_remaining
+        }
+      };
     } finally {
       isLoading.value = false;
     }
