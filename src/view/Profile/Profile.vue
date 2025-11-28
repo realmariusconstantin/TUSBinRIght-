@@ -23,6 +23,17 @@
         </div>
       </div>
 
+        <!-- Avatar upload & preview -->
+        <div class="avatar-upload" style="margin-bottom:18px; text-align:center;">
+          <img
+            v-if="avatarPreview || user.avatarUrl"
+            :src="avatarPreview || user.avatarUrl"
+            alt="Avatar Preview"
+            style="width:96px; height:96px; object-fit:cover; border-radius:50%; border:1px solid #e5e7eb; margin-bottom:10px;"
+          />
+          <input type="file" accept="image/*" @change="onAvatarChange" style="display:block; margin:0 auto;" />
+        </div>
+
       <div v-if="message" :class="['alert', messageType]">{{ message }}</div>
 
       <!-- Account edit -->
@@ -71,6 +82,21 @@
       <button class="btn btn-danger full-width" @click="logoutNow">Log out</button>
     </div>
   </section>
+
+          // Avatar upload feature
+          const selectedAvatar = ref(null)
+          const avatarPreview = ref('')
+
+          function onAvatarChange(e) {
+            const file = e.target.files[0]
+            if (file) {
+              selectedAvatar.value = file
+              avatarPreview.value = URL.createObjectURL(file)
+            } else {
+              selectedAvatar.value = null
+              avatarPreview.value = ''
+            }
+          }
 </template>
 
 <script setup>
@@ -121,7 +147,18 @@ async function saveProfile() {
   if (!email.value) return toast('Email is required.', 'error')
   saving.value = true
   try {
-    await api.put('/api/me/email', { email: email.value, name: name.value })
+    // Avatar upload logic
+    if (selectedAvatar.value) {
+      const form = new FormData()
+      form.append('email', email.value)
+      form.append('name', name.value)
+      form.append('avatar', selectedAvatar.value)
+      await api.put('/api/me/email', form, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
+    } else {
+      await api.put('/api/me/email', { email: email.value, name: name.value })
+    }
     await refreshUser()
     toast('Profile updated successfully.')
   } catch (e) {
