@@ -5,8 +5,8 @@ import { useCharts } from '@/composables/useCharts'
 import { useDarkMode } from '@/composables/useDarkMode'
 import ChartComponent from '@/components/ChartComponent.vue'
 
-// current user info
 const me = ref({ id: '', name: '', email: '' })
+
 const recyclingSummary = ref({
   can: 0,
   plastic: 0,
@@ -15,100 +15,128 @@ const recyclingSummary = ref({
   total: 0
 })
 
-// composables
-const { getUserMaterialChart, getChartOptions, getPieChartOptions } = useCharts()
+const materialChartData = ref({
+  Plastic: { count: 0, carbonSaved: 0, drivingMinutes: 0 },
+  Glass: { count: 0, carbonSaved: 0, drivingMinutes: 0 },
+  Cans: { count: 0, carbonSaved: 0, drivingMinutes: 0 },
+  Paper: { count: 0, carbonSaved: 0, drivingMinutes: 0 }
+})
+
+const MATERIAL_MAP = {
+  1: 'Plastic',
+  2: 'Cans',
+  3: 'Glass',
+  4: 'Paper'
+}
+
+const IMPACT_FACTORS = {
+  Plastic: { carbon: 0.05, drive: 0.3 },
+  Glass:   { carbon: 0.03, drive: 0.2 },
+  Cans:    { carbon: 0.07, drive: 0.4 },
+  Paper:   { carbon: 0.02, drive: 0.1 }
+}
+
+const { getPieChartOptions } = useCharts()
 const { isDarkMode } = useDarkMode()
 
-// modals
 const showEmailModal = ref(false)
 const showPasswordModal = ref(false)
 
-// edit form
 const newEmail = ref('')
 const currentPassword = ref('')
 const newPassword = ref('')
 const confirmPassword = ref('')
+
 const showPassword = ref(false)
 const showNewPassword = ref(false)
 const showConfirmPassword = ref(false)
 
-// messages
 const emailMsg = ref('')
 const pwdMsg = ref('')
 const loading = ref(false)
 
-// material names mapping
-const materialNames = {
-  1: 'Can',
-  2: 'Plastic',
-  3: 'Paper',
-  4: 'Glass'
-}
+async function loadUserScans() {
+  try {
+    const userId = me.value.id
+    if (!userId) return
 
-// material icons mapping
-const materialIcons = {
-  'Can': 'fas fa-trash',
-  'Plastic': 'fas fa-bottle-water',
-  'Paper': 'fas fa-file-alt',
-  'Glass': 'fas fa-wine-glass-alt'
+    const { data } = await api.get(`/user-scans/${userId}`)
+    if (data?.status !== 'success') return
+
+    const counts = { Plastic: 0, Cans: 0, Paper: 0, Glass: 0 }
+
+    data.scans.forEach(scan => {
+      const type = MATERIAL_MAP[Number(scan.item_type_id)]
+      if (type) counts[type]++
+    })
+
+    recyclingSummary.value = {
+      can: counts.Cans,
+      plastic: counts.Plastic,
+      paper: counts.Paper,
+      glass: counts.Glass,
+      total: counts.Cans + counts.Plastic + counts.Paper + counts.Glass
+    }
+
+    materialChartData.value = Object.fromEntries(
+      Object.entries(counts).map(([key, count]) => [
+        key,
+        {
+          count,
+          carbonSaved: count * IMPACT_FACTORS[key].carbon,
+          drivingMinutes: count * IMPACT_FACTORS[key].drive
+        }
+      ])
+    )
+  } catch (err) {
+    console.error('Failed to load user scans:', err)
+  }
 }
 
 async function loadMe() {
   try {
     const { data } = await api.get('/profile')
-    if (data?.status === 'success' && data?.user) {
-      me.value = data.user
-      newEmail.value = data.user.email
-      await loadRecyclingSummary()
-    } else {
+    if (data?.status !== 'success') {
       alert('Failed to load profile. Please log in again.')
-      window.location.href = '/login'
+      return (window.location.href = '/login')
     }
-  } catch (err) {
-    console.error('Failed to load profile:', err)
+
+    me.value = data.user
+    newEmail.value = data.user.email
+
+    await loadUserScans()
+  } catch {
     alert('Session expired. Please log in again.')
     window.location.href = '/login'
   }
 }
 
-async function loadRecyclingSummary() {
-  try {
-    const { data } = await api.get(`/profile/recycling-summary`)
-    if (data?.status === 'success' && data?.summary) {
-      recyclingSummary.value = data.summary
-    }
-  } catch (err) {
-    console.error('Failed to load recycling summary:', err)
-  }
-}
-
-// update email
 async function updateEmail() {
   if (!newEmail.value) {
     emailMsg.value = 'Please enter a valid email'
     return
   }
+
   loading.value = true
   try {
     const { data } = await api.put('/profile/email', { email: newEmail.value })
     if (data?.status === 'success') {
-      emailMsg.value = '✅ Email updated successfully'
+      emailMsg.value = 'Email updated successfully'
       me.value.email = newEmail.value
       setTimeout(() => {
         showEmailModal.value = false
         emailMsg.value = ''
       }, 1500)
     } else {
-      emailMsg.value = '❌ ' + (data?.message || 'Failed to update email')
+      emailMsg.value = data?.message || 'Failed to update email'
     }
   } catch (err) {
-    emailMsg.value = '❌ ' + (err.response?.data?.message || 'Failed to update email')
+    emailMsg.value = err.response?.data?.message || 'Failed to update email'
   } finally {
     loading.value = false
   }
 }
 
-// update password
 async function updatePassword() {
   if (!currentPassword.value || !newPassword.value || !confirmPassword.value) {
     pwdMsg.value = 'All password fields are required'
@@ -123,10 +151,11 @@ async function updatePassword() {
   try {
     const { data } = await api.put('/profile/password', {
       currentPassword: currentPassword.value,
-      newPassword: newPassword.value,
+      newPassword: newPassword.value
     })
+
     if (data?.status === 'success') {
-      pwdMsg.value = '✅ Password changed successfully'
+      pwdMsg.value = 'Password changed successfully'
       currentPassword.value = ''
       newPassword.value = ''
       confirmPassword.value = ''
@@ -135,33 +164,13 @@ async function updatePassword() {
         pwdMsg.value = ''
       }, 1500)
     } else {
-      pwdMsg.value = '❌ ' + (data?.message || 'Failed to update password')
+      pwdMsg.value = data?.message || 'Failed to update password'
     }
   } catch (err) {
-    pwdMsg.value = '❌ ' + (err.response?.data?.message || 'Failed to update password')
+    pwdMsg.value = err.response?.data?.message || 'Failed to update password'
   } finally {
     loading.value = false
   }
-}
-
-function openEmailModal() {
-  emailMsg.value = ''
-  showEmailModal.value = true
-}
-
-function openPasswordModal() {
-  pwdMsg.value = ''
-  showPasswordModal.value = true
-}
-
-function closeEmailModal() {
-  showEmailModal.value = false
-  emailMsg.value = ''
-}
-
-function closePasswordModal() {
-  showPasswordModal.value = false
-  pwdMsg.value = ''
 }
 
 function logout() {
@@ -169,22 +178,32 @@ function logout() {
 }
 
 const userInitials = computed(() => {
-  if (me.value.name) {
-    return me.value.name.split(' ').map(n => n[0]).join('').toUpperCase()
-  }
-  return me.value.email ? me.value.email[0].toUpperCase() : '?'
+  if (me.value.name) return me.value.name.split(' ').map(n => n[0]).join('').toUpperCase()
+  return me.value.email?.[0]?.toUpperCase() || '?'
 })
 
-// Computed properties for user material charts
-const plasticChartData = computed(() => getUserMaterialChart('Plastic'))
-const glassChartData = computed(() => getUserMaterialChart('Glass'))
-const cansChartData = computed(() => getUserMaterialChart('Cans'))
-const paperChartData = computed(() => getUserMaterialChart('Paper'))
+function materialChart(type) {
+  return computed(() => {
+    const m = materialChartData.value[type]
+    return {
+      labels: ['Recycled', 'Remaining'],
+      datasets: [{ data: [m.count, Math.max(50 - m.count, 0)] }],
+      drivingMinutes: m.drivingMinutes,
+      carbonSaved: m.carbonSaved
+    }
+  })
+}
+
+const plasticChartData = materialChart('Plastic')
+const glassChartData = materialChart('Glass')
+const cansChartData = materialChart('Cans')
+const paperChartData = materialChart('Paper')
 
 const chartOptions = computed(() => getPieChartOptions(isDarkMode.value))
 
 onMounted(loadMe)
 </script>
+
 
 <template>
   <div class="container">
@@ -276,44 +295,62 @@ onMounted(loadMe)
     <div class="charts-section">
       <h2>Your Carbon Savings by Material</h2>
       <p class="charts-subtitle">See how much carbon you've saved by recycling each material</p>
+
       <div class="charts-grid">
+
+        <!-- Plastic -->
         <div class="chart-card">
           <div class="chart-title">🥤 Plastic</div>
           <ChartComponent
             chartType="doughnut"
             :chartData="plasticChartData.datasets ? { labels: plasticChartData.labels, datasets: plasticChartData.datasets } : {}"
             :chartOptions="chartOptions"
-            :stats="{ carbonSaved: plasticChartData.datasets ? 12.5 : 0, drivingMinutes: plasticChartData.drivingMinutes }"
+            :stats="{ 
+              carbonSaved: plasticChartData.carbonSaved,
+              drivingMinutes: plasticChartData.drivingMinutes 
+            }"
           />
         </div>
 
+        <!-- Glass -->
         <div class="chart-card">
           <div class="chart-title">🍾 Glass</div>
           <ChartComponent
             chartType="doughnut"
             :chartData="glassChartData.datasets ? { labels: glassChartData.labels, datasets: glassChartData.datasets } : {}"
             :chartOptions="chartOptions"
-            :stats="{ carbonSaved: glassChartData.datasets ? 8.3 : 0, drivingMinutes: glassChartData.drivingMinutes }"
+            :stats="{ 
+              carbonSaved: glassChartData.carbonSaved,
+              drivingMinutes: glassChartData.drivingMinutes 
+            }"
           />
         </div>
 
+        <!-- Cans -->
         <div class="chart-card">
           <div class="chart-title">🥫 Cans</div>
           <ChartComponent
             chartType="doughnut"
             :chartData="cansChartData.datasets ? { labels: cansChartData.labels, datasets: cansChartData.datasets } : {}"
             :chartOptions="chartOptions"
-            :stats="{ carbonSaved: cansChartData.datasets ? 15.7 : 0, drivingMinutes: cansChartData.drivingMinutes }"
+            :stats="{ 
+              carbonSaved: cansChartData.carbonSaved,
+              drivingMinutes: cansChartData.drivingMinutes 
+            }"
           />
         </div>
 
+        <!-- Paper -->
         <div class="chart-card">
           <div class="chart-title">📄 Paper</div>
           <ChartComponent
             chartType="doughnut"
             :chartData="paperChartData.datasets ? { labels: paperChartData.labels, datasets: paperChartData.datasets } : {}"
             :chartOptions="chartOptions"
-            :stats="{ carbonSaved: paperChartData.datasets ? 20.1 : 0, drivingMinutes: paperChartData.drivingMinutes }"
+            :stats="{ 
+              carbonSaved: paperChartData.carbonSaved,
+              drivingMinutes: paperChartData.drivingMinutes 
+            }"
           />
         </div>
       </div>
