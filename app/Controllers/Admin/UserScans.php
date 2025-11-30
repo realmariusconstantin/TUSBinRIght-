@@ -83,4 +83,24 @@ class UserScans extends ResourceController
             'message' => $result[0]['message'] ?? 'Failed to create scan'
         ]);
     }
+
+    // GET /user-scans/userId
+    public function getScansByUser($user_id)
+    {
+        if (!$user_id) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'User ID is required'
+            ]);
+        }
+
+        $scans = $this->model->getUserScansByUserId($user_id);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'user_id' => $user_id,
+            'total' => count($scans),
+            'scans' => $scans
+        ]);
+    }
 }
