@@ -37,6 +37,13 @@
     </section>
 </template>
 
+                            <!-- Remember Me checkbox -->
+                            <div style="margin-bottom:12px;">
+                                <label style="display:flex;align-items:center;gap:8px;">
+                                    <input type="checkbox" v-model="rememberMe" />
+                                    Remember Me
+                                </label>
+                            </div>
 <script setup>
 import { ref } from 'vue';
 import { useAuth } from '@/composables/useAuth';

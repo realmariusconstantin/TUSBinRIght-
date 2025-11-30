@@ -8,7 +8,11 @@ import PlasticPage from '@/view/Materials/Plastic.vue';
 import CanPage from '@/view/Materials/Can.vue';
 import GlassPage from '@/view/Materials/Glass.vue';
 import PaperPage from '@/view/Materials/Paper.vue';
+<<<<<<< Updated upstream
 import Profile from '@/view/Profile/Profile.vue';
+=======
+import ProtectedPage from '@/view/Profile/ProtectedPage.vue';
+>>>>>>> Stashed changes
 import RecyclingInfo from '@/view/RecyclingInfo/RecyclingInfo.vue';
 
 // Admin pages
