@@ -547,4 +547,22 @@ BEGIN
 END$$
 
 
+CREATE PROCEDURE GetUserScansByUserId(IN p_user_id INT)
+BEGIN
+    SELECT
+        us.id AS scan_id,
+        us.user_id,
+        u.name AS user_name,
+        it.id AS item_type_id,
+        it.name AS item_type,
+        it.description AS item_description,
+        us.created_at
+    FROM userscan us
+    INNER JOIN users u ON us.user_id = u.id
+    INNER JOIN itemtype it ON us.item_type_id = it.id
+    WHERE us.user_id = p_user_id
+    ORDER BY us.created_at DESC;
+END$$
+
+
 DELIMITER ;
