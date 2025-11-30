@@ -3,7 +3,7 @@
     <h1>Users</h1>
 
     <DataTable :headers="['ID', 'User', 'Email', 'Type', 'Actions']">
-      <tr v-for="u in users" :key="u.id">
+      <tr v-for="u in paginatedUsers" :key="u.id">
         <td>{{ u.id }}</td>
         <td>
           <InputField v-if="editId === u.id" v-model="editData.user" />
@@ -27,6 +27,41 @@
         </td>
       </tr>
     </DataTable>
+
+    <!-- Pagination -->
+    <div class="pagination" v-if="totalPages > 1">
+      <button 
+        @click="currentPage = Math.max(1, currentPage - 1)" 
+        :disabled="currentPage === 1"
+        class="pagination-btn"
+      >
+        <i class="fas fa-chevron-left"></i> Previous
+      </button>
+
+      <div class="page-numbers">
+        <button 
+          v-for="page in visiblePages" 
+          :key="page"
+          @click="currentPage = page"
+          :class="{ active: currentPage === page }"
+          class="page-number"
+        >
+          {{ page }}
+        </button>
+      </div>
+
+      <button 
+        @click="currentPage = Math.min(totalPages, currentPage + 1)" 
+        :disabled="currentPage === totalPages"
+        class="pagination-btn"
+      >
+        Next <i class="fas fa-chevron-right"></i>
+      </button>
+
+      <span class="pagination-info">
+        Page {{ currentPage }} of {{ totalPages }} ({{ users.length }} total users)
+      </span>
+    </div>
   </div>
 </template>
 
@@ -43,8 +78,39 @@ export default {
     return {
       users: [],
       editId: null,
-      editData: { user: '', email: '', user_type_id: '' }
+      editData: { user: '', email: '', user_type_id: '' },
+      currentPage: 1,
+      itemsPerPage: 10
     };
+  },
+  computed: {
+    totalPages() {
+      return Math.ceil(this.users.length / this.itemsPerPage);
+    },
+    paginatedUsers() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.users.slice(start, end);
+    },
+    visiblePages() {
+      const pages = [];
+      const maxVisible = 5;
+      const half = Math.floor(maxVisible / 2);
+
+      let start = Math.max(1, this.currentPage - half);
+      let end = Math.min(this.totalPages, this.currentPage + half);
+
+      if (start === 1) {
+        end = Math.min(this.totalPages, maxVisible);
+      } else if (end === this.totalPages) {
+        start = Math.max(1, this.totalPages - maxVisible + 1);
+      }
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+      return pages;
+    }
   },
   async mounted() {
     await this.loadUsers();
@@ -53,6 +119,7 @@ export default {
     async loadUsers() {
       const { data } = await api.get('/admin/users');
       this.users = data.users;
+      this.currentPage = 1;
     },
     editUser(user) {
       this.editId = user.id;
@@ -76,6 +143,12 @@ export default {
 .page { 
   font-family: 'Inter', sans-serif; 
   padding: 1rem;
+  color: var(--text-primary);
+}
+
+.page h1 {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 table {
@@ -84,15 +157,32 @@ table {
   table-layout: fixed;
 }
 
+tbody tr {
+  background: var(--bg-primary);
+  transition: background-color 0.3s ease;
+}
+
+tbody tr:hover {
+  background: var(--bg-secondary);
+}
+
 td, th {
   padding: 0.6rem 1rem;
   text-align: left;
   vertical-align: middle;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--border-color);
   height: 48px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: border-color 0.3s ease;
+  color: var(--text-primary);
+}
+
+th {
+  background: #00ADB5;
+  color: white;
+  font-weight: 600;
 }
 
 td:first-child {
@@ -112,13 +202,24 @@ select {
   border-radius: 6px;
   border: 1px solid transparent;
   padding: 0 0.6rem;
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .input,
 input,
 select {
-  border: 1px solid #ccc;
-  background-color: #fff;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.input:focus,
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent-green);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
 }
 
 td:last-child {
@@ -137,9 +238,114 @@ button {
   text-align: center;
   font-size: 0.9rem;
   border-radius: 6px;
-  border: 1px solid #ccc;
-  background-color: #f7f7f7;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
   cursor: pointer;
   padding: 0;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--accent-green);
+  color: white;
+  border-color: var(--accent-green);
+}
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 30px;
+  padding: 20px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.pagination-btn {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 6px;
+}
+
+.page-number {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.page-number:hover {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.page-number.active {
+  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+  color: white;
+  border-color: #4CAF50;
+}
+
+.pagination-info {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    gap: 8px;
+  }
+
+  .pagination-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .page-number {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .pagination-info {
+    flex-basis: 100%;
+    text-align: center;
+    order: 4;
+  }
 }
 </style>

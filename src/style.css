@@ -1,0 +1,145 @@
+/* Global CSS Variables - Color Palette from Design */
+:root {
+  /* Light Mode Colors */
+  --bg-primary: #F8FAF9;
+  --bg-secondary: #FFFFFF;
+  --text-primary: #181B1B;
+  --text-secondary: #4A5A4F;
+  --accent-green: #4CAF50;
+  --accent-green-dark: #2E7D32;
+  --border-color: #DCE0DE;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --button-bg: #4CAF50;
+  --button-hover: #43A047;
+  --gradient-start: #43A047;
+  --gradient-end: #66BB6A;
+}
+
+:root[data-theme="dark"] {
+  /* Dark Mode Colors from screenshot */
+  --bg-primary: #0E1A14;
+  --bg-secondary: #1B2822;
+  --text-primary: #E5EDE7;
+  --text-secondary: #86CBEF;
+  --accent-green: #2E7D32;
+  --accent-green-dark: #1B5E20;
+  --border-color: #27402F;
+  --shadow: rgba(0, 0, 0, 0.4);
+  --button-bg: #2E7D32;
+  --button-hover: #388E3C;
+  --gradient-start: #1B5E20;
+  --gradient-end: #2E7D32;
+}
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Remove default button styles */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Links */
+a {
+  color: var(--accent-green);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-green-dark);
+}
+
+/* Input styles */
+input,
+textarea,
+select {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent-green);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+/* Form elements */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-green);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-green-dark);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-color: var(--accent-green) var(--bg-primary);
+  scrollbar-width: thin;
+}
+
+/* Smooth transitions for theme switching */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+button,
+a {
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Ensure elements fill the viewport */
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}

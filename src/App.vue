@@ -2,17 +2,29 @@
   <div id="app">
     <Navbar />
     <RouterView />
-    <Footer />
+    <Footer v-if="!isAdminRoute" />
   </div>
 </template>
 
-<script>
-import { RouterView } from 'vue-router';
-import Navbar from './components/navbar/nav.vue';
-import Footer from './components/Footer/Footer.vue';
+<script setup>
+import { onMounted, computed } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
+import Navbar from './components/navbar/nav.vue'
+import Footer from './components/Footer/Footer.vue'
+import { useDarkMode } from '@/composables/useDarkMode'
 
-export default {
-  name: 'App',
-  components: { RouterView, Navbar, Footer }
-};
+const route = useRoute()
+const { initializeDarkMode } = useDarkMode()
+
+// Hide footer on admin routes
+const isAdminRoute = computed(() => {
+  return route.path.startsWith('/admin')
+})
+
+// Initialize dark mode on app mount
+onMounted(() => {
+  initializeDarkMode()
+  console.log('✅ App initialized with dark mode support')
+})
 </script>
+
