@@ -83,7 +83,7 @@ export function useAuth() {
     isLoading.value = true;
     try {
       console.log('Fetching user profile...');
-      const { data } = await api.get('/profile');
+      const { data } = await api.get('/me');
       console.log('Profile response:', data);
       
       if (data.status === 'success') {
