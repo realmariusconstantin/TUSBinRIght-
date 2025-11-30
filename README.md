@@ -23,13 +23,14 @@ Renova implements all these requirements and adds extra features like CO₂ stat
 1. Place the **backend branch** into your **htdocs** directory (e.g., XAMPP).  
 2. Open the `.env` file and update your database credentials if required.  
 3. Import the SQL dump:
+   tusbinright_new.sql, this will create the tables and populate the required data structure.
 
 ## Frontend Setup (Branch: `master`)
 You can run the frontend anywhere, but **htdocs is recommended**.
 
 1. Open the frontend folder  
-2. Install dependencies:
-3. Run the app:
+2. Install dependencies: npm install
+3. Run the app: npm run dev
 
 ## Recommended Login (Admin Access)
 **Email:** `k00294842@student.tus.ie`  
