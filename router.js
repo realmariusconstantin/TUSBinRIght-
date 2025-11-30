@@ -9,10 +9,10 @@ import PlasticPage from '@/view/Materials/Plastic.vue';
 import CanPage from '@/view/Materials/Can.vue';
 import GlassPage from '@/view/Materials/Glass.vue';
 import PaperPage from '@/view/Materials/Paper.vue';
-import Profile from '@/view/Profile/Profile.vue';
+
 
 import RecyclingInfo from '@/view/RecyclingInfo/RecyclingInfo.vue';
-import ProfilePage from '@/view/ProfilePage.vue';
+import ProfilePage from '@/view/Profile/ProfilePage.vue';
 
 // Admin pages
 import AdminLayout from '@/components/Panel/AdminLayout.vue'
@@ -68,16 +68,11 @@ const routes = [
     },
     { 
         path: '/profile', 
-        component: Profile,
+        component: ProfilePage,
         meta: { requiresAuth: true }
         // Protected route - placeholder for user profile (to be implemented by colleagues)
     },
-    {
-
-        path: '/profile', 
-        component: ProfilePage,
-        meta: { requiresAuth: true }
-    },
+    
     { 
 
         path: '/admin',

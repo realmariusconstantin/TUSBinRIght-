@@ -92,17 +92,17 @@ async function updateEmail() {
   try {
     const { data } = await api.put('/profile/email', { email: newEmail.value })
     if (data?.status === 'success') {
-      emailMsg.value = '✅ Email updated successfully'
+      emailMsg.value = 'Email updated successfully'
       me.value.email = newEmail.value
       setTimeout(() => {
         showEmailModal.value = false
         emailMsg.value = ''
       }, 1500)
     } else {
-      emailMsg.value = '❌ ' + (data?.message || 'Failed to update email')
+      emailMsg.value = '' + (data?.message || 'Failed to update email')
     }
   } catch (err) {
-    emailMsg.value = '❌ ' + (err.response?.data?.message || 'Failed to update email')
+    emailMsg.value = '' + (err.response?.data?.message || 'Failed to update email')
   } finally {
     loading.value = false
   }
@@ -126,7 +126,7 @@ async function updatePassword() {
       newPassword: newPassword.value,
     })
     if (data?.status === 'success') {
-      pwdMsg.value = '✅ Password changed successfully'
+      pwdMsg.value = 'Password changed successfully'
       currentPassword.value = ''
       newPassword.value = ''
       confirmPassword.value = ''
@@ -135,10 +135,10 @@ async function updatePassword() {
         pwdMsg.value = ''
       }, 1500)
     } else {
-      pwdMsg.value = '❌ ' + (data?.message || 'Failed to update password')
+      pwdMsg.value = '' + (data?.message || 'Failed to update password')
     }
   } catch (err) {
-    pwdMsg.value = '❌ ' + (err.response?.data?.message || 'Failed to update password')
+    pwdMsg.value = ' ' + (err.response?.data?.message || 'Failed to update password')
   } finally {
     loading.value = false
   }
@@ -278,7 +278,7 @@ onMounted(loadMe)
       <p class="charts-subtitle">See how much carbon you've saved by recycling each material</p>
       <div class="charts-grid">
         <div class="chart-card">
-          <div class="chart-title">🥤 Plastic</div>
+          <div class="chart-title">🥤Plastic</div>
           <ChartComponent
             chartType="doughnut"
             :chartData="plasticChartData.datasets ? { labels: plasticChartData.labels, datasets: plasticChartData.datasets } : {}"
@@ -298,7 +298,7 @@ onMounted(loadMe)
         </div>
 
         <div class="chart-card">
-          <div class="chart-title">🥫 Cans</div>
+          <div class="chart-title">Cans</div>
           <ChartComponent
             chartType="doughnut"
             :chartData="cansChartData.datasets ? { labels: cansChartData.labels, datasets: cansChartData.datasets } : {}"
@@ -308,7 +308,7 @@ onMounted(loadMe)
         </div>
 
         <div class="chart-card">
-          <div class="chart-title">📄 Paper</div>
+          <div class="chart-title">Paper</div>
           <ChartComponent
             chartType="doughnut"
             :chartData="paperChartData.datasets ? { labels: paperChartData.labels, datasets: paperChartData.datasets } : {}"
