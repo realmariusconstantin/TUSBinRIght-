@@ -1,13 +1,19 @@
 import { ref } from 'vue'
+import api from '@/lib/api'
+
+// Cache for community data
+const communityDataCache = ref(null)
+const communityDataLoading = ref(false)
 
 export function useCharts() {
-  // Carbon savings data (in kg CO2)
-  const getCarbonSavings = () => ({
-    plastic: 12.5,
-    glass: 8.3,
-    cans: 15.7,
-    paper: 20.1
-  })
+  // Carbon savings per item (kg CO2) - must match backend values
+  const carbonPerItem = {
+    plastic: 0.08,  // ~80g CO2 per plastic bottle
+    glass: 0.05,    // ~50g CO2 per glass item
+    can: 0.06,      // ~60g CO2 per can
+    cans: 0.06,
+    paper: 0.03     // ~30g CO2 per paper item
+  }
 
   // Convert CO2 to driving minutes (average car emits ~0.21 kg CO2/km)
   const convertCO2ToDrivingMinutes = (kgCO2) => {
@@ -16,18 +22,73 @@ export function useCharts() {
     return Math.round(minsAtAveragePace)
   }
 
+  // Calculate carbon saved from recycling count
+  const calculateCarbonSaved = (material, count) => {
+    const key = material.toLowerCase()
+    return count * (carbonPerItem[key] || 0.05)
+  }
+
+  // Fetch community stats from API
+  const fetchCommunityStats = async () => {
+    if (communityDataCache.value) {
+      return communityDataCache.value
+    }
+
+    if (communityDataLoading.value) {
+      // Wait for existing request
+      return new Promise(resolve => {
+        const check = setInterval(() => {
+          if (!communityDataLoading.value) {
+            clearInterval(check)
+            resolve(communityDataCache.value)
+          }
+        }, 100)
+      })
+    }
+
+    communityDataLoading.value = true
+    try {
+      const { data } = await api.get('/community-stats')
+      if (data?.status === 'success') {
+        communityDataCache.value = data.community
+      }
+      return communityDataCache.value
+    } catch (error) {
+      console.error('Failed to fetch community stats:', error)
+      return null
+    } finally {
+      communityDataLoading.value = false
+    }
+  }
+
+  // Clear cache (call when new scan is added)
+  const clearCommunityCache = () => {
+    communityDataCache.value = null
+  }
+
   // Get user-specific chart data (for profile page)
-  const getUserMaterialChart = (material) => {
-    const data = getCarbonSavings()
-    const carbonSaved = data[material.toLowerCase()] || 0
+  // Now accepts user's recycling summary
+  const getUserMaterialChart = (material, recyclingSummary = null) => {
+    let count = 0
+    
+    // Get count from recycling summary if available
+    if (recyclingSummary) {
+      const key = material.toLowerCase() === 'cans' ? 'can' : material.toLowerCase()
+      count = recyclingSummary[key] || 0
+    }
+    
+    const carbonSaved = calculateCarbonSaved(material, count)
     const drivingMinutes = convertCO2ToDrivingMinutes(carbonSaved)
+    
+    // Target is double what they've saved (motivation)
+    const target = Math.max(carbonSaved * 2, 1)
 
     return {
-      labels: [material, 'Target'],
+      labels: ['Saved', 'Target'],
       datasets: [
         {
-          label: 'Carbon Saved (kg CO2)',
-          data: [carbonSaved, carbonSaved * 2], // Double as target
+          label: `${material} - Carbon Saved (kg CO2)`,
+          data: [carbonSaved, target - carbonSaved],
           backgroundColor: [
             '#4caf50',
             '#e0e0e0'
@@ -39,27 +100,37 @@ export function useCharts() {
           borderWidth: 2
         }
       ],
-      drivingMinutes
+      carbonSaved: carbonSaved.toFixed(1),
+      drivingMinutes,
+      count
     }
   }
 
   // Get community-wide chart data (for recycling info page)
-  const getCommunityMaterialChart = (material) => {
-    const communityData = {
-      plastic: { saved: 450, target: 600, users: 156 },
-      glass: { saved: 320, target: 500, users: 98 },
-      cans: { saved: 580, target: 700, users: 234 },
-      paper: { saved: 720, target: 900, users: 187 }
+  const getCommunityMaterialChart = (material, communityData = null) => {
+    if (!communityData) {
+      // Return empty data while loading
+      return {
+        labels: ['Saved', 'Target'],
+        datasets: [{ data: [0, 1], backgroundColor: ['#4caf50', '#81c784'] }],
+        users: 0,
+        communityDrivingMinutes: 0,
+        carbonSaved: 0
+      }
     }
 
-    const material_data = communityData[material.toLowerCase()] || {}
+    const key = material.toLowerCase() === 'cans' ? 'can' : material.toLowerCase()
+    const materialData = communityData[key] || { saved: 0, users: 0 }
+    
+    // Target is 150% of what's saved (community goal)
+    const target = Math.max(materialData.saved * 1.5, 10)
 
     return {
-      labels: ['Saved', 'Remaining to Target'],
+      labels: ['Saved', 'Remaining'],
       datasets: [
         {
           label: `${material} - Community Impact (kg CO2)`,
-          data: [material_data.saved, material_data.target - material_data.saved],
+          data: [materialData.saved, Math.max(0, target - materialData.saved)],
           backgroundColor: [
             '#4caf50',
             '#81c784'
@@ -68,8 +139,10 @@ export function useCharts() {
           borderWidth: 2
         }
       ],
-      users: material_data.users,
-      communityDrivingMinutes: convertCO2ToDrivingMinutes(material_data.saved)
+      users: materialData.users || 0,
+      count: materialData.count || 0,
+      carbonSaved: materialData.saved,
+      communityDrivingMinutes: convertCO2ToDrivingMinutes(materialData.saved)
     }
   }
 
@@ -142,8 +215,10 @@ export function useCharts() {
   })
 
   return {
-    getCarbonSavings,
+    calculateCarbonSaved,
     convertCO2ToDrivingMinutes,
+    fetchCommunityStats,
+    clearCommunityCache,
     getUserMaterialChart,
     getCommunityMaterialChart,
     getChartOptions,

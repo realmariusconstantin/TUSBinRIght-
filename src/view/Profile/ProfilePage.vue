@@ -6,7 +6,7 @@ import { useDarkMode } from '@/composables/useDarkMode'
 import ChartComponent from '@/components/ChartComponent.vue'
 
 // current user info
-const me = ref({ id: '', name: '', email: '' })
+const me = ref({ id: '', name: '', email: '', avatar: '' })
 const recyclingSummary = ref({
   can: 0,
   plastic: 0,
@@ -14,6 +14,64 @@ const recyclingSummary = ref({
   glass: 0,
   total: 0
 })
+
+// Profile picture
+const fileInput = ref(null)
+const isUploadingAvatar = ref(false)
+const avatarError = ref('')
+
+function openFilePicker() {
+  fileInput.value?.click()
+}
+
+async function handleAvatarUpload(event) {
+  const file = event.target.files?.[0]
+  if (!file) return
+
+  // Validate file type
+  const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+  if (!validTypes.includes(file.type)) {
+    avatarError.value = 'Please select a valid image (JPEG, PNG, GIF, or WebP)'
+    return
+  }
+
+  // Validate file size (max 5MB)
+  if (file.size > 5 * 1024 * 1024) {
+    avatarError.value = 'Image size must be less than 5MB'
+    return
+  }
+
+  avatarError.value = ''
+  isUploadingAvatar.value = true
+
+  try {
+    const formData = new FormData()
+    formData.append('avatar', file)
+
+    const { data } = await api.post('/profile/avatar', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+
+    if (data?.status === 'success') {
+      me.value.avatar = data.avatar_url
+      // Also update localStorage
+      const storedUser = localStorage.getItem('user')
+      if (storedUser) {
+        const user = JSON.parse(storedUser)
+        user.avatar = data.avatar_url
+        localStorage.setItem('user', JSON.stringify(user))
+      }
+    } else {
+      avatarError.value = data?.message || 'Failed to upload avatar'
+    }
+  } catch (err) {
+    avatarError.value = err.response?.data?.message || 'Failed to upload avatar'
+  } finally {
+    isUploadingAvatar.value = false
+    // Reset file input
+    if (fileInput.value) fileInput.value.value = ''
+  }
+}
 
 // composables
 const { getUserMaterialChart, getChartOptions, getPieChartOptions } = useCharts()
@@ -57,7 +115,7 @@ async function loadMe() {
   try {
     const { data } = await api.get('/profile')
     if (data?.status === 'success' && data?.user) {
-      me.value = data.user
+      me.value = { ...data.user, avatar: data.user.avatar || '' }
       newEmail.value = data.user.email
       await loadRecyclingSummary()
     } else {
@@ -176,10 +234,10 @@ const userInitials = computed(() => {
 })
 
 // Computed properties for user material charts
-const plasticChartData = computed(() => getUserMaterialChart('Plastic'))
-const glassChartData = computed(() => getUserMaterialChart('Glass'))
-const cansChartData = computed(() => getUserMaterialChart('Cans'))
-const paperChartData = computed(() => getUserMaterialChart('Paper'))
+const plasticChartData = computed(() => getUserMaterialChart('Plastic', recyclingSummary.value))
+const glassChartData = computed(() => getUserMaterialChart('Glass', recyclingSummary.value))
+const cansChartData = computed(() => getUserMaterialChart('Cans', recyclingSummary.value))
+const paperChartData = computed(() => getUserMaterialChart('Paper', recyclingSummary.value))
 
 const chartOptions = computed(() => getPieChartOptions(isDarkMode.value))
 
@@ -190,13 +248,30 @@ onMounted(loadMe)
   <div class="container">
     <!-- Profile Header Section -->
     <div class="profile-header">
-      <!-- Avatar -->
-      <div class="avatar">{{ userInitials }}</div>
+      <!-- Clickable Avatar with Image Upload -->
+      <div class="avatar-wrapper" @click="openFilePicker" :class="{ uploading: isUploadingAvatar }">
+        <div class="avatar" v-if="!me.avatar">{{ userInitials }}</div>
+        <img v-else :src="me.avatar" :alt="me.name" class="avatar-image" />
+        <div class="avatar-overlay">
+          <i class="fas fa-camera"></i>
+        </div>
+        <div v-if="isUploadingAvatar" class="upload-spinner">
+          <i class="fas fa-spinner fa-spin"></i>
+        </div>
+      </div>
+      <input
+        ref="fileInput"
+        type="file"
+        accept="image/jpeg,image/png,image/gif,image/webp"
+        style="display: none"
+        @change="handleAvatarUpload"
+      />
       
       <!-- User Info -->
       <div class="user-info">
         <h1>{{ me.name || 'User' }}</h1>
         <p class="user-email">{{ me.email }}</p>
+        <p v-if="avatarError" class="avatar-error">{{ avatarError }}</p>
       </div>
     </div>
 
@@ -283,7 +358,7 @@ onMounted(loadMe)
             chartType="doughnut"
             :chartData="plasticChartData.datasets ? { labels: plasticChartData.labels, datasets: plasticChartData.datasets } : {}"
             :chartOptions="chartOptions"
-            :stats="{ carbonSaved: plasticChartData.datasets ? 12.5 : 0, drivingMinutes: plasticChartData.drivingMinutes }"
+            :stats="{ carbonSaved: plasticChartData.carbonSaved || 0, drivingMinutes: plasticChartData.drivingMinutes }"
           />
         </div>
 
@@ -293,7 +368,7 @@ onMounted(loadMe)
             chartType="doughnut"
             :chartData="glassChartData.datasets ? { labels: glassChartData.labels, datasets: glassChartData.datasets } : {}"
             :chartOptions="chartOptions"
-            :stats="{ carbonSaved: glassChartData.datasets ? 8.3 : 0, drivingMinutes: glassChartData.drivingMinutes }"
+            :stats="{ carbonSaved: glassChartData.carbonSaved || 0, drivingMinutes: glassChartData.drivingMinutes }"
           />
         </div>
 
@@ -471,6 +546,74 @@ onMounted(loadMe)
   color: white;
   flex-shrink: 0;
   box-shadow: 0 8px 24px rgba(76, 175, 80, 0.3);
+}
+
+/* Avatar Upload Styles */
+.avatar-wrapper {
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.avatar-wrapper:hover .avatar-overlay {
+  opacity: 1;
+}
+
+.avatar-wrapper.uploading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.avatar-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 8px 24px rgba(76, 175, 80, 0.3);
+}
+
+.avatar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.avatar-overlay i {
+  color: white;
+  font-size: 28px;
+}
+
+.upload-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-spinner i {
+  color: white;
+  font-size: 32px;
+}
+
+.avatar-error {
+  color: #dc3545;
+  font-size: 13px;
+  margin-top: 8px;
 }
 
 .user-info h1 {

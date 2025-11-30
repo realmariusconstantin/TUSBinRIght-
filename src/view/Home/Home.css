@@ -415,3 +415,129 @@
     padding: 14px 20px;
   }
 }
+
+/* Accuracy Feedback Modal */
+.accuracy-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.accuracy-modal {
+  background: var(--bg-secondary);
+  padding: 32px;
+  border-radius: 16px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.accuracy-modal h3 {
+  margin: 0 0 16px 0;
+  font-size: 24px;
+  color: var(--text-primary);
+}
+
+.accuracy-modal p {
+  color: var(--text-secondary);
+  margin: 8px 0;
+}
+
+.accuracy-modal p strong {
+  color: #4CAF50;
+}
+
+.accuracy-question {
+  margin-bottom: 24px !important;
+}
+
+.accuracy-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.accuracy-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.yes-btn {
+  background: #4CAF50;
+  color: white;
+}
+
+.yes-btn:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+}
+
+.no-btn {
+  background: #f44336;
+  color: white;
+}
+
+.no-btn:hover {
+  background: #d32f2f;
+  transform: translateY(-2px);
+}
+
+.skip-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 8px;
+}
+
+.skip-btn:hover {
+  color: var(--text-primary);
+}
+
+@media (max-width: 480px) {
+  .accuracy-buttons {
+    flex-direction: column;
+  }
+  
+  .accuracy-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

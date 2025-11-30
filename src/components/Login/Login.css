@@ -276,3 +276,29 @@
     color: #fcd34d;
 }
 
+/* Remember Me Checkbox */
+.remember-me-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.remember-me-field input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #4CAF50;
+    cursor: pointer;
+}
+
+.remember-me-field label {
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 0;
+}
+
+:root[data-theme="dark"] .remember-me-field label {
+    color: #b0b0b0;
+}

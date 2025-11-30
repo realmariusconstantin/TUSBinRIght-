@@ -39,6 +39,11 @@
                 <p v-if="errors.password && !fieldErrors.password" class="error">{{ errors.password }}</p>
             </div>
 
+            <div class="remember-me-field">
+                <input type="checkbox" id="rememberMe" v-model="rememberMe" />
+                <label for="rememberMe">Remember me for 7 days</label>
+            </div>
+
             <p v-if="successMessage" class="success">{{ successMessage }}</p>
 
             <!-- Rate Limit Warning -->
@@ -90,6 +95,9 @@ const fieldErrors = ref({
 
 // Password visibility toggle
 const showPassword = ref(false);
+
+// Remember me checkbox
+const rememberMe = ref(false);
 
 // Rate limiting state
 const rateLimited = ref(false);
@@ -191,7 +199,7 @@ const handleSubmit = async () => {
     const password = form.value.password;
 
     // Send credentials to backend (JWT stored in HttpOnly cookie)
-    const result = await login(email, password);
+    const result = await login(email, password, rememberMe.value);
 
     if (result.success) {
         // Clear rate limit state on successful login

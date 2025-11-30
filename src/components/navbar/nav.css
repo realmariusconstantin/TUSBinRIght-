@@ -10,11 +10,25 @@ nav {
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.logo {
+/* Logo Container with Hover Animation */
+.logo-container {
+    position: relative;
     margin-left: 30px;
+}
+
+.logo {
     height: 60px;
     display: flex;
     align-items: center;
+    margin: 0;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    text-decoration: none;
+    gap: 0;
 }
 
 .logo img {
@@ -22,12 +36,29 @@ nav {
     height: 250%;
     object-fit: contain;
     max-width: 180px;
+    transition: transform 0.35s ease;
 }
 
-.logo a {
-    display: flex;
-    align-items: center;
-    height: 100%;
+.logo-text {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent-green);
+    opacity: 0;
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all 0.35s ease;
+    letter-spacing: -0.02em;
+}
+
+.logo:hover .logo-text {
+    opacity: 1;
+    max-width: 120px;
+    margin-left: 8px;
+}
+
+.logo:hover img {
+    transform: scale(1.05);
 }
 
 nav a {

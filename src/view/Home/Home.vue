@@ -6,19 +6,6 @@
         <h1 class="welcome-text">Welcome{{ username ? `, ${username}` : '' }}!</h1>
         <p class="hero-subtitle">Scan, Search, and Recycle Smarter</p>
 
-        <!-- Search Bar -->
-        <div class="search-container">
-          <input type="text" v-model="searchQuery" placeholder="Search for recyclable items..." class="search-input"
-            @keyup.enter="handleSearch" />
-          <button @click="handleSearch" class="search-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.35-4.35"></path>
-            </svg>
-          </button>
-        </div>
-
         <!-- Scanner Section -->
         <div class="scanner-container">
           <div class="scanner-options">
@@ -30,17 +17,6 @@
               </svg>
               {{ isScannerActive ? 'Stop Camera' : 'Scan with Camera' }}
             </button>
-
-            <button @click="triggerFileInput" class="scanner-btn upload-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="17 8 12 3 7 8"></polyline>
-                <line x1="12" y1="3" x2="12" y2="15"></line>
-              </svg>
-              Upload QR/Barcode
-            </button>
-            <input type="file" ref="fileInput" @change="handleFileUpload" accept="image/*" style="display: none;" />
           </div>
 
           <!-- Camera Preview -->
@@ -56,6 +32,31 @@
               Detected: <strong>{{ detectedMaterial }}</strong>
             </p>
             <button @click="lookupItem" class="lookup-btn">Look Up Item</button>
+          </div>
+
+          <!-- Accuracy Feedback Modal -->
+          <div v-if="showAccuracyPrompt" class="accuracy-modal-overlay" @click.self="closeAccuracyPrompt">
+            <div class="accuracy-modal">
+              <h3>Was this scan accurate?</h3>
+              <p>You scanned: <strong>{{ lastScannedMaterial }}</strong></p>
+              <p class="accuracy-question">Did we correctly identify this item?</p>
+              <div class="accuracy-buttons">
+                <button @click="submitAccuracyFeedback(true)" class="accuracy-btn yes-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  Yes, Correct!
+                </button>
+                <button @click="submitAccuracyFeedback(false)" class="accuracy-btn no-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                  No, Wrong
+                </button>
+              </div>
+              <button @click="closeAccuracyPrompt" class="skip-btn">Skip</button>
+            </div>
           </div>
         </div>
       </div>
@@ -129,7 +130,7 @@
             <p>Active Users</p>
           </div>
           <div class="stat-item">
-            <h3>95%</h3>
+            <h3>{{ accuracyRate }}%</h3>
             <p>Accuracy Rate</p>
           </div>
         </div>
@@ -167,36 +168,34 @@ export default {
       isProcessing: false,
       totalScans: 0,
       totalUsers: 0,
+      accuracyRate: 0,
+      showAccuracyPrompt: false,
+      lastScannedMaterial: '',
+      lastScanId: null,
     };
   },
   methods: {
-    
-    handleSearch() {
-      if (this.searchQuery.trim()) {
-        console.log('Searching for:', this.searchQuery);
-        // Add your search logic here (API call, routing, etc.)
-        alert(`Searching for: ${this.searchQuery}`);
-      }
-    },
-
     async fetchStats() {
       // I try to fetch user scans and total users from CI4 backend for FrontEnd
       try {
-        const [scansRes, usersRes] = await Promise.all([
+        const [scansRes, usersRes, accuracyRes] = await Promise.all([
           // Request to json endpoints: http://localhost/tusbinright/public/total-users & http://localhost/tusbinright/public/total-scans
           api.get('/total-scans'),
-          api.get('/total-users')
+          api.get('/total-users'),
+          api.get('/scan-accuracy-stats')
         ]);
 
         // If there is no data, default to 0
         this.totalScans = scansRes.data.total_scans || 0;
         this.totalUsers = usersRes.data.total_users || 0;
+        this.accuracyRate = accuracyRes.data.stats?.accuracy_percentage || 95;
 
       } catch (error) {
         console.error('Error fetching stats:', error);
         // If there is and exception, default to 0
         this.totalScans = 0;
         this.totalUsers = 0;
+        this.accuracyRate = 95;
       }
     },
 
@@ -293,14 +292,18 @@ export default {
       this.scanResult = decodedText;
       this.stopScanner();
 
+      let materialType = null;
+      let scanId = null;
+
       try {
         if (this.username !== 'Guest') {
-          const materialType = await this.identifyMaterial(decodedText);
+          materialType = await this.identifyMaterial(decodedText);
           let itemTypeId = this.getItemTypeId(materialType);
 
           if (!itemTypeId) { // Marius will have to help me out with this, as scanner doesn't always detect
             console.warn('⚠️ Could not detect item type, automatically defaulting to plastic');
             itemTypeId = 1;
+            materialType = 'plastic';
           }
 
           const response = await api.post('/create-scan', {
@@ -308,6 +311,18 @@ export default {
             item_type_id: itemTypeId,
           });
           console.log('Scan successfully recorded in backend', response.data);
+          
+          // Save scan ID for accuracy feedback
+          scanId = response.data.data?.scan_id;
+          console.log('Extracted scan_id:', scanId, 'from response:', response.data.data);
+          this.lastScanId = scanId;
+          this.lastScannedMaterial = materialType ? materialType.charAt(0).toUpperCase() + materialType.slice(1) : 'Unknown';
+          console.log('Set lastScanId to:', this.lastScanId);
+          
+          // Show accuracy prompt immediately on home page
+          if (scanId) {
+            this.showAccuracyPrompt = true;
+          }
         } else {
           console.log('User not logged in, skipping scan save.');
         }
@@ -315,7 +330,8 @@ export default {
         console.error('Error saving scan:', error);
       }
 
-      this.routeToMaterial(decodedText);
+      // Route to material page and show accuracy prompt after
+      this.routeToMaterialWithFeedback(decodedText, materialType);
     },
 
     triggerFileInput() {
@@ -560,6 +576,67 @@ export default {
       } else {
         this.$router.push('/material/paper');
       }
+    },
+
+    async routeToMaterialWithFeedback(barcodeData, materialType) {
+      console.log('Processing barcode with feedback:', barcodeData);
+      
+      // If materialType wasn't passed, try to identify it
+      if (!materialType) {
+        materialType = await this.identifyMaterial(barcodeData);
+      }
+      
+      if (materialType) {
+        // Store detected material for display
+        this.detectedMaterial = materialType.charAt(0).toUpperCase() + materialType.slice(1);
+        
+        // Small delay to show detection, then route
+        setTimeout(() => {
+          // Clear the scan result before routing
+          this.scanResult = '';
+          this.detectedMaterial = '';
+          
+          // Navigate to material page
+          this.$router.push(`/material/${materialType}`);
+        }, 1000);
+      } else {
+        // Show options if we can't determine automatically
+        this.showMaterialOptions(barcodeData);
+      }
+    },
+
+    async submitAccuracyFeedback(isAccurate) {
+      if (!this.lastScanId) {
+        console.warn('No scan ID available for accuracy feedback');
+        this.closeAccuracyPrompt();
+        return;
+      }
+
+      try {
+        console.log('Submitting accuracy feedback:', { scan_id: this.lastScanId, is_accurate: isAccurate });
+        const response = await api.post('/scan-accuracy', {
+          scan_id: this.lastScanId,
+          is_accurate: isAccurate
+        });
+        console.log('Accuracy feedback submitted successfully:', response.data);
+        
+        // Refresh accuracy stats
+        await this.fetchStats();
+      } catch (error) {
+        console.error('Error submitting accuracy feedback:', error);
+        if (error.response) {
+          console.error('Response error:', error.response.data);
+        }
+      }
+
+      this.closeAccuracyPrompt();
+    },
+
+    closeAccuracyPrompt() {
+      this.showAccuracyPrompt = false;
+      this.lastScanId = null;
+      this.lastScannedMaterial = '';
+      this.isProcessing = false;
     }
   },
 

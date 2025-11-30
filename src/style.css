@@ -3,6 +3,7 @@
   /* Light Mode Colors */
   --bg-primary: #F8FAF9;
   --bg-secondary: #FFFFFF;
+  --bg-tertiary: #F5F5F5;
   --text-primary: #181B1B;
   --text-secondary: #4A5A4F;
   --accent-green: #4CAF50;
@@ -19,6 +20,7 @@
   /* Dark Mode Colors from screenshot */
   --bg-primary: #0E1A14;
   --bg-secondary: #1B2822;
+  --bg-tertiary: #233129;
   --text-primary: #E5EDE7;
   --text-secondary: #86CBEF;
   --accent-green: #2E7D32;

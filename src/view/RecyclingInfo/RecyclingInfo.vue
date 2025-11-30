@@ -43,28 +43,28 @@
               chartType="doughnut"
               :chartData="plasticChartData.datasets ? { labels: plasticChartData.labels, datasets: plasticChartData.datasets } : {}"
               :chartOptions="getPieChartOptions(isDarkMode)"
-              :stats="{ carbonSaved: plasticChartData.saved, drivingMinutes: plasticChartData.communityDrivingMinutes }"
+              :stats="{ carbonSaved: plasticChartData.carbonSaved, drivingMinutes: plasticChartData.communityDrivingMinutes }"
             />
             <ChartComponent
               v-if="i === 1"
               chartType="doughnut"
               :chartData="paperChartData.datasets ? { labels: paperChartData.labels, datasets: paperChartData.datasets } : {}"
               :chartOptions="getPieChartOptions(isDarkMode)"
-              :stats="{ carbonSaved: paperChartData.saved, drivingMinutes: paperChartData.communityDrivingMinutes }"
+              :stats="{ carbonSaved: paperChartData.carbonSaved, drivingMinutes: paperChartData.communityDrivingMinutes }"
             />
             <ChartComponent
               v-if="i === 2"
               chartType="doughnut"
               :chartData="cansChartData.datasets ? { labels: cansChartData.labels, datasets: cansChartData.datasets } : {}"
               :chartOptions="getPieChartOptions(isDarkMode)"
-              :stats="{ carbonSaved: cansChartData.saved, drivingMinutes: cansChartData.communityDrivingMinutes }"
+              :stats="{ carbonSaved: cansChartData.carbonSaved, drivingMinutes: cansChartData.communityDrivingMinutes }"
             />
             <ChartComponent
               v-if="i === 3"
               chartType="doughnut"
               :chartData="glassChartData.datasets ? { labels: glassChartData.labels, datasets: glassChartData.datasets } : {}"
               :chartOptions="getPieChartOptions(isDarkMode)"
-              :stats="{ carbonSaved: glassChartData.saved, drivingMinutes: glassChartData.communityDrivingMinutes }"
+              :stats="{ carbonSaved: glassChartData.carbonSaved, drivingMinutes: glassChartData.communityDrivingMinutes }"
             />
           </div>
         </div>
@@ -113,7 +113,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useDarkMode } from '@/composables/useDarkMode';
 import { useCharts } from '@/composables/useCharts';
 import { useRouter } from 'vue-router';
@@ -127,14 +127,46 @@ import beerBottleImg from '@/images/beerBottle.png';
 
 const { isDarkMode } = useDarkMode();
 const router = useRouter();
-const { getCommunityMaterialChart, getChartOptions, getPieChartOptions } = useCharts();
+const { getCommunityMaterialChart, fetchCommunityStats, getChartOptions, getPieChartOptions } = useCharts();
 
-const stats = [
-  { icon: "♻️", number: "75%", label: "Waste Can Be Recycled" },
-  { icon: "🌍", number: "95%", label: "Energy Saved (Aluminum)" },
-  { icon: "🌳", number: "17", label: "Trees Saved Per Ton" },
-  { icon: "💧", number: "70%", label: "Water Saved (Paper)" },
-];
+// Community data from API
+const communityData = ref(null);
+
+// Fetch community stats on mount
+onMounted(async () => {
+  communityData.value = await fetchCommunityStats();
+});
+
+// Dynamic stats based on community recycling data
+const stats = computed(() => {
+  const data = communityData.value;
+  if (!data) {
+    return [
+      { icon: "♻️", number: "0", label: "Total Items Recycled" },
+      { icon: "🌍", number: "0 kg", label: "CO₂ Saved (Community)" },
+      { icon: "🥫", number: "0", label: "Cans Recycled" },
+      { icon: "💧", number: "0", label: "Plastic Bottles Saved" },
+    ];
+  }
+  
+  // Calculate totals from community data
+  const totalItems = (data.plastic || 0) + (data.cans || 0) + (data.glass || 0) + (data.paper || 0);
+  
+  // Carbon savings: plastic 0.1kg, glass 0.3kg, cans 0.5kg, paper 0.05kg per item
+  const carbonSaved = (
+    (data.plastic || 0) * 0.1 +
+    (data.glass || 0) * 0.3 +
+    (data.cans || 0) * 0.5 +
+    (data.paper || 0) * 0.05
+  ).toFixed(1);
+  
+  return [
+    { icon: "♻️", number: totalItems.toLocaleString(), label: "Total Items Recycled" },
+    { icon: "🌍", number: `${carbonSaved} kg`, label: "CO₂ Saved (Community)" },
+    { icon: "🥫", number: (data.cans || 0).toLocaleString(), label: "Cans Recycled" },
+    { icon: "💧", number: (data.plastic || 0).toLocaleString(), label: "Plastic Bottles Saved" },
+  ];
+});
 
 const items = [
   {
@@ -202,11 +234,11 @@ const goToHome = () => {
   router.push("/");
 };
 
-// Chart data for each material
-const plasticChartData = computed(() => getCommunityMaterialChart('plastic'));
-const glassChartData = computed(() => getCommunityMaterialChart('glass'));
-const cansChartData = computed(() => getCommunityMaterialChart('cans'));
-const paperChartData = computed(() => getCommunityMaterialChart('paper'));
+// Chart data for each material (now uses real API data)
+const plasticChartData = computed(() => getCommunityMaterialChart('plastic', communityData.value));
+const glassChartData = computed(() => getCommunityMaterialChart('glass', communityData.value));
+const cansChartData = computed(() => getCommunityMaterialChart('cans', communityData.value));
+const paperChartData = computed(() => getCommunityMaterialChart('paper', communityData.value));
 
 const chartOptions = computed(() => getChartOptions(isDarkMode.value));
 </script>

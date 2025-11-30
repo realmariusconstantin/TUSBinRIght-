@@ -12,11 +12,11 @@ export function useAuth() {
     successMessage.value = '';
   };
 
-  const login = async (email, password) => {
+  const login = async (email, password, rememberMe = false) => {
     clearMessages();
     isLoading.value = true;
     try {
-      const { data } = await api.post('/login', { email, password });
+      const { data } = await api.post('/login', { email, password, rememberMe });
 
       if (data.status === 'success') {
         user.value = data.user;
@@ -79,11 +79,11 @@ export function useAuth() {
     }
   };
 
-  const fetchUser = async () => {
+const fetchUser = async () => {
     isLoading.value = true;
     try {
       console.log('Fetching user profile...');
-      const { data } = await api.get('/me');
+      const { data } = await api.get('/profile');
       console.log('Profile response:', data);
       
       if (data.status === 'success') {
@@ -91,13 +91,20 @@ export function useAuth() {
         localStorage.setItem('user', JSON.stringify(data.user));
         return { success: true };
       } else {
-        user.value = null;
+        // Don't clear user on soft failures - keep localStorage data
+        console.log('Profile fetch returned non-success status');
         return { success: false };
       }
     } catch (error) {
       console.error('fetchUser error:', error.response?.data || error.message);
-      user.value = null;
-      localStorage.removeItem('user');
+      
+      // Only clear user if it's an auth error (401)
+      // Don't clear for network errors or server issues
+      if (error.response?.status === 401) {
+        user.value = null;
+        localStorage.removeItem('user');
+        localStorage.removeItem('lastUserVerification');
+      }
       return { success: false };
     } finally {
       isLoading.value = false;

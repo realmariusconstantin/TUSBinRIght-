@@ -1,9 +1,10 @@
 <template>
     <nav>
-        <div>
+        <div class="logo-container">
             <h1 class="logo">
                 <a href="/home">
                     <img :src="logo" alt="" aria-hidden="true">
+                    <span class="logo-text">Renova</span>
                 </a>
             </h1>
         </div>
@@ -133,12 +134,19 @@ onMounted(async () => {
     initUser();
     
     // If user exists in localStorage, verify with backend
-    // Only fetch if we think we're logged in
+    // Only fetch if we think we're logged in AND haven't verified recently
     if (user.value) {
-        const result = await fetchUser();
-        // If fetch fails, user will be cleared automatically
-        if (!result.success) {
-            console.log('Session expired or invalid');
+        // Check if we've verified in the last 5 minutes
+        const lastVerified = localStorage.getItem('lastUserVerification');
+        const fiveMinutesAgo = Date.now() - (5 * 60 * 1000);
+        
+        if (!lastVerified || parseInt(lastVerified) < fiveMinutesAgo) {
+            const result = await fetchUser();
+            if (result.success) {
+                localStorage.setItem('lastUserVerification', Date.now().toString());
+            } else {
+                console.log('Session expired or invalid');
+            }
         }
     }
     
