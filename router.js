@@ -8,18 +8,22 @@ import PlasticPage from '@/view/Materials/Plastic.vue';
 import CanPage from '@/view/Materials/Can.vue';
 import GlassPage from '@/view/Materials/Glass.vue';
 import PaperPage from '@/view/Materials/Paper.vue';
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 import Profile from '@/view/Profile/Profile.vue';
 =======
 import ProtectedPage from '@/view/Profile/ProtectedPage.vue';
 >>>>>>> Stashed changes
+=======
+
+>>>>>>> 6484c18624f6affa5cfb233e367f3531a11b3a21
 import RecyclingInfo from '@/view/RecyclingInfo/RecyclingInfo.vue';
 
 // Admin pages
 import AdminLayout from '@/components/Panel/AdminLayout.vue'
 import Users from '@/components/Panel/Users.vue'
-import BinSteps from '@/components/Panel/BinSteps.vue'
-import Items from '@/components/Panel/Items.vue'
+import DisposalRules from '@/components/Panel/DisposalRules.vue'
+import UserScans from '@/components/Panel/UserScans.vue'
 
 const routes = [
     { 
@@ -68,20 +72,23 @@ const routes = [
         // No authentication required - accessible to everyone
     },
     { 
+<<<<<<< HEAD
         path: '/profile', 
         component: Profile,
         meta: { requiresAuth: true }
         // Protected route - placeholder for user profile (to be implemented by colleagues)
     },
     {
+=======
+>>>>>>> 6484c18624f6affa5cfb233e367f3531a11b3a21
         path: '/admin',
         component: AdminLayout,
         meta: { requiresAuth: true, adminOnly: true },
         children: [
             { path: '', redirect: '/admin/users' },
             { path: 'users', component: Users },
-            { path: 'bin-steps', component: BinSteps },
-            { path: 'items', component: Items }
+            { path: 'disposal-rules', component: DisposalRules },
+            { path: 'user-scans', component: UserScans }
         ]
     },
     { path: '/:pathMatch(.*)*', redirect: '/' }
