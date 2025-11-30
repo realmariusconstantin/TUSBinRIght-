@@ -1,0 +1,314 @@
+ERROR - 2025-11-30 20:17:25 --> Login failed: file_get_contents(C:\xampp\htdocs\tusbinright\app\): Failed to open stream: No such file or directory
+ERROR - 2025-11-30 21:04:33 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `lo...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `lo...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `lo...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `lo...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Services\RateLimitService.php(91): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\xampp\htdocs\tusbinright\app\Controllers\AuthController.php(196): App\Services\RateLimitService->recordFailedAttempt('k00249482@stude...', '::1')
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#8 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+ERROR - 2025-11-30 21:04:33 --> Login failed: Unknown column 'created_at' in 'field list'
+ERROR - 2025-11-30 21:04:36 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `lo...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `lo...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `lo...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `lo...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Services\RateLimitService.php(91): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\xampp\htdocs\tusbinright\app\Controllers\AuthController.php(196): App\Services\RateLimitService->recordFailedAttempt('k00249482@stude...', '::1')
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#8 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+ERROR - 2025-11-30 21:04:36 --> Login failed: Unknown column 'created_at' in 'field list'
+ERROR - 2025-11-30 21:04:45 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `lo...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `lo...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `lo...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `lo...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Services\RateLimitService.php(91): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\xampp\htdocs\tusbinright\app\Controllers\AuthController.php(196): App\Services\RateLimitService->recordFailedAttempt('k00249482@stude...', '::1')
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#8 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+ERROR - 2025-11-30 21:04:45 --> Login failed: Unknown column 'created_at' in 'field list'
+ERROR - 2025-11-30 21:04:55 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `lo...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `lo...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `lo...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `lo...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Services\RateLimitService.php(91): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\xampp\htdocs\tusbinright\app\Controllers\AuthController.php(196): App\Services\RateLimitService->recordFailedAttempt('k00294842@stude...', '::1')
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#8 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+ERROR - 2025-11-30 21:04:55 --> Login failed: Unknown column 'created_at' in 'field list'
+ERROR - 2025-11-30 21:06:33 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '`user_id`) AS `users`
+FROM `userscan`' at line 1 in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(`D...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`D...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`D...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`D...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\StatsController.php(106): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\StatsController->communityStats()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StatsController))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-30 21:06:33 --> Community stats failed: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '`user_id`) AS `users`
+FROM `userscan`' at line 1
+ERROR - 2025-11-30 21:13:48 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '`user_id`) AS `users`
+FROM `userscan`' at line 1 in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(`D...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`D...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`D...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`D...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\StatsController.php(106): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\StatsController->communityStats()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StatsController))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-30 21:13:48 --> Community stats failed: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '`user_id`) AS `users`
+FROM `userscan`' at line 1
+ERROR - 2025-11-30 21:15:07 --> mysqli_sql_exception: Unknown column 'scanned_at' in 'order clause' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\UserScans.php(84): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\UserScans->createScan()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\UserScans))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-11-30 21:15:07 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'scanned_at' in 'order clause'
+[Method: POST, Route: create-scan]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `userscan`
+WHERE `user_id` = :user_id:
+ORDER BY `scanned_at` DESC
+ LIMIT 1', [...], false)
+ 2 APPPATH\Controllers\Admin\UserScans.php(84): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\UserScans->createScan()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\UserScans))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-30 21:15:07 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'scanned_at' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `userscan`
+WHERE `user_id` = \'8\'
+ORDER BY `scanned_at` DESC
+ LIMIT 1')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `userscan`
+WHERE `user_id` = \'8\'
+ORDER BY `scanned_at` DESC
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `userscan`
+WHERE `user_id` = :user_id:
+ORDER BY `scanned_at` DESC
+ LIMIT 1', [...], false)
+ 4 APPPATH\Controllers\Admin\UserScans.php(84): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\UserScans->createScan()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\UserScans))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-30 21:15:07 --> [Caused by] mysqli_sql_exception: Unknown column 'scanned_at' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *
+FROM `userscan`
+WHERE `user_id` = \'8\'
+ORDER BY `scanned_at` DESC
+ LIMIT 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `userscan`
+WHERE `user_id` = \'8\'
+ORDER BY `scanned_at` DESC
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `userscan`
+WHERE `user_id` = \'8\'
+ORDER BY `scanned_at` DESC
+ LIMIT 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `userscan`
+WHERE `user_id` = :user_id:
+ORDER BY `scanned_at` DESC
+ LIMIT 1', [...], false)
+ 5 APPPATH\Controllers\Admin\UserScans.php(84): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\UserScans->createScan()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\UserScans))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-30 21:23:44 --> mysqli_sql_exception: Unknown column 'scanned_at' in 'order clause' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\UserScans.php(84): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\UserScans->createScan()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\UserScans))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-11-30 21:23:44 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'scanned_at' in 'order clause'
+[Method: POST, Route: create-scan]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `userscan`
+WHERE `user_id` = :user_id:
+ORDER BY `scanned_at` DESC
+ LIMIT 1', [...], false)
+ 2 APPPATH\Controllers\Admin\UserScans.php(84): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\UserScans->createScan()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\UserScans))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-30 21:23:44 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'scanned_at' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `userscan`
+WHERE `user_id` = \'8\'
+ORDER BY `scanned_at` DESC
+ LIMIT 1')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `userscan`
+WHERE `user_id` = \'8\'
+ORDER BY `scanned_at` DESC
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `userscan`
+WHERE `user_id` = :user_id:
+ORDER BY `scanned_at` DESC
+ LIMIT 1', [...], false)
+ 4 APPPATH\Controllers\Admin\UserScans.php(84): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\UserScans->createScan()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\UserScans))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-30 21:23:44 --> [Caused by] mysqli_sql_exception: Unknown column 'scanned_at' in 'order clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *
+FROM `userscan`
+WHERE `user_id` = \'8\'
+ORDER BY `scanned_at` DESC
+ LIMIT 1', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `userscan`
+WHERE `user_id` = \'8\'
+ORDER BY `scanned_at` DESC
+ LIMIT 1')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `userscan`
+WHERE `user_id` = \'8\'
+ORDER BY `scanned_at` DESC
+ LIMIT 1')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `userscan`
+WHERE `user_id` = :user_id:
+ORDER BY `scanned_at` DESC
+ LIMIT 1', [...], false)
+ 5 APPPATH\Controllers\Admin\UserScans.php(84): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin\UserScans->createScan()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\UserScans))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-11-30 21:40:50 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '`user_id`) AS `users`
+FROM `userscan`' at line 1 in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(`D...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`D...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`D...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`D...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\StatsController.php(106): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\StatsController->communityStats()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StatsController))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-30 21:40:50 --> Community stats failed: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '`user_id`) AS `users`
+FROM `userscan`' at line 1
+ERROR - 2025-11-30 21:41:03 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '`user_id`) AS `users`
+FROM `userscan`' at line 1 in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(`D...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`D...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`D...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`D...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\StatsController.php(106): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\StatsController->communityStats()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StatsController))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-30 21:41:03 --> Community stats failed: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '`user_id`) AS `users`
+FROM `userscan`' at line 1
+ERROR - 2025-11-30 21:42:17 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '`user_id`) AS `users`
+FROM `userscan`' at line 1 in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(`D...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(`D...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(`D...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(`D...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\StatsController.php(106): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\StatsController->communityStats()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\StatsController))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-30 21:42:17 --> Community stats failed: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '`user_id`) AS `users`
+FROM `userscan`' at line 1

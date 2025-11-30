@@ -1,0 +1,196 @@
+ERROR - 2025-11-17 11:28:25 --> mysqli_sql_exception: Unknown column 'created_at' in 'field list' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `lo...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `lo...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `lo...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `lo...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Services\RateLimitService.php(91): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\xampp\htdocs\tusbinright\app\Controllers\AuthController.php(196): App\Services\RateLimitService->recordFailedAttempt('marius.c49@yaho...', '::1')
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\AuthController->login()
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+#8 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+ERROR - 2025-11-17 11:28:25 --> Login failed: Unknown column 'created_at' in 'field list'
+ERROR - 2025-11-17 11:30:10 --> mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`tusbinright`.`userscan`, CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)) in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('DELETE FROM `us...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('DELETE FROM `us...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('DELETE FROM `us...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2848): CodeIgniter\Database\BaseConnection->query('DELETE FROM `us...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(82): CodeIgniter\Database\BaseBuilder->delete()
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->deleteUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-17 11:30:10 --> User delete failed: Cannot delete or update a parent row: a foreign key constraint fails (`tusbinright`.`userscan`, CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`))
+ERROR - 2025-11-17 11:30:14 --> mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`tusbinright`.`userscan`, CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)) in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('DELETE FROM `us...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('DELETE FROM `us...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('DELETE FROM `us...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2848): CodeIgniter\Database\BaseConnection->query('DELETE FROM `us...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(82): CodeIgniter\Database\BaseBuilder->delete()
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->deleteUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-17 11:30:14 --> User delete failed: Cannot delete or update a parent row: a foreign key constraint fails (`tusbinright`.`userscan`, CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`))
+ERROR - 2025-11-17 11:30:25 --> mysqli_sql_exception: Duplicate entry 'marius.c49@yahoo.com' for key 'email' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('UPDATE `users` ...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `users` ...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `users` ...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2521): CodeIgniter\Database\BaseConnection->query('UPDATE `users` ...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(51): CodeIgniter\Database\BaseBuilder->update(Array)
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-17 11:30:25 --> User update failed: Duplicate entry 'marius.c49@yahoo.com' for key 'email'
+ERROR - 2025-11-17 11:30:26 --> mysqli_sql_exception: Duplicate entry 'marius.c49@yahoo.com' for key 'email' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('UPDATE `users` ...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `users` ...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `users` ...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2521): CodeIgniter\Database\BaseConnection->query('UPDATE `users` ...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(51): CodeIgniter\Database\BaseBuilder->update(Array)
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-17 11:30:26 --> User update failed: Duplicate entry 'marius.c49@yahoo.com' for key 'email'
+ERROR - 2025-11-17 11:30:26 --> mysqli_sql_exception: Duplicate entry 'marius.c49@yahoo.com' for key 'email' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('UPDATE `users` ...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `users` ...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `users` ...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2521): CodeIgniter\Database\BaseConnection->query('UPDATE `users` ...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(51): CodeIgniter\Database\BaseBuilder->update(Array)
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-17 11:30:26 --> User update failed: Duplicate entry 'marius.c49@yahoo.com' for key 'email'
+ERROR - 2025-11-17 11:30:26 --> mysqli_sql_exception: Duplicate entry 'marius.c49@yahoo.com' for key 'email' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('UPDATE `users` ...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `users` ...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `users` ...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2521): CodeIgniter\Database\BaseConnection->query('UPDATE `users` ...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(51): CodeIgniter\Database\BaseBuilder->update(Array)
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-17 11:30:26 --> User update failed: Duplicate entry 'marius.c49@yahoo.com' for key 'email'
+ERROR - 2025-11-17 11:30:26 --> mysqli_sql_exception: Duplicate entry 'marius.c49@yahoo.com' for key 'email' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('UPDATE `users` ...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `users` ...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `users` ...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2521): CodeIgniter\Database\BaseConnection->query('UPDATE `users` ...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(51): CodeIgniter\Database\BaseBuilder->update(Array)
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-17 11:30:26 --> User update failed: Duplicate entry 'marius.c49@yahoo.com' for key 'email'
+ERROR - 2025-11-17 11:30:31 --> mysqli_sql_exception: Duplicate entry 'marius.c49@yahoo.com' for key 'email' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('UPDATE `users` ...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `users` ...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `users` ...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2521): CodeIgniter\Database\BaseConnection->query('UPDATE `users` ...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(51): CodeIgniter\Database\BaseBuilder->update(Array)
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-17 11:30:31 --> User update failed: Duplicate entry 'marius.c49@yahoo.com' for key 'email'
+ERROR - 2025-11-17 11:30:31 --> mysqli_sql_exception: Duplicate entry 'marius.c49@yahoo.com' for key 'email' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('UPDATE `users` ...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `users` ...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `users` ...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2521): CodeIgniter\Database\BaseConnection->query('UPDATE `users` ...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(51): CodeIgniter\Database\BaseBuilder->update(Array)
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-17 11:30:31 --> User update failed: Duplicate entry 'marius.c49@yahoo.com' for key 'email'
+ERROR - 2025-11-17 11:30:31 --> mysqli_sql_exception: Duplicate entry 'marius.c49@yahoo.com' for key 'email' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('UPDATE `users` ...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `users` ...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `users` ...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2521): CodeIgniter\Database\BaseConnection->query('UPDATE `users` ...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(51): CodeIgniter\Database\BaseBuilder->update(Array)
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-17 11:30:31 --> User update failed: Duplicate entry 'marius.c49@yahoo.com' for key 'email'
+ERROR - 2025-11-17 11:30:32 --> mysqli_sql_exception: Duplicate entry 'marius.c49@yahoo.com' for key 'email' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('UPDATE `users` ...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `users` ...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `users` ...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2521): CodeIgniter\Database\BaseConnection->query('UPDATE `users` ...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(51): CodeIgniter\Database\BaseBuilder->update(Array)
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-17 11:30:32 --> User update failed: Duplicate entry 'marius.c49@yahoo.com' for key 'email'
+ERROR - 2025-11-17 11:30:34 --> mysqli_sql_exception: Duplicate entry 'marius.c49@yahoo.com' for key 'email' in C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\tusbinright\system\Database\MySQLi\Connection.php(327): mysqli->query('UPDATE `users` ...', 0)
+#1 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `users` ...')
+#2 C:\xampp\htdocs\tusbinright\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `users` ...')
+#3 C:\xampp\htdocs\tusbinright\system\Database\BaseBuilder.php(2521): CodeIgniter\Database\BaseConnection->query('UPDATE `users` ...', Array, false)
+#4 C:\xampp\htdocs\tusbinright\app\Controllers\Admin\Users.php(51): CodeIgniter\Database\BaseBuilder->update(Array)
+#5 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(933): App\Controllers\Admin\Users->updateUser()
+#6 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin\Users))
+#7 C:\xampp\htdocs\tusbinright\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\tusbinright\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\tusbinright\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\tusbinright\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-11-17 11:30:34 --> User update failed: Duplicate entry 'marius.c49@yahoo.com' for key 'email'

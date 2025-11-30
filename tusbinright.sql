@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2025 at 01:22 PM
--- Server version: 8.0.42
+-- Generation Time: Nov 30, 2025 at 10:44 PM
+-- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -27,10 +27,7 @@ DELIMITER $$
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckEmailExists` (IN `p_email` VARCHAR(255))   BEGIN
     DECLARE email_count INT DEFAULT 0;
-
-    SELECT COUNT(*) INTO email_count
-    FROM users
-    WHERE email = p_email;
+    SELECT COUNT(*) INTO email_count FROM users WHERE email = p_email;
 
     IF email_count > 0 THEN
         SELECT 1 AS status, 'Email exists' AS message;
@@ -39,37 +36,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `CheckEmailExists` (IN `p_email` VAR
     END IF;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateBinStep` (IN `p_description` VARCHAR(255), IN `p_bin_type_id` INT)   BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-    BEGIN
-        ROLLBACK;
-        SELECT 0 AS status, 'Failed to create bin step' AS message;
-    END;
-
-    START TRANSACTION;
-        INSERT INTO BinStep (description, bin_type_id)
-        VALUES (p_description, p_bin_type_id);
-    COMMIT;
-
-    SELECT 1 AS status, 'Bin step created successfully' AS message;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateBinType` (IN `p_name` VARCHAR(100), IN `p_description` VARCHAR(255))   BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-    BEGIN
-        ROLLBACK;
-        SELECT 0 AS status, 'Failed to create bin type' AS message;
-    END;
-
-    START TRANSACTION;
-        INSERT INTO BinType (name, description)
-        VALUES (p_name, p_description);
-    COMMIT;
-
-    SELECT 1 AS status, 'Bin type created successfully' AS message;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateDisposalRule` (IN `p_item_id` INT, IN `p_location_id` INT, IN `p_bin_type_id` INT, IN `p_description` VARCHAR(255))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateDisposalRule` (IN `p_item_type_id` INT, IN `p_location_id` INT, IN `p_bin_type_id` INT, IN `p_description` VARCHAR(255))   BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION 
     BEGIN
         ROLLBACK;
@@ -77,41 +44,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateDisposalRule` (IN `p_item_id`
     END;
 
     START TRANSACTION;
-        INSERT INTO DisposalRule (item_id, location_id, bin_type_id, description)
-        VALUES (p_item_id, p_location_id, p_bin_type_id, p_description);
+        INSERT INTO DisposalRule (item_type_id, location_id, bin_type_id, description)
+        VALUES (p_item_type_id, p_location_id, p_bin_type_id, p_description);
     COMMIT;
 
     SELECT 1 AS status, 'Disposal rule created successfully' AS message;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateItem` (IN `p_name` VARCHAR(100), IN `p_description` VARCHAR(255), IN `p_bar_code` VARCHAR(255), IN `p_qr_code` VARCHAR(255))   BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-    BEGIN
-        ROLLBACK;
-        SELECT 0 AS status, 'Failed to create item' AS message;
-    END;
-
-    START TRANSACTION;
-        INSERT INTO Item (name, description, bar_code, qr_code)
-        VALUES (p_name, p_description, p_bar_code, p_qr_code);
-    COMMIT;
-
-    SELECT 1 AS status, 'Item created successfully' AS message;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateLocation` (IN `p_name` VARCHAR(255))   BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-    BEGIN
-        ROLLBACK;
-        SELECT 0 AS status, 'Failed to create location' AS message;
-    END;
-
-    START TRANSACTION;
-        INSERT INTO Location (name)
-        VALUES (p_name);
-    COMMIT;
-
-    SELECT 1 AS status, 'Location created successfully' AS message;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateUser` (IN `p_name` VARCHAR(100), IN `p_email` VARCHAR(255), IN `p_password_hash` VARCHAR(255), IN `p_user_type_id` INT)   BEGIN
@@ -129,32 +66,19 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateUser` (IN `p_name` VARCHAR(10
     SELECT 1 AS status, 'User created successfully' AS message;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteBinStep` (IN `p_bin_step_id` INT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateUserScan` (IN `p_user_id` INT, IN `p_item_type_id` INT)   BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION 
     BEGIN
         ROLLBACK;
-        SELECT 0 AS status, 'Failed to delete bin step' AS message;
+        SELECT 0 AS status, 'Failed to create user scan' AS message;
     END;
 
     START TRANSACTION;
-        DELETE FROM BinStep WHERE id = p_bin_step_id;
+        INSERT INTO UserScan (user_id, item_type_id)
+        VALUES (p_user_id, p_item_type_id);
     COMMIT;
 
-    SELECT 1 AS status, 'Bin step deleted successfully' AS message;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteBinType` (IN `p_bin_type_id` INT)   BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-    BEGIN
-        ROLLBACK;
-        SELECT 0 AS status, 'Failed to delete bin type' AS message;
-    END;
-
-    START TRANSACTION;
-        DELETE FROM BinType WHERE id = p_bin_type_id;
-    COMMIT;
-
-    SELECT 1 AS status, 'Bin type deleted successfully' AS message;
+    SELECT 1 AS status, 'User scan recorded successfully' AS message;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteDisposalRule` (IN `p_disposal_rule_id` INT)   BEGIN
@@ -171,34 +95,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteDisposalRule` (IN `p_disposal
     SELECT 1 AS status, 'Disposal rule deleted successfully' AS message;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteItem` (IN `p_item_id` INT)   BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-    BEGIN
-        ROLLBACK;
-        SELECT 0 AS status, 'Failed to delete item' AS message;
-    END;
-
-    START TRANSACTION;
-        DELETE FROM Item WHERE id = p_item_id;
-    COMMIT;
-
-    SELECT 1 AS status, 'Item deleted successfully' AS message;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteLocation` (IN `p_location_id` INT)   BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-    BEGIN
-        ROLLBACK;
-        SELECT 0 AS status, 'Failed to delete location' AS message;
-    END;
-
-    START TRANSACTION;
-        DELETE FROM Location WHERE id = p_location_id;
-    COMMIT;
-
-    SELECT 1 AS status, 'Location deleted successfully' AS message;
-END$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteUser` (IN `p_user_id` INT)   BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION 
     BEGIN
@@ -213,6 +109,25 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteUser` (IN `p_user_id` INT)   
     SELECT 1 AS status, 'User deleted successfully' AS message;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteUserScans` (IN `p_scan_ids` TEXT)   BEGIN
+    DECLARE exit handler FOR SQLEXCEPTION 
+    BEGIN
+        ROLLBACK;
+        SELECT 0 AS status, 'Failed to delete user scans' AS message;
+    END;
+
+    START TRANSACTION;
+
+    SET @sql = CONCAT('DELETE FROM UserScan WHERE id IN (', p_scan_ids, ')');
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+
+    COMMIT;
+
+    SELECT 1 AS status, 'User scans deleted successfully' AS message;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllUsers` ()   BEGIN
     SELECT 
         u.id, 
@@ -223,26 +138,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllUsers` ()   BEGIN
     FROM users u
     INNER JOIN usertype ut ON u.user_type_id = ut.id
     ORDER BY u.id;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetBinStepById` (IN `p_bin_step_id` INT)   BEGIN
-    SELECT 
-        bs.id,
-        bs.description AS step_description,
-        bt.name AS bin_type
-    FROM BinStep bs
-    INNER JOIN BinType bt ON bs.bin_type_id = bt.id
-    WHERE bs.id = p_bin_step_id;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetBinSteps` ()   BEGIN
-    SELECT 
-        bs.id,
-        bs.description AS step_description,
-        bt.name AS bin_type
-    FROM BinStep bs
-    INNER JOIN BinType bt ON bs.bin_type_id = bt.id
-    ORDER BY bs.id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetBinTypeById` (IN `p_bin_type_id` INT)   BEGIN
@@ -266,12 +161,12 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetDisposalRuleById` (IN `p_disposal_rule_id` INT)   BEGIN
     SELECT 
         dr.id,
-        i.name AS item,
+        it.name AS item_type,
         l.name AS location,
         bt.name AS bin_type,
         dr.description
     FROM DisposalRule dr
-    INNER JOIN Item i ON dr.item_id = i.id
+    INNER JOIN ItemType it ON dr.item_type_id = it.id
     INNER JOIN Location l ON dr.location_id = l.id
     INNER JOIN BinType bt ON dr.bin_type_id = bt.id
     WHERE dr.id = p_disposal_rule_id;
@@ -280,37 +175,49 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetDisposalRules` ()   BEGIN
     SELECT 
         dr.id,
-        i.name AS item,
+        it.name AS item_type,
         l.name AS location,
         bt.name AS bin_type,
         dr.description
     FROM DisposalRule dr
-    INNER JOIN Item i ON dr.item_id = i.id
+    INNER JOIN ItemType it ON dr.item_type_id = it.id
     INNER JOIN Location l ON dr.location_id = l.id
     INNER JOIN BinType bt ON dr.bin_type_id = bt.id
     ORDER BY dr.id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetItemById` (IN `p_item_id` INT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetDisposalRulesByItemAndLocationId` (IN `p_item_type_id` INT, IN `p_location_id` INT)   BEGIN
     SELECT 
-        i.id,
-        i.name AS item,
-        i.description,
-        i.bar_code,
-        i.qr_code
-    FROM Item i
-    WHERE i.id = p_item_id;
+        dr.id,
+        it.name AS item_type,
+        l.name AS location,
+        bt.name AS bin_type,
+        dr.description
+    FROM disposalrule dr
+    INNER JOIN itemtype it ON dr.item_type_id = it.id
+    INNER JOIN location l ON dr.location_id = l.id
+    INNER JOIN bintype bt ON dr.bin_type_id = bt.id
+    WHERE dr.item_type_id = p_item_type_id
+      AND dr.location_id = p_location_id
+    ORDER BY dr.id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetItems` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetItemTypeById` (IN `p_item_type_id` INT)   BEGIN
     SELECT 
-        i.id,
-        i.name AS item,
-        i.description,
-        i.bar_code,
-        i.qr_code
-    FROM Item i
-    ORDER BY i.id;
+        it.id,
+        it.name AS item_type,
+        it.description
+    FROM ItemType it
+    WHERE it.id = p_item_type_id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetItemTypes` ()   BEGIN
+    SELECT 
+        it.id,
+        it.name AS item_type,
+        it.description
+    FROM ItemType it
+    ORDER BY it.id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetLocationById` (IN `p_location_id` INT)   BEGIN
@@ -329,6 +236,18 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `GetLocations` ()   BEGIN
     ORDER BY l.id;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetTotalScans` ()   BEGIN
+    SELECT 
+        COUNT(*) AS total_scans
+    FROM userscan;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetTotalUsers` ()   BEGIN
+    SELECT 
+        COUNT(*) AS total_users
+    FROM users;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUserById` (IN `p_user_id` INT)   BEGIN
     SELECT 
         u.id,
@@ -340,39 +259,44 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUserById` (IN `p_user_id` INT)  
     WHERE u.id = p_user_id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateBinStep` (IN `p_bin_step_id` INT, IN `p_description` VARCHAR(255), IN `p_bin_type_id` INT)   BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-    BEGIN
-        ROLLBACK;
-        SELECT 0 AS status, 'Failed to update bin step' AS message;
-    END;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUserScans` (IN `p_user_id` INT, IN `p_start_date` DATETIME, IN `p_end_date` DATETIME, IN `p_limit` INT, IN `p_offset` INT)   BEGIN
+    SET @sql = '
+        SELECT 
+            us.id,
+            us.user_id,
+            u.name AS user_name,
+            it.name AS item_type,
+            us.created_at
+        FROM UserScan us
+        INNER JOIN users u ON us.user_id = u.id
+        INNER JOIN ItemType it ON us.item_type_id = it.id
+        WHERE 1 = 1
+    ';
 
-    START TRANSACTION;
-        UPDATE BinStep
-        SET description = p_description, bin_type_id = p_bin_type_id
-        WHERE id = p_bin_step_id;
-    COMMIT;
+    -- Filter by user if provided
+    IF p_user_id IS NOT NULL THEN
+        SET @sql = CONCAT(@sql, ' AND us.user_id = ', p_user_id);
+    END IF;
 
-    SELECT 1 AS status, 'Bin step updated successfully' AS message;
+    -- Filter by date range if both dates provided
+    IF p_start_date IS NOT NULL AND p_end_date IS NOT NULL THEN
+        SET @sql = CONCAT(@sql, 
+            " AND us.created_at BETWEEN '", p_start_date, "' AND '", p_end_date, "'"
+        );
+    END IF;
+
+    -- Add ordering and pagination
+    SET @sql = CONCAT(@sql, 
+        ' ORDER BY us.created_at DESC ',
+        ' LIMIT ', p_limit, ' OFFSET ', p_offset
+    );
+
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateBinType` (IN `p_bin_type_id` INT, IN `p_name` VARCHAR(100), IN `p_description` VARCHAR(255))   BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-    BEGIN
-        ROLLBACK;
-        SELECT 0 AS status, 'Failed to update bin type' AS message;
-    END;
-
-    START TRANSACTION;
-        UPDATE BinType
-        SET name = p_name, description = p_description
-        WHERE id = p_bin_type_id;
-    COMMIT;
-
-    SELECT 1 AS status, 'Bin type updated successfully' AS message;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateDisposalRule` (IN `p_disposal_rule_id` INT, IN `p_item_id` INT, IN `p_location_id` INT, IN `p_bin_type_id` INT, IN `p_description` VARCHAR(255))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateDisposalRule` (IN `p_disposal_rule_id` INT, IN `p_item_type_id` INT, IN `p_location_id` INT, IN `p_bin_type_id` INT, IN `p_description` VARCHAR(255))   BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION 
     BEGIN
         ROLLBACK;
@@ -381,7 +305,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateDisposalRule` (IN `p_disposal
 
     START TRANSACTION;
         UPDATE DisposalRule
-        SET item_id = p_item_id,
+        SET item_type_id = p_item_type_id,
             location_id = p_location_id,
             bin_type_id = p_bin_type_id,
             description = p_description
@@ -389,41 +313,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateDisposalRule` (IN `p_disposal
     COMMIT;
 
     SELECT 1 AS status, 'Disposal rule updated successfully' AS message;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateItem` (IN `p_item_id` INT, IN `p_name` VARCHAR(100), IN `p_description` VARCHAR(255), IN `p_bar_code` VARCHAR(255), IN `p_qr_code` VARCHAR(255))   BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-    BEGIN
-        ROLLBACK;
-        SELECT 0 AS status, 'Failed to update item' AS message;
-    END;
-
-    START TRANSACTION;
-        UPDATE Item
-        SET name = p_name,
-            description = p_description,
-            bar_code = p_bar_code,
-            qr_code = p_qr_code
-        WHERE id = p_item_id;
-    COMMIT;
-
-    SELECT 1 AS status, 'Item updated successfully' AS message;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateLocation` (IN `p_location_id` INT, IN `p_name` VARCHAR(255))   BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-    BEGIN
-        ROLLBACK;
-        SELECT 0 AS status, 'Failed to update location' AS message;
-    END;
-
-    START TRANSACTION;
-        UPDATE Location
-        SET name = p_name
-        WHERE id = p_location_id;
-    COMMIT;
-
-    SELECT 1 AS status, 'Location updated successfully' AS message;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateUser` (IN `p_user_id` INT, IN `p_name` VARCHAR(100), IN `p_email` VARCHAR(255), IN `p_password_hash` VARCHAR(255), IN `p_user_type_id` INT)   BEGIN
@@ -434,9 +323,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateUser` (IN `p_user_id` INT, IN
     END;
 
     START TRANSACTION;
-        UPDATE users 
-        SET 
-            name = p_name,
+        UPDATE users
+        SET name = p_name,
             email = p_email,
             password_hash = p_password_hash,
             user_type_id = p_user_type_id
@@ -464,32 +352,13 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `binstep`
---
-
-CREATE TABLE `binstep` (
-  `id` int NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `bin_type_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `binstep`
---
-
-INSERT INTO `binstep` (`id`, `description`, `bin_type_id`) VALUES
-(4, 'Cut boxes', 1);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `bintype`
 --
 
 CREATE TABLE `bintype` (
-  `id` int NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -509,26 +378,34 @@ INSERT INTO `bintype` (`id`, `name`, `description`) VALUES
 --
 
 CREATE TABLE `disposalrule` (
-  `id` int NOT NULL,
-  `item_id` int NOT NULL,
-  `location_id` int NOT NULL,
-  `bin_type_id` int NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `id` int(11) NOT NULL,
+  `item_type_id` int(11) NOT NULL,
+  `location_id` int(11) NOT NULL,
+  `bin_type_id` int(11) NOT NULL,
+  `description` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `item`
+-- Table structure for table `itemtype`
 --
 
-CREATE TABLE `item` (
-  `id` int NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `bar_code` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `qr_code` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
+CREATE TABLE `itemtype` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `itemtype`
+--
+
+INSERT INTO `itemtype` (`id`, `name`, `description`) VALUES
+(1, 'Plastic', 'Plastic containers and bottles'),
+(2, 'Can', 'Metal cans'),
+(3, 'Glass', 'Glass jars and bottles'),
+(4, 'Paper', 'Paper, cardboard, newspapers');
 
 -- --------------------------------------------------------
 
@@ -537,8 +414,32 @@ CREATE TABLE `item` (
 --
 
 CREATE TABLE `location` (
-  `id` int NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `location`
+--
+
+INSERT INTO `location` (`id`, `name`) VALUES
+(1, 'Moylish Campus'),
+(2, 'Home'),
+(3, 'Work');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login_attempts`
+--
+
+CREATE TABLE `login_attempts` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `ip_address` varchar(45) NOT NULL,
+  `attempts` int(11) NOT NULL DEFAULT 1,
+  `last_attempt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `locked_until` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -548,30 +449,59 @@ CREATE TABLE `location` (
 --
 
 CREATE TABLE `users` (
-  `id` int NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `password_hash` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_type_id` int NOT NULL DEFAULT '1',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `user_type_id` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password_hash`, `user_type_id`, `created_at`, `updated_at`) VALUES
-(1, 'Marius', 'marius.c49@Yahoo.com', '$2y$10$F0XEGrJxMYwgaFeitnzdj.ccQvmObRXF0sftg5yTTXi5RJ5zsMHje', 1, '2025-10-16 14:05:57', '2025-10-21 10:41:24'),
-(2, 'alex', 'alex@gmail.ie', '$2y$10$W3/Mpff1VcrFqjLmboMZE.CBcjqGYgZbylpSH86duPNdOy6JNmCAO', 1, '2025-10-16 14:06:43', '2025-10-21 09:27:16'),
-(3, 'lee', 'lee@gmail.com', '$2y$10$f6sr7.XCV54U1g9naPQpPe9eUvp.1zZWuumDZwtNawUsoSm1gIICu', 2, '2025-10-16 15:23:05', '2025-10-21 09:14:18'),
-(4, 'lee', 'leej@gmail.com', '$2y$10$SoKQshB.PrlxHU09V7G6wuXExbpdtNmA7IemnZGFg.PEJ2rS.JGv.', 1, '2025-10-16 15:23:18', '2025-10-16 15:23:18'),
-(5, 'test123', 'test123@gmail.com', '$2y$10$CNMluJwa8SsdbfcK3ZmRBuA18GYEDfFEpI7beXH4nbNLDuofWed.u', 1, '2025-10-16 15:36:21', '2025-10-16 15:36:21'),
-(6, 'roberto', 'roberto@gmail.com', '$2y$10$mjbbMZe.xGvuTbwQfbyPSuYblahZDyjwx/8niWxod3/kWow2rv4Wu', 1, '2025-10-17 08:32:06', '2025-10-17 08:32:06'),
-(7, 'yevhen', 'yevhen@gmail.com', '$2y$10$c9zinwh2xeJPU1W08qBMXOwujtHI9J5RtyKVrizTh1sMF0eKulGhq', 1, '2025-10-20 10:21:15', '2025-10-20 10:21:15'),
-(8, 'marius', 'k00294842@student.tus.ie', '$2y$10$d8Vrkn7nNXjWNHZc6UcwZO6Y6qwgZwW2uk.uTF7aLvsL8DZOTqIyO', 2, '2025-10-20 10:42:11', '2025-10-20 11:05:24'),
-(9, 'mahommed', 'mahommed@gmail.com', '$2y$10$luy4Po4NddKRBEsu2Y48J.q4rJMFvFUxh4jTTmQhjWA5QWJXfT5Ae', 1, '2025-10-20 12:00:16', '2025-10-20 12:00:16'),
-(11, 'Mbappe', 'mbappe@gmail.com', '$2y$10$UHgA0iCCgv0RmmV3vEKQnOfOocmZ6aPN3rw5A8SM22BFO7warOsPK', 1, '2025-10-20 21:31:14', '2025-10-21 10:42:26');
+INSERT INTO `users` (`id`, `name`, `email`, `avatar`, `password_hash`, `user_type_id`, `created_at`, `updated_at`) VALUES
+(1, 'Marius', 'marius.c49@Yahoo.com', NULL, '$2y$10$F0XEGrJxMYwgaFeitnzdj.ccQvmObRXF0sftg5yTTXi5RJ5zsMHje', 1, '2025-10-16 14:05:57', '2025-10-21 10:41:24'),
+(2, 'alex', 'alex@gmail.ie', NULL, '$2y$10$W3/Mpff1VcrFqjLmboMZE.CBcjqGYgZbylpSH86duPNdOy6JNmCAO', 1, '2025-10-16 14:06:43', '2025-10-21 09:27:16'),
+(3, 'lee', 'lee@gmail.com', NULL, '$2y$10$f6sr7.XCV54U1g9naPQpPe9eUvp.1zZWuumDZwtNawUsoSm1gIICu', 2, '2025-10-16 15:23:05', '2025-10-21 09:14:18'),
+(4, 'lee', 'leej@gmail.com', NULL, '$2y$10$SoKQshB.PrlxHU09V7G6wuXExbpdtNmA7IemnZGFg.PEJ2rS.JGv.', 1, '2025-10-16 15:23:18', '2025-10-16 15:23:18'),
+(5, 'test123', 'test123@gmail.com', NULL, '$2y$10$CNMluJwa8SsdbfcK3ZmRBuA18GYEDfFEpI7beXH4nbNLDuofWed.u', 1, '2025-10-16 15:36:21', '2025-10-16 15:36:21'),
+(6, 'roberto', 'roberto@gmail.com', NULL, '$2y$10$mjbbMZe.xGvuTbwQfbyPSuYblahZDyjwx/8niWxod3/kWow2rv4Wu', 1, '2025-10-17 08:32:06', '2025-10-17 08:32:06'),
+(7, 'yevhen', 'yevhen@gmail.com', NULL, '$2y$10$c9zinwh2xeJPU1W08qBMXOwujtHI9J5RtyKVrizTh1sMF0eKulGhq', 1, '2025-10-20 10:21:15', '2025-10-20 10:21:15'),
+(8, 'marius', 'k00294842@student.tus.ie', NULL, '$2y$10$d8Vrkn7nNXjWNHZc6UcwZO6Y6qwgZwW2uk.uTF7aLvsL8DZOTqIyO', 2, '2025-10-20 10:42:11', '2025-10-20 11:05:24'),
+(9, 'mahommed', 'mahommed@gmail.com', NULL, '$2y$10$luy4Po4NddKRBEsu2Y48J.q4rJMFvFUxh4jTTmQhjWA5QWJXfT5Ae', 1, '2025-10-20 12:00:16', '2025-10-20 12:00:16'),
+(11, 'Mbappe', 'mbappe@gmail.com', NULL, '$2y$10$UHgA0iCCgv0RmmV3vEKQnOfOocmZ6aPN3rw5A8SM22BFO7warOsPK', 1, '2025-10-20 21:31:14', '2025-10-21 10:42:26');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userscan`
+--
+
+CREATE TABLE `userscan` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `item_type_id` int(11) NOT NULL,
+  `is_accurate` tinyint(1) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `userscan`
+--
+
+INSERT INTO `userscan` (`id`, `user_id`, `item_type_id`, `is_accurate`, `created_at`) VALUES
+(1, 1, 1, NULL, '2025-10-25 08:00:00'),
+(2, 1, 3, NULL, '2025-10-26 09:30:00'),
+(3, 3, 2, NULL, '2025-10-27 10:15:00'),
+(4, 5, 4, NULL, '2025-10-28 14:20:00'),
+(5, 8, 1, NULL, '2025-10-29 08:45:00'),
+(6, 8, 1, NULL, '2025-11-17 11:31:29'),
+(7, 8, 2, NULL, '2025-11-30 21:15:07'),
+(8, 8, 2, NULL, '2025-11-30 21:23:44');
 
 -- --------------------------------------------------------
 
@@ -580,8 +510,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `password_hash`, `user_type_id`, `cr
 --
 
 CREATE TABLE `usertype` (
-  `id` int NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+  `id` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -597,13 +527,6 @@ INSERT INTO `usertype` (`id`, `description`) VALUES
 --
 
 --
--- Indexes for table `binstep`
---
-ALTER TABLE `binstep`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `bin_type_id` (`bin_type_id`);
-
---
 -- Indexes for table `bintype`
 --
 ALTER TABLE `bintype`
@@ -614,17 +537,15 @@ ALTER TABLE `bintype`
 --
 ALTER TABLE `disposalrule`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `item_id` (`item_id`),
+  ADD KEY `item_type_id` (`item_type_id`),
   ADD KEY `location_id` (`location_id`),
   ADD KEY `bin_type_id` (`bin_type_id`);
 
 --
--- Indexes for table `item`
+-- Indexes for table `itemtype`
 --
-ALTER TABLE `item`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `bar_code` (`bar_code`),
-  ADD UNIQUE KEY `qr_code` (`qr_code`);
+ALTER TABLE `itemtype`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `location`
@@ -633,12 +554,29 @@ ALTER TABLE `location`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `login_attempts`
+--
+ALTER TABLE `login_attempts`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email_ip` (`email`,`ip_address`),
+  ADD KEY `locked_until` (`locked_until`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
   ADD KEY `user_type_id` (`user_type_id`);
+
+--
+-- Indexes for table `userscan`
+--
+ALTER TABLE `userscan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `item_type_id` (`item_type_id`),
+  ADD KEY `idx_userscan_accuracy` (`is_accurate`);
 
 --
 -- Indexes for table `usertype`
@@ -651,62 +589,62 @@ ALTER TABLE `usertype`
 --
 
 --
--- AUTO_INCREMENT for table `binstep`
---
-ALTER TABLE `binstep`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT for table `bintype`
 --
 ALTER TABLE `bintype`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `disposalrule`
 --
 ALTER TABLE `disposalrule`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `item`
+-- AUTO_INCREMENT for table `itemtype`
 --
-ALTER TABLE `item`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `itemtype`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `location`
 --
 ALTER TABLE `location`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `login_attempts`
+--
+ALTER TABLE `login_attempts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `userscan`
+--
+ALTER TABLE `userscan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `usertype`
 --
 ALTER TABLE `usertype`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `binstep`
---
-ALTER TABLE `binstep`
-  ADD CONSTRAINT `binstep_ibfk_1` FOREIGN KEY (`bin_type_id`) REFERENCES `bintype` (`id`);
-
---
 -- Constraints for table `disposalrule`
 --
 ALTER TABLE `disposalrule`
-  ADD CONSTRAINT `disposalrule_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`),
+  ADD CONSTRAINT `disposalrule_ibfk_1` FOREIGN KEY (`item_type_id`) REFERENCES `itemtype` (`id`),
   ADD CONSTRAINT `disposalrule_ibfk_2` FOREIGN KEY (`location_id`) REFERENCES `location` (`id`),
   ADD CONSTRAINT `disposalrule_ibfk_3` FOREIGN KEY (`bin_type_id`) REFERENCES `bintype` (`id`);
 
@@ -715,6 +653,13 @@ ALTER TABLE `disposalrule`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`user_type_id`) REFERENCES `usertype` (`id`);
+
+--
+-- Constraints for table `userscan`
+--
+ALTER TABLE `userscan`
+  ADD CONSTRAINT `userscan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `userscan_ibfk_2` FOREIGN KEY (`item_type_id`) REFERENCES `itemtype` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

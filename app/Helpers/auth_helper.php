@@ -4,7 +4,7 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 if (!function_exists('generateJWT')) {
-    function generateJWT(int $userId, string $email, string $name, string $role): string
+    function generateJWT(int $userId, string $email, string $name, string $role, int $expireSeconds = 3600): string
     {
         $algo = getenv('JWT_ALGO') ?: 'RS256';
         
@@ -29,7 +29,7 @@ if (!function_exists('generateJWT')) {
         }
 
         $issuedAt = time();
-        $expirationTime = $issuedAt + 3600;
+        $expirationTime = $issuedAt + $expireSeconds;
         
         $payload = [
             'iat' => $issuedAt,

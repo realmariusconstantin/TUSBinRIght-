@@ -214,14 +214,18 @@ class AuthController extends ResourceController
             // Role is already fetched from usertype table
             $role = $user->role;
 
+            // Check if rememberMe is enabled (7 days vs 1 hour)
+            $rememberMe = isset($data['rememberMe']) && $data['rememberMe'] === true;
+            $expireTime = $rememberMe ? (7 * 24 * 3600) : 3600; // 7 days or 1 hour
+
             // Generate JWT token with RS256
-            $token = generateJWT($user->id, $user->email, $user->name, $role);
+            $token = generateJWT($user->id, $user->email, $user->name, $role, $expireTime);
 
             // Create HttpOnly cookie
             $cookie = [
                 'name' => 'jwt_token',
                 'value' => $token,
-                'expire' => 3600,
+                'expire' => $expireTime,
                 'path' => '/',
                 'domain' => '',
                 'secure' => false,
@@ -302,13 +306,21 @@ class AuthController extends ResourceController
             // Role is already fetched from usertype table
             $role = $userData->role;
 
+            // Build avatar URL if exists
+            $avatarUrl = null;
+            if (!empty($userData->avatar)) {
+                $baseUrl = rtrim(base_url(), '/');
+                $avatarUrl = $baseUrl . $userData->avatar;
+            }
+
             return $this->response->setJSON([
                 'status' => 'success',
                 'user' => [
                     'id' => $userData->id,
                     'name' => $userData->name,
                     'email' => $userData->email,
-                    'role' => $role
+                    'role' => $role,
+                    'avatar' => $avatarUrl
                 ]
             ])->setStatusCode(200);
 
@@ -581,6 +593,100 @@ class AuthController extends ResourceController
             return $this->response->setJSON([
                 'status' => 'error',
                 'message' => 'Failed to update password'
+            ])->setStatusCode(500);
+        }
+    }
+
+    /**
+     * Upload user avatar
+     * POST /profile/avatar
+     */
+    public function uploadAvatar()
+    {
+        $user = getAuthenticatedUser();
+
+        if (!$user) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Not authenticated'
+            ])->setStatusCode(401);
+        }
+
+        $file = $this->request->getFile('avatar');
+
+        if (!$file || !$file->isValid()) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'No valid file uploaded'
+            ])->setStatusCode(400);
+        }
+
+        // Validate file type
+        $validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        if (!in_array($file->getMimeType(), $validTypes)) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Invalid file type. Please upload JPEG, PNG, GIF, or WebP'
+            ])->setStatusCode(400);
+        }
+
+        // Validate file size (max 5MB)
+        if ($file->getSize() > 5 * 1024 * 1024) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'File size must be less than 5MB'
+            ])->setStatusCode(400);
+        }
+
+        try {
+            // Create avatars directory if it doesn't exist
+            $uploadPath = FCPATH . 'uploads/avatars/';
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+
+            // Delete old avatar if exists
+            $currentUser = $this->db->table('users')
+                ->select('avatar')
+                ->where('id', $user->id)
+                ->get()
+                ->getRow();
+
+            if ($currentUser && $currentUser->avatar) {
+                $oldFile = FCPATH . ltrim($currentUser->avatar, '/');
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
+            }
+
+            // Generate unique filename
+            $extension = $file->getExtension();
+            $newName = 'avatar_' . $user->id . '_' . time() . '.' . $extension;
+
+            // Move file
+            $file->move($uploadPath, $newName);
+
+            // Save path to database
+            $avatarPath = '/uploads/avatars/' . $newName;
+            $this->db->table('users')
+                ->where('id', $user->id)
+                ->update(['avatar' => $avatarPath]);
+
+            // Return full URL
+            $baseUrl = rtrim(base_url(), '/');
+            $avatarUrl = $baseUrl . $avatarPath;
+
+            return $this->response->setJSON([
+                'status' => 'success',
+                'message' => 'Avatar uploaded successfully',
+                'avatar_url' => $avatarUrl
+            ])->setStatusCode(200);
+
+        } catch (\Exception $e) {
+            log_message('error', 'Avatar upload failed: ' . $e->getMessage());
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Failed to upload avatar'
             ])->setStatusCode(500);
         }
     }

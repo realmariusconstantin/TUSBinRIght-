@@ -17,6 +17,8 @@ $routes->post('login', 'AuthController::login');
 $routes->post('logout', 'AuthController::logout');
 $routes->get('total-scans', 'StatsController::totalScans');
 $routes->get('total-users', 'StatsController::totalUsers');
+$routes->get('community-stats', 'StatsController::communityStats');
+$routes->get('scan-accuracy-stats', '\App\Controllers\Admin\UserScans::getAccuracyStats');
 $routes->get('disposal-rules-location', '\App\Controllers\Admin\DisposalRules::getDisposalRulesByItemAndLocationId');
 $routes->get('api/password-strength', '\App\Controllers\Api\PasswordValidator::strength');
 
@@ -26,9 +28,11 @@ $routes->group('', ['filter' => 'jwtauth'], function($routes) {
     $routes->get('profile/recycling-summary', 'AuthController::recyclingSummary');
     $routes->put('profile/email', 'AuthController::updateEmail');
     $routes->put('profile/password', 'AuthController::updatePassword');
+    $routes->post('profile/avatar', 'AuthController::uploadAvatar');
     $routes->post('refresh', 'AuthController::refresh');
     $routes->post('promote/(:num)', 'AuthController::promote/$1');
     $routes->post('create-scan', '\App\Controllers\Admin\UserScans::createScan');
+    $routes->post('scan-accuracy', '\App\Controllers\Admin\UserScans::submitAccuracy');
 });
 
 // ADMIN ROUTES
