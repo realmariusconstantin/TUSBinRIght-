@@ -20,7 +20,7 @@ Renova implements all these requirements and adds extra features like CO₂ stat
 # 🔧 Project Setup
 
 ## Backend Setup (Branch: `backend`)
-1. Place the **backend branch** into your **htdocs** directory (e.g., XAMPP).  
+1. Place the **backend branch** into your **htdocs** directory (name it tusbinright).  
 2. Open the `.env` file and update your database credentials if required.  
 3. Import the SQL dump:
    tusbinright_new.sql, this will create the tables and populate the required data structure.
@@ -90,8 +90,6 @@ Admins can:
 ---
 
 # 🗄️ Database Design
-
-Add your diagram here:
 
 ![Database Design](images/erd.png)
 
