@@ -5,8 +5,8 @@ import { useCharts } from '@/composables/useCharts'
 import { useDarkMode } from '@/composables/useDarkMode'
 import ChartComponent from '@/components/ChartComponent.vue'
 
-// current user info
 const me = ref({ id: '', name: '', email: '', avatar: '' })
+
 const recyclingSummary = ref({
   can: 0,
   plastic: 0,
@@ -15,7 +15,27 @@ const recyclingSummary = ref({
   total: 0
 })
 
-// Profile picture
+const materialChartData = ref({
+  Plastic: { count: 0, carbonSaved: 0, drivingMinutes: 0 },
+  Glass: { count: 0, carbonSaved: 0, drivingMinutes: 0 },
+  Cans: { count: 0, carbonSaved: 0, drivingMinutes: 0 },
+  Paper: { count: 0, carbonSaved: 0, drivingMinutes: 0 }
+})
+
+const MATERIAL_MAP = {
+  1: 'Plastic',
+  2: 'Cans',
+  3: 'Glass',
+  4: 'Paper'
+}
+
+const IMPACT_FACTORS = {
+  Plastic: { carbon: 0.05, drive: 0.3 },
+  Glass: { carbon: 0.03, drive: 0.2 },
+  Cans: { carbon: 0.07, drive: 0.4 },
+  Paper: { carbon: 0.02, drive: 0.1 }
+}
+
 const fileInput = ref(null)
 const isUploadingAvatar = ref(false)
 const avatarError = ref('')
@@ -27,34 +47,25 @@ function openFilePicker() {
 async function handleAvatarUpload(event) {
   const file = event.target.files?.[0]
   if (!file) return
-
-  // Validate file type
   const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
   if (!validTypes.includes(file.type)) {
     avatarError.value = 'Please select a valid image (JPEG, PNG, GIF, or WebP)'
     return
   }
-
-  // Validate file size (max 5MB)
   if (file.size > 5 * 1024 * 1024) {
     avatarError.value = 'Image size must be less than 5MB'
     return
   }
-
   avatarError.value = ''
   isUploadingAvatar.value = true
-
   try {
     const formData = new FormData()
     formData.append('avatar', file)
-
     const { data } = await api.post('/profile/avatar', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
-
     if (data?.status === 'success') {
       me.value.avatar = data.avatar_url
-      // Also update localStorage
       const storedUser = localStorage.getItem('user')
       if (storedUser) {
         const user = JSON.parse(storedUser)
@@ -68,20 +79,16 @@ async function handleAvatarUpload(event) {
     avatarError.value = err.response?.data?.message || 'Failed to upload avatar'
   } finally {
     isUploadingAvatar.value = false
-    // Reset file input
     if (fileInput.value) fileInput.value.value = ''
   }
 }
 
-// composables
-const { getUserMaterialChart, getChartOptions, getPieChartOptions } = useCharts()
+const { getPieChartOptions } = useCharts()
 const { isDarkMode } = useDarkMode()
 
-// modals
 const showEmailModal = ref(false)
 const showPasswordModal = ref(false)
 
-// edit form
 const newEmail = ref('')
 const currentPassword = ref('')
 const newPassword = ref('')
@@ -90,57 +97,64 @@ const showPassword = ref(false)
 const showNewPassword = ref(false)
 const showConfirmPassword = ref(false)
 
-// messages
 const emailMsg = ref('')
 const pwdMsg = ref('')
 const loading = ref(false)
 
-// material names mapping
-const materialNames = {
-  1: 'Can',
-  2: 'Plastic',
-  3: 'Paper',
-  4: 'Glass'
-}
+async function loadUserScans() {
+  try {
+    const userId = me.value.id
+    if (!userId) return
 
-// material icons mapping
-const materialIcons = {
-  'Can': 'fas fa-trash',
-  'Plastic': 'fas fa-bottle-water',
-  'Paper': 'fas fa-file-alt',
-  'Glass': 'fas fa-wine-glass-alt'
+    const { data } = await api.get(`/user-scans/${userId}`)
+    if (data?.status !== 'success') return
+
+    const counts = { Plastic: 0, Cans: 0, Paper: 0, Glass: 0 }
+
+    data.scans.forEach(scan => {
+      const type = MATERIAL_MAP[Number(scan.item_type_id)]
+      if (type) counts[type]++
+    })
+
+    recyclingSummary.value = {
+      can: counts.Cans,
+      plastic: counts.Plastic,
+      paper: counts.Paper,
+      glass: counts.Glass,
+      total: counts.Cans + counts.Plastic + counts.Paper + counts.Glass
+    }
+
+    materialChartData.value = Object.fromEntries(
+      Object.entries(counts).map(([key, count]) => [
+        key,
+        {
+          count,
+          carbonSaved: count * IMPACT_FACTORS[key].carbon,
+          drivingMinutes: count * IMPACT_FACTORS[key].drive
+        }
+      ])
+    )
+  } catch {}
 }
 
 async function loadMe() {
   try {
     const { data } = await api.get('/profile')
-    if (data?.status === 'success' && data?.user) {
-      me.value = { ...data.user, avatar: data.user.avatar || '' }
-      newEmail.value = data.user.email
-      await loadRecyclingSummary()
-    } else {
+    if (data?.status !== 'success') {
       alert('Failed to load profile. Please log in again.')
-      window.location.href = '/login'
+      return (window.location.href = '/login')
     }
-  } catch (err) {
-    console.error('Failed to load profile:', err)
+
+    me.value = { ...data.user, avatar: data.user.avatar || '' }
+    newEmail.value = data.user.email
+
+    await loadUserScans()
+  } catch {
     alert('Session expired. Please log in again.')
     window.location.href = '/login'
   }
 }
 
-async function loadRecyclingSummary() {
-  try {
-    const { data } = await api.get(`/profile/recycling-summary`)
-    if (data?.status === 'success' && data?.summary) {
-      recyclingSummary.value = data.summary
-    }
-  } catch (err) {
-    console.error('Failed to load recycling summary:', err)
-  }
-}
-
-// update email
 async function updateEmail() {
   if (!newEmail.value) {
     emailMsg.value = 'Please enter a valid email'
@@ -157,16 +171,15 @@ async function updateEmail() {
         emailMsg.value = ''
       }, 1500)
     } else {
-      emailMsg.value = '' + (data?.message || 'Failed to update email')
+      emailMsg.value = data?.message || 'Failed to update email'
     }
   } catch (err) {
-    emailMsg.value = '' + (err.response?.data?.message || 'Failed to update email')
+    emailMsg.value = err.response?.data?.message || 'Failed to update email'
   } finally {
     loading.value = false
   }
 }
 
-// update password
 async function updatePassword() {
   if (!currentPassword.value || !newPassword.value || !confirmPassword.value) {
     pwdMsg.value = 'All password fields are required'
@@ -176,12 +189,11 @@ async function updatePassword() {
     pwdMsg.value = 'Passwords do not match'
     return
   }
-
   loading.value = true
   try {
     const { data } = await api.put('/profile/password', {
       currentPassword: currentPassword.value,
-      newPassword: newPassword.value,
+      newPassword: newPassword.value
     })
     if (data?.status === 'success') {
       pwdMsg.value = 'Password changed successfully'
@@ -193,10 +205,10 @@ async function updatePassword() {
         pwdMsg.value = ''
       }, 1500)
     } else {
-      pwdMsg.value = '' + (data?.message || 'Failed to update password')
+      pwdMsg.value = data?.message || 'Failed to update password'
     }
   } catch (err) {
-    pwdMsg.value = ' ' + (err.response?.data?.message || 'Failed to update password')
+    pwdMsg.value = err.response?.data?.message || 'Failed to update password'
   } finally {
     loading.value = false
   }
@@ -227,17 +239,26 @@ function logout() {
 }
 
 const userInitials = computed(() => {
-  if (me.value.name) {
-    return me.value.name.split(' ').map(n => n[0]).join('').toUpperCase()
-  }
+  if (me.value.name) return me.value.name.split(' ').map(n => n[0]).join('').toUpperCase()
   return me.value.email ? me.value.email[0].toUpperCase() : '?'
 })
 
-// Computed properties for user material charts
-const plasticChartData = computed(() => getUserMaterialChart('Plastic', recyclingSummary.value))
-const glassChartData = computed(() => getUserMaterialChart('Glass', recyclingSummary.value))
-const cansChartData = computed(() => getUserMaterialChart('Cans', recyclingSummary.value))
-const paperChartData = computed(() => getUserMaterialChart('Paper', recyclingSummary.value))
+function materialChart(type) {
+  return computed(() => {
+    const m = materialChartData.value[type]
+    return {
+      labels: ['Recycled', 'Remaining'],
+      datasets: [{ data: [m.count, Math.max(50 - m.count, 0)] }],
+      drivingMinutes: m.drivingMinutes,
+      carbonSaved: m.carbonSaved
+    }
+  })
+}
+
+const plasticChartData = materialChart('Plastic')
+const glassChartData = materialChart('Glass')
+const cansChartData = materialChart('Cans')
+const paperChartData = materialChart('Paper')
 
 const chartOptions = computed(() => getPieChartOptions(isDarkMode.value))
 
@@ -246,9 +267,7 @@ onMounted(loadMe)
 
 <template>
   <div class="container">
-    <!-- Profile Header Section -->
     <div class="profile-header">
-      <!-- Clickable Avatar with Image Upload -->
       <div class="avatar-wrapper" @click="openFilePicker" :class="{ uploading: isUploadingAvatar }">
         <div class="avatar" v-if="!me.avatar">{{ userInitials }}</div>
         <img v-else :src="me.avatar" :alt="me.name" class="avatar-image" />
@@ -259,15 +278,7 @@ onMounted(loadMe)
           <i class="fas fa-spinner fa-spin"></i>
         </div>
       </div>
-      <input
-        ref="fileInput"
-        type="file"
-        accept="image/jpeg,image/png,image/gif,image/webp"
-        style="display: none"
-        @change="handleAvatarUpload"
-      />
-      
-      <!-- User Info -->
+      <input ref="fileInput" type="file" accept="image/jpeg,image/png,image/gif,image/webp" style="display: none" @change="handleAvatarUpload" />
       <div class="user-info">
         <h1>{{ me.name || 'User' }}</h1>
         <p class="user-email">{{ me.email }}</p>
@@ -275,7 +286,6 @@ onMounted(loadMe)
       </div>
     </div>
 
-    <!-- Email & Password Section -->
     <div class="credentials-section">
       <div class="credential-card">
         <div class="credential-header">
@@ -304,7 +314,6 @@ onMounted(loadMe)
       </div>
     </div>
 
-    <!-- Recycling Stats Section -->
     <div class="stats-section">
       <h2>Your Recycling Impact</h2>
       <div class="stats-grid">
@@ -347,7 +356,6 @@ onMounted(loadMe)
       </div>
     </div>
 
-    <!-- Carbon Impact Charts Section -->
     <div class="charts-section">
       <h2>Your Carbon Savings by Material</h2>
       <p class="charts-subtitle">See how much carbon you've saved by recycling each material</p>
@@ -378,7 +386,7 @@ onMounted(loadMe)
             chartType="doughnut"
             :chartData="cansChartData.datasets ? { labels: cansChartData.labels, datasets: cansChartData.datasets } : {}"
             :chartOptions="chartOptions"
-            :stats="{ carbonSaved: cansChartData.datasets ? 15.7 : 0, drivingMinutes: cansChartData.drivingMinutes }"
+            :stats="{ carbonSaved: cansChartData.carbonSaved || 0, drivingMinutes: cansChartData.drivingMinutes }"
           />
         </div>
 
@@ -388,18 +396,16 @@ onMounted(loadMe)
             chartType="doughnut"
             :chartData="paperChartData.datasets ? { labels: paperChartData.labels, datasets: paperChartData.datasets } : {}"
             :chartOptions="chartOptions"
-            :stats="{ carbonSaved: paperChartData.datasets ? 20.1 : 0, drivingMinutes: paperChartData.drivingMinutes }"
+            :stats="{ carbonSaved: paperChartData.carbonSaved || 0, drivingMinutes: paperChartData.drivingMinutes }"
           />
         </div>
       </div>
     </div>
 
-    <!-- Logout Button -->
     <button class="logout-btn" @click="logout">
       <i class="fas fa-sign-out-alt"></i> Logout
     </button>
 
-    <!-- Email Modal -->
     <div v-if="showEmailModal" class="modal-overlay" @click.self="closeEmailModal">
       <div class="modal">
         <div class="modal-header">
@@ -413,14 +419,9 @@ onMounted(loadMe)
           </div>
           <div class="field-group">
             <label for="new-email">New Email Address</label>
-            <input 
-              id="new-email"
-              v-model="newEmail" 
-              type="email" 
-              placeholder="Enter your new email address" 
-            />
+            <input id="new-email" v-model="newEmail" type="email" placeholder="Enter your new email address" />
           </div>
-          <p v-if="emailMsg" class="msg" :class="{ success: emailMsg.includes('✅'), error: emailMsg.includes('❌') }">
+          <p v-if="emailMsg" class="msg" :class="{ success: emailMsg.includes('success'), error: emailMsg.includes('Failed') }">
             {{ emailMsg }}
           </p>
         </div>
@@ -433,7 +434,6 @@ onMounted(loadMe)
       </div>
     </div>
 
-    <!-- Password Modal -->
     <div v-if="showPasswordModal" class="modal-overlay" @click.self="closePasswordModal">
       <div class="modal">
         <div class="modal-header">
@@ -444,17 +444,8 @@ onMounted(loadMe)
           <div class="field-group">
             <label for="current-pwd">Current Password</label>
             <div class="password-input-group">
-              <input 
-                id="current-pwd"
-                v-model="currentPassword" 
-                :type="showPassword ? 'text' : 'password'" 
-                placeholder="Enter your current password" 
-              />
-              <button 
-                type="button" 
-                class="toggle-visibility"
-                @click="showPassword = !showPassword"
-              >
+              <input id="current-pwd" v-model="currentPassword" :type="showPassword ? 'text' : 'password'" placeholder="Enter your current password" />
+              <button type="button" class="toggle-visibility" @click="showPassword = !showPassword">
                 <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
             </div>
@@ -463,17 +454,8 @@ onMounted(loadMe)
           <div class="field-group">
             <label for="new-pwd">New Password</label>
             <div class="password-input-group">
-              <input 
-                id="new-pwd"
-                v-model="newPassword" 
-                :type="showNewPassword ? 'text' : 'password'" 
-                placeholder="Enter your new password" 
-              />
-              <button 
-                type="button" 
-                class="toggle-visibility"
-                @click="showNewPassword = !showNewPassword"
-              >
+              <input id="new-pwd" v-model="newPassword" :type="showNewPassword ? 'text' : 'password'" placeholder="Enter your new password" />
+              <button type="button" class="toggle-visibility" @click="showNewPassword = !showNewPassword">
                 <i :class="showNewPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
             </div>
@@ -482,23 +464,14 @@ onMounted(loadMe)
           <div class="field-group">
             <label for="confirm-pwd">Confirm New Password</label>
             <div class="password-input-group">
-              <input 
-                id="confirm-pwd"
-                v-model="confirmPassword" 
-                :type="showConfirmPassword ? 'text' : 'password'" 
-                placeholder="Confirm your new password" 
-              />
-              <button 
-                type="button" 
-                class="toggle-visibility"
-                @click="showConfirmPassword = !showConfirmPassword"
-              >
+              <input id="confirm-pwd" v-model="confirmPassword" :type="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm your new password" />
+              <button type="button" class="toggle-visibility" @click="showConfirmPassword = !showConfirmPassword">
                 <i :class="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
               </button>
             </div>
           </div>
 
-          <p v-if="pwdMsg" class="msg" :class="{ success: pwdMsg.includes('✅'), error: pwdMsg.includes('❌') }">
+          <p v-if="pwdMsg" class="msg" :class="{ success: pwdMsg.includes('success'), error: pwdMsg.includes('Failed') }">
             {{ pwdMsg }}
           </p>
         </div>
@@ -522,7 +495,6 @@ onMounted(loadMe)
   transition: background-color 0.3s ease;
 }
 
-/* Profile Header */
 .profile-header {
   display: flex;
   align-items: center;
@@ -548,7 +520,6 @@ onMounted(loadMe)
   box-shadow: 0 8px 24px rgba(76, 175, 80, 0.3);
 }
 
-/* Avatar Upload Styles */
 .avatar-wrapper {
   position: relative;
   cursor: pointer;
@@ -630,7 +601,6 @@ onMounted(loadMe)
   margin: 0;
 }
 
-/* Credentials Section */
 .credentials-section {
   max-width: 900px;
   margin: 0 auto 48px;
@@ -704,7 +674,6 @@ onMounted(loadMe)
   box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
 }
 
-/* Stats Section */
 .stats-section {
   max-width: 900px;
   margin: 0 auto 48px;
@@ -816,7 +785,6 @@ onMounted(loadMe)
   opacity: 0.9;
 }
 
-/* Modal Styles */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -1077,7 +1045,6 @@ button {
   box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .profile-header {
     flex-direction: column;
@@ -1107,7 +1074,6 @@ button {
   }
 }
 
-/* Charts Section */
 .charts-section {
   background: white;
   border-radius: 12px;
