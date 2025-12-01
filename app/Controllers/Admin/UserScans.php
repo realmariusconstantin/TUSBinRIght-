@@ -74,7 +74,7 @@ class UserScans extends ResourceController
             // Get the last inserted scan ID
             $db = \Config\Database::connect();
             $scanId = $db->insertID();
-            
+
             // If insertID doesn't work with stored procedure, try to get the last scan for this user
             if (!$scanId) {
                 $lastScan = $db->table('userscan')
@@ -156,9 +156,9 @@ class UserScans extends ResourceController
 
             $totalRated = (int)($stats->total_rated ?? 0);
             $accurateCount = (int)($stats->accurate_count ?? 0);
-            
-            $accuracyPercentage = $totalRated > 0 
-                ? round(($accurateCount / $totalRated) * 100, 1) 
+
+            $accuracyPercentage = $totalRated > 0
+                ? round(($accurateCount / $totalRated) * 100, 1)
                 : 0;
 
             return $this->response->setJSON([
@@ -176,5 +176,25 @@ class UserScans extends ResourceController
                 'message' => 'Failed to get accuracy stats'
             ])->setStatusCode(500);
         }
+    }
+
+    // GET /user-scans/userId
+    public function getScansByUser($user_id)
+    {
+        if (!$user_id) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'User ID is required'
+            ]);
+        }
+
+        $scans = $this->model->getUserScansByUserId($user_id);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'user_id' => $user_id,
+            'total' => count($scans),
+            'scans' => $scans
+        ]);
     }
 }

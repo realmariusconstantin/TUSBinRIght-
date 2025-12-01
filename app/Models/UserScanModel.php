@@ -60,4 +60,13 @@ class UserScanModel extends Model
         $query->freeResult();
         return $result['total_scans'] ?? 0;
     }
+
+    // Get user scans by user id
+    public function getUserScansByUserId($user_id)
+    {
+        $query = $this->db->query('CALL GetUserScansByUserId(?)', [$user_id]);
+        $result = $query->getResultArray();
+        $query->freeResult();
+        return $result;
+    }
 }

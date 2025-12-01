@@ -16,6 +16,7 @@ $routes->post('register', 'AuthController::register');
 $routes->post('login', 'AuthController::login');
 $routes->post('logout', 'AuthController::logout');
 $routes->get('total-scans', 'StatsController::totalScans');
+$routes->get('user-scans/(:num)', 'Admin\UserScans::getScansByUser/$1');
 $routes->get('total-users', 'StatsController::totalUsers');
 $routes->get('community-stats', 'StatsController::communityStats');
 $routes->get('scan-accuracy-stats', '\App\Controllers\Admin\UserScans::getAccuracyStats');
